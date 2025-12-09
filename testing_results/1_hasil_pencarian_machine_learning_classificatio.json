@@ -1,0 +1,127 @@
+{
+  "query": "machine learning classification",
+  "timestamp": "20251208_015230",
+  "total_results": 10,
+  "papers": [
+    {
+      "title": "An overview of machine learning classification techniques",
+      "authors": "Amer F.A.H. Alnuaimi, T. H. Albaldawi",
+      "abstract": "Machine learning (ML) is a key component within the broader field of artificial intelligence (AI) that employs statistical methods to empower computers with the ability to learn and make decisions autonomously, without the need for explicit programming. It is founded on the concept that computers can acquire knowledge from data, identify patterns, and draw conclusions with minimal human intervention. The main categories of ML include supervised learning, unsupervised learning, semisupervised learning, and reinforcement learning. Supervised learning involves training models using labelled datasets and comprises two primary forms: classification and regression. Regression is used for continuous output, while classification is employed for categorical output. The objective of supervised learning is to optimize models that can predict class labels based on input features. Classification is a technique used to predict similar information based on the values of a categorical target or class variable. It is a valuable method for analyzing various types of statistical data. These algorithms have diverse applications, including image classification, predictive modeling, and data mining. This study aims to provide a quick reference guide to the most widely used basic classification methods in machine learning, with advantages and disadvantages. Of course, a single article cannot be a complete review of all supervised machine learning classification algorithms. It serves as a valuable resource for both academics and researchers, providing a guide for all newcomers to the field, thereby enriching their comprehension of classification methodologies.",
+      "year": "2024",
+      "citations": "53",
+      "url": "https://www.semanticscholar.org/paper/0ff29677d9d14e7d512219b08f561cad989befbc",
+      "scholar_url": "https://www.semanticscholar.org/paper/0ff29677d9d14e7d512219b08f561cad989befbc",
+      "pdf_link": "https://doi.org/10.1051/bioconf/20249700133",
+      "source": "Semantic Scholar",
+      "venue": "BIO Web of Conferences"
+    },
+    {
+      "title": "Implementation of machine-learning classification in remote sensing: an applied review",
+      "authors": "Aaron E. Maxwell, T. Warner, Fang Fang",
+      "abstract": "ABSTRACT Machine learning offers the potential for effective and efficient classification of remotely sensed imagery. The strengths of machine learning include the capacity to handle data of high dimensionality and to map classes with very complex characteristics. Nevertheless, implementing a machine-learning classification is not straightforward, and the literature provides conflicting advice regarding many key issues. This article therefore provides an overview of machine learning from an applied perspective. We focus on the relatively mature methods of support vector machines, single decision trees (DTs), Random Forests, boosted DTs, artificial neural networks, and k-nearest neighbours (k-NN). Issues considered include the choice of algorithm, training data requirements, user-defined parameter selection and optimization, feature space impacts and reduction, and computational costs. We illustrate these issues through applying machine-learning classification to two publically available remotely sensed data sets.",
+      "year": "2018",
+      "citations": "1525",
+      "url": "https://www.semanticscholar.org/paper/b3de1062d8a462dfdc2938558258f8884abe9f4e",
+      "scholar_url": "https://www.semanticscholar.org/paper/b3de1062d8a462dfdc2938558258f8884abe9f4e",
+      "pdf_link": "https://www.tandfonline.com/doi/pdf/10.1080/01431161.2018.1433343?needAccess=true",
+      "source": "Semantic Scholar",
+      "venue": ""
+    },
+    {
+      "title": "Recurrence microstates for machine learning classification.",
+      "authors": "G. S. Spezzatto, J. V. V. Flauzino, G. Corso, B. Boaretto, E. Macau et al.",
+      "abstract": "Recurrence microstates are obtained from the cross recurrence of two sequences of values embedded in a time series, being the generalization of the concept of recurrence of a given state in phase space. The probability of occurrence of each microstate constitutes a recurrence quantifier. The set of probabilities of all microstates are capable of detecting even small changes in the data pattern. This creates an ideal tool for generating features in machine learning algorithms. Thanks to the sensitivity of the set of probabilities of occurrence of microstates, it can be used to feed a deep neural network, namely, a microstate multi-layer perceptron (MMLP) to classify parameters of chaotic systems. Additionally, we show that with more microstates, the accuracy of the MMLP increases, showing that the increasing size and number of microstates insert new and independent information into the analysis. We also explore potential applications of the proposed method when adapted to different contexts.",
+      "year": "2024",
+      "citations": "4",
+      "url": "https://www.semanticscholar.org/paper/57d49808b5c12011d14e33ca5fce9ffeca5d252b",
+      "scholar_url": "https://www.semanticscholar.org/paper/57d49808b5c12011d14e33ca5fce9ffeca5d252b",
+      "pdf_link": "",
+      "source": "Semantic Scholar",
+      "venue": "Chaos"
+    },
+    {
+      "title": "Heart Disease Identification Method Using Machine Learning Classification in E-Healthcare",
+      "authors": "J. Li, A. Haq, Salah Ud Din, Jalaluddin Khan, Asif Khan et al.",
+      "abstract": "Heart disease is one of the complex diseases and globally many people suffered from this disease. On time and efficient identification of heart disease plays a key role in healthcare, particularly in the field of cardiology. In this article, we proposed an efficient and accurate system to diagnosis heart disease and the system is based on machine learning techniques. The system is developed based on classification algorithms includes Support vector machine, Logistic regression, Artificial neural network, K-nearest neighbor, Naïve bays, and Decision tree while standard features selection algorithms have been used such as Relief, Minimal redundancy maximal relevance, Least absolute shrinkage selection operator and Local learning for removing irrelevant and redundant features. We also proposed novel fast conditional mutual information feature selection algorithm to solve feature selection problem. The features selection algorithms are used for features selection to increase the classification accuracy and reduce the execution time of classification system. Furthermore, the leave one subject out cross-validation method has been used for learning the best practices of model assessment and for hyperparameter tuning. The performance measuring metrics are used for assessment of the performances of the classifiers. The performances of the classifiers have been checked on the selected features as selected by features selection algorithms. The experimental results show that the proposed feature selection algorithm (FCMIM) is feasible with classifier support vector machine for designing a high-level intelligent system to identify heart disease. The suggested diagnosis system (FCMIM-SVM) achieved good accuracy as compared to previously proposed methods. Additionally, the proposed system can easily be implemented in healthcare for the identification of heart disease.",
+      "year": "2020",
+      "citations": "435",
+      "url": "https://www.semanticscholar.org/paper/84685126682d65bf700d5d419db30c3644b237f1",
+      "scholar_url": "https://www.semanticscholar.org/paper/84685126682d65bf700d5d419db30c3644b237f1",
+      "pdf_link": "https://ieeexplore.ieee.org/ielx7/6287639/8948470/09112202.pdf",
+      "source": "Semantic Scholar",
+      "venue": "IEEE Access"
+    },
+    {
+      "title": "Liver Disease Prediction using Machine learning Classification Techniques",
+      "authors": "Ketan Gupta, Nasmin Jiwani, Neda Afreen, Divyarani D",
+      "abstract": "Machine Learning is a process which is used to discover patterns in huge data/ large data set to enable decision, thereby allowing machines to go through a learning process (i.e. supervised, unsupervised and semi-supervised or reinforced). The data set used in this paper is Liver Patient taken from UCI Repository (i.e. Supervised Learning). There is a plenty of data on patients undergoing medical examination at hospitals and these data has been extracted on liver patients whose information can be further used for future improvement of their conditions. In other words, historical and classified input of patients and output data is fed into various algorithms or classifiers for predicting the future data of patients. The algorithms used here for predicting liver patients are Logistic regression, Decision Tree, Random Forest, KNNeighbor, Gradient Boosting, Extreme Gradient Boosting, LightGB. Based on the analysis and result calculations, it was found that these algorithm has obtained good accuracy after feature selection.",
+      "year": "2022",
+      "citations": "85",
+      "url": "https://www.semanticscholar.org/paper/4c5daae9c7271ba235426a27a1f39b35e2dff653",
+      "scholar_url": "https://www.semanticscholar.org/paper/4c5daae9c7271ba235426a27a1f39b35e2dff653",
+      "pdf_link": "",
+      "source": "Semantic Scholar",
+      "venue": "International Conference on Communication Systems and Network Technologies"
+    },
+    {
+      "title": "Machine Learning Classification over Encrypted Data",
+      "authors": "Raphael Bost, Raluca A. Popa, Stephen Tu, S. Goldwasser",
+      "abstract": "Tidak ada abstrak tersedia",
+      "year": "2015",
+      "citations": "747",
+      "url": "https://www.semanticscholar.org/paper/9e6060316394393c226b5c86ce51b06c4c75bee1",
+      "scholar_url": "https://www.semanticscholar.org/paper/9e6060316394393c226b5c86ce51b06c4c75bee1",
+      "pdf_link": "http://eprint.iacr.org/2014/331.pdf",
+      "source": "Semantic Scholar",
+      "venue": "Network and Distributed System Security Symposium"
+    },
+    {
+      "title": "Teachable Machine: Approachable Web-Based Tool for Exploring Machine Learning Classification",
+      "authors": "Michelle Carney, Barron Webster, Irene Alvarado, Kyle Phillips, Noura Howell et al.",
+      "abstract": "Teachable Machine (teachablemachine.withgoogle.com) is a web-based GUI tool for creating custom machine learning classification models without specialized technical expertise. (Machine learning, or ML, lets systems learn to analyze data without being explicitly programmed.) We created it to help students, teachers, designers, and others learn about ML by creating and using their own classification models. Its broad uptake suggests it has empowered people to learn, teach, and explore ML concepts: People have created curriculum, tutorials, and other resources using Teachable Machine on topics like AI ethics at institutions including the Stanford d.school, NYU's Interactive Telecommunications Program, the MIT Media Lab, as well as creative experiments. Users in 201 countries have created over 125,000 classification models. Here we outline the project and its key contributions of (1) a flexible, approachable interface for ML classification models without ML or coding expertise, (2) a set of technical and design decisions that can inform future interactive machine learning tools, and (3) an example of how structured learning content surrounding the tool supports people accessing ML concepts.",
+      "year": "2020",
+      "citations": "274",
+      "url": "https://www.semanticscholar.org/paper/4a17a8ab29ecffde5e8280382dd858c75d5bb6b6",
+      "scholar_url": "https://www.semanticscholar.org/paper/4a17a8ab29ecffde5e8280382dd858c75d5bb6b6",
+      "pdf_link": "",
+      "source": "Semantic Scholar",
+      "venue": "CHI Extended Abstracts"
+    },
+    {
+      "title": "Machine Learning Classification Model Comparison",
+      "authors": "Paolo Giudici, Alex Gramegna, E. Raffinetti",
+      "abstract": "Tidak ada abstrak tersedia",
+      "year": "2023",
+      "citations": "16",
+      "url": "https://www.semanticscholar.org/paper/edbc599ba6873c47e1e2deea4796596b14300e62",
+      "scholar_url": "https://www.semanticscholar.org/paper/edbc599ba6873c47e1e2deea4796596b14300e62",
+      "pdf_link": "https://doi.org/10.1016/j.seps.2023.101560",
+      "source": "Semantic Scholar",
+      "venue": "Socio-Economic Planning Sciences"
+    },
+    {
+      "title": "Thumbs up? Sentiment Classification using Machine Learning Techniques",
+      "authors": "B. Pang, Lillian Lee, Shivakumar Vaithyanathan",
+      "abstract": "We consider the problem of classifying documents not by topic, but by overall sentiment, e.g., determining whether a review is positive or negative. Using movie reviews as data, we find that standard machine learning techniques definitively outperform human-produced baselines. However, the three machine learning methods we employed (Naive Bayes, maximum entropy classification, and support vector machines) do not perform as well on sentiment classification as on traditional topic-based categorization. We conclude by examining factors that make the sentiment classification problem more challenging.",
+      "year": "2002",
+      "citations": "9462",
+      "url": "https://www.semanticscholar.org/paper/12d0353ce8b41b7e5409e5a4a611110aee33c7bc",
+      "scholar_url": "https://www.semanticscholar.org/paper/12d0353ce8b41b7e5409e5a4a611110aee33c7bc",
+      "pdf_link": "https://dl.acm.org/doi/pdf/10.3115/1118693.1118704",
+      "source": "Semantic Scholar",
+      "venue": "Conference on Empirical Methods in Natural Language Processing"
+    },
+    {
+      "title": "Machine Learning Classification Based on Radom Forest Algorithm: A Review",
+      "authors": "N. M. Abdulkareem, A. Abdulazeez",
+      "abstract": "Tidak ada abstrak tersedia",
+      "year": "2021",
+      "citations": "97",
+      "url": "https://www.semanticscholar.org/paper/e695834a08e231d90bfb057f422857af4df52f54",
+      "scholar_url": "https://www.semanticscholar.org/paper/e695834a08e231d90bfb057f422857af4df52f54",
+      "pdf_link": "",
+      "source": "Semantic Scholar",
+      "venue": ""
+    }
+  ]
+}

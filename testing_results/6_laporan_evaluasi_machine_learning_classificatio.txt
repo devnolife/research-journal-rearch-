@@ -1,0 +1,29 @@
+
+LAPORAN EVALUASI SISTEM PENCARIAN JURNAL
+==========================================
+Content-Based Filtering dengan TF-IDF + Cosine Similarity
+
+Query: machine learning classification
+Tanggal: 08 December 2025, 01:52
+Total Hasil: 10 jurnal
+
+DISTRIBUSI RELEVANSI:
+---------------------
+• Relevansi Tinggi (≥70%)  : 0 jurnal (0.0%)
+• Relevansi Sedang (40-70%): 0 jurnal (0.0%)
+• Relevansi Rendah (<40%)  : 10 jurnal (100.0%)
+
+STATISTIK SKOR:
+---------------
+• Rata-rata   : 7.99%
+• Tertinggi   : 17.47%
+• Terendah    : 0.0%
+• Median      : 5.6%
+
+TOP 5 HASIL PALING RELEVAN:
+---------------------------
+1. [17.47%] Machine Learning Classification Model Comparison...
+2. [17.35%] Machine Learning Classification over Encrypted Data...
+3. [13.01%] Machine Learning Classification Based on Radom Forest Algori...
+4. [7.13%] Implementation of machine-learning classification in remote ...
+5. [5.6%] Teachable Machine: Approachable Web-Based Tool for Exploring...

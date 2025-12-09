@@ -1,0 +1,91 @@
+{
+  "tahap": "Preprocessing",
+  "langkah": [
+    "1. Case Folding (lowercase)",
+    "2. Tokenisasi",
+    "3. Penghapusan Stopwords",
+    "4. Lemmatisasi"
+  ],
+  "hasil": [
+    {
+      "dokumen": "D1",
+      "judul": "An overview of machine learning classification tec...",
+      "teks_asli": "An overview of machine learning classification techniques Machine learning (ML) is a key component within the broader field of artificial intelligence (AI) that employs statistical methods to empower ...",
+      "setelah_preprocessing": "overview machine learning classification technique machine learning key component within broader field artificial intelligence employ statistical method empower computer ability learn make decision au...",
+      "jumlah_kata_asli": 241,
+      "jumlah_kata_setelah": 151
+    },
+    {
+      "dokumen": "D2",
+      "judul": "Implementation of machine-learning classification ...",
+      "teks_asli": "Implementation of machine-learning classification in remote sensing: an applied review ABSTRACT Machine learning offers the potential for effective and efficient classification of remotely sensed imag...",
+      "setelah_preprocessing": "implementation machine learning classification remote sensing applied review machine learning offer potential effective efficient classification remotely sensed imagery strength machine learning inclu...",
+      "jumlah_kata_asli": 143,
+      "jumlah_kata_setelah": 105
+    },
+    {
+      "dokumen": "D3",
+      "judul": "Recurrence microstates for machine learning classi...",
+      "teks_asli": "Recurrence microstates for machine learning classification. Recurrence microstates are obtained from the cross recurrence of two sequences of values embedded in a time series, being the generalization...",
+      "setelah_preprocessing": "recurrence microstates machine learning classification recurrence microstates obtained cross recurrence two sequence value embedded time series generalization concept recurrence given state phase spac...",
+      "jumlah_kata_asli": 159,
+      "jumlah_kata_setelah": 92
+    },
+    {
+      "dokumen": "D4",
+      "judul": "Heart Disease Identification Method Using Machine ...",
+      "teks_asli": "Heart Disease Identification Method Using Machine Learning Classification in E-Healthcare Heart disease is one of the complex diseases and globally many people suffered from this disease. On time and ...",
+      "setelah_preprocessing": "heart disease identification using machine learning classification healthcare heart disease one complex disease globally many people suffered disease time efficient identification heart disease play k...",
+      "jumlah_kata_asli": 273,
+      "jumlah_kata_setelah": 183
+    },
+    {
+      "dokumen": "D5",
+      "judul": "Liver Disease Prediction using Machine learning Cl...",
+      "teks_asli": "Liver Disease Prediction using Machine learning Classification Techniques Machine Learning is a process which is used to discover patterns in huge data/ large data set to enable decision, thereby allo...",
+      "setelah_preprocessing": "liver disease prediction using machine learning classification technique machine learning process used discover pattern huge data large data set enable decision thereby allowing machine learning proce...",
+      "jumlah_kata_asli": 163,
+      "jumlah_kata_setelah": 101
+    },
+    {
+      "dokumen": "D6",
+      "judul": "Machine Learning Classification over Encrypted Dat...",
+      "teks_asli": "Machine Learning Classification over Encrypted Data Tidak ada abstrak tersedia...",
+      "setelah_preprocessing": "machine learning classification encrypted data tidak ada abstrak tersedia...",
+      "jumlah_kata_asli": 10,
+      "jumlah_kata_setelah": 9
+    },
+    {
+      "dokumen": "D7",
+      "judul": "Teachable Machine: Approachable Web-Based Tool for...",
+      "teks_asli": "Teachable Machine: Approachable Web-Based Tool for Exploring Machine Learning Classification Teachable Machine (teachablemachine.withgoogle.com) is a web-based GUI tool for creating custom machine lea...",
+      "setelah_preprocessing": "teachable machine approachable web based tool exploring machine learning classification teachable machine teachablemachine withgoogle com web based gui tool creating custom machine learning classifica...",
+      "jumlah_kata_asli": 181,
+      "jumlah_kata_setelah": 121
+    },
+    {
+      "dokumen": "D8",
+      "judul": "Machine Learning Classification Model Comparison...",
+      "teks_asli": "Machine Learning Classification Model Comparison Tidak ada abstrak tersedia...",
+      "setelah_preprocessing": "machine learning classification model comparison tidak ada abstrak tersedia...",
+      "jumlah_kata_asli": 9,
+      "jumlah_kata_setelah": 9
+    },
+    {
+      "dokumen": "D9",
+      "judul": "Thumbs up? Sentiment Classification using Machine ...",
+      "teks_asli": "Thumbs up? Sentiment Classification using Machine Learning Techniques We consider the problem of classifying documents not by topic, but by overall sentiment, e.g., determining whether a review is pos...",
+      "setelah_preprocessing": "thumb sentiment classification using machine learning technique consider problem classifying document topic overall sentiment determining whether review positive negative using movie review data find ...",
+      "jumlah_kata_asli": 90,
+      "jumlah_kata_setelah": 63
+    },
+    {
+      "dokumen": "D10",
+      "judul": "Machine Learning Classification Based on Radom For...",
+      "teks_asli": "Machine Learning Classification Based on Radom Forest Algorithm: A Review Tidak ada abstrak tersedia...",
+      "setelah_preprocessing": "machine learning classification based radom forest algorithm review tidak ada abstrak tersedia...",
+      "jumlah_kata_asli": 14,
+      "jumlah_kata_setelah": 12
+    }
+  ]
+}

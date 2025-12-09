@@ -1,0 +1,472 @@
+{
+  "tahap": "Pembobotan TF-IDF",
+  "formula": {
+    "tfidf": "TF-IDF(t,d) = TF(t,d) × IDF(t)",
+    "tf": "TF(t,d) = frekuensi term t dalam dokumen d",
+    "idf": "IDF(t) = log(N / df(t)) + 1"
+  },
+  "total_dokumen": 10,
+  "total_terms_unik": 1094,
+  "hasil_per_dokumen": [
+    {
+      "dokumen": "D1",
+      "judul": "An overview of machine learning classification techniques",
+      "top_terms": [
+        {
+          "term": "supervised",
+          "bobot_tfidf": 0.1263
+        },
+        {
+          "term": "classification technique",
+          "bobot_tfidf": 0.1111
+        },
+        {
+          "term": "supervised learning",
+          "bobot_tfidf": 0.1111
+        },
+        {
+          "term": "statistical",
+          "bobot_tfidf": 0.1054
+        },
+        {
+          "term": "valuable",
+          "bobot_tfidf": 0.1054
+        },
+        {
+          "term": "categorical",
+          "bobot_tfidf": 0.1054
+        },
+        {
+          "term": "guide",
+          "bobot_tfidf": 0.1054
+        },
+        {
+          "term": "computer",
+          "bobot_tfidf": 0.1054
+        },
+        {
+          "term": "predict",
+          "bobot_tfidf": 0.1054
+        },
+        {
+          "term": "output",
+          "bobot_tfidf": 0.0896
+        }
+      ]
+    },
+    {
+      "dokumen": "D2",
+      "judul": "Implementation of machine-learning classification in remote ",
+      "top_terms": [
+        {
+          "term": "applied",
+          "bobot_tfidf": 0.1549
+        },
+        {
+          "term": "issue",
+          "bobot_tfidf": 0.1549
+        },
+        {
+          "term": "sensed",
+          "bobot_tfidf": 0.125
+        },
+        {
+          "term": "remote sensing",
+          "bobot_tfidf": 0.125
+        },
+        {
+          "term": "sensing",
+          "bobot_tfidf": 0.125
+        },
+        {
+          "term": "implementation",
+          "bobot_tfidf": 0.125
+        },
+        {
+          "term": "classification remote",
+          "bobot_tfidf": 0.125
+        },
+        {
+          "term": "applied review",
+          "bobot_tfidf": 0.125
+        },
+        {
+          "term": "implementation machine",
+          "bobot_tfidf": 0.125
+        },
+        {
+          "term": "remote",
+          "bobot_tfidf": 0.125
+        }
+      ]
+    },
+    {
+      "dokumen": "D3",
+      "judul": "Recurrence microstates for machine learning classification.",
+      "top_terms": [
+        {
+          "term": "microstates",
+          "bobot_tfidf": 0.2258
+        },
+        {
+          "term": "recurrence",
+          "bobot_tfidf": 0.214
+        },
+        {
+          "term": "recurrence microstates",
+          "bobot_tfidf": 0.1608
+        },
+        {
+          "term": "probability",
+          "bobot_tfidf": 0.1608
+        },
+        {
+          "term": "occurrence",
+          "bobot_tfidf": 0.1298
+        },
+        {
+          "term": "classification recurrence",
+          "bobot_tfidf": 0.1298
+        },
+        {
+          "term": "probability occurrence",
+          "bobot_tfidf": 0.1298
+        },
+        {
+          "term": "microstates machine",
+          "bobot_tfidf": 0.1298
+        },
+        {
+          "term": "microstate",
+          "bobot_tfidf": 0.1298
+        },
+        {
+          "term": "mmlp",
+          "bobot_tfidf": 0.1298
+        }
+      ]
+    },
+    {
+      "dokumen": "D4",
+      "judul": "Heart Disease Identification Method Using Machine Learning C",
+      "top_terms": [
+        {
+          "term": "heart disease",
+          "bobot_tfidf": 0.1642
+        },
+        {
+          "term": "heart",
+          "bobot_tfidf": 0.1642
+        },
+        {
+          "term": "disease",
+          "bobot_tfidf": 0.1515
+        },
+        {
+          "term": "selection algorithm",
+          "bobot_tfidf": 0.1454
+        },
+        {
+          "term": "feature selection",
+          "bobot_tfidf": 0.1396
+        },
+        {
+          "term": "identification",
+          "bobot_tfidf": 0.133
+        },
+        {
+          "term": "healthcare",
+          "bobot_tfidf": 0.133
+        },
+        {
+          "term": "selection",
+          "bobot_tfidf": 0.1276
+        },
+        {
+          "term": "proposed",
+          "bobot_tfidf": 0.1236
+        },
+        {
+          "term": "performance",
+          "bobot_tfidf": 0.117
+        }
+      ]
+    },
+    {
+      "dokumen": "D5",
+      "judul": "Liver Disease Prediction using Machine learning Classificati",
+      "top_terms": [
+        {
+          "term": "patient",
+          "bobot_tfidf": 0.2038
+        },
+        {
+          "term": "liver",
+          "bobot_tfidf": 0.1905
+        },
+        {
+          "term": "liver patient",
+          "bobot_tfidf": 0.1532
+        },
+        {
+          "term": "supervised",
+          "bobot_tfidf": 0.1302
+        },
+        {
+          "term": "learning process",
+          "bobot_tfidf": 0.1236
+        },
+        {
+          "term": "prediction",
+          "bobot_tfidf": 0.1236
+        },
+        {
+          "term": "data patient",
+          "bobot_tfidf": 0.1236
+        },
+        {
+          "term": "liver disease",
+          "bobot_tfidf": 0.1236
+        },
+        {
+          "term": "prediction using",
+          "bobot_tfidf": 0.1236
+        },
+        {
+          "term": "gradient boosting",
+          "bobot_tfidf": 0.1236
+        }
+      ]
+    },
+    {
+      "dokumen": "D6",
+      "judul": "Machine Learning Classification over Encrypted Data",
+      "top_terms": [
+        {
+          "term": "classification encrypted",
+          "bobot_tfidf": 0.4284
+        },
+        {
+          "term": "encrypted",
+          "bobot_tfidf": 0.4284
+        },
+        {
+          "term": "encrypted data",
+          "bobot_tfidf": 0.4284
+        },
+        {
+          "term": "data machine",
+          "bobot_tfidf": 0.253
+        },
+        {
+          "term": "data tidak",
+          "bobot_tfidf": 0.253
+        },
+        {
+          "term": "data",
+          "bobot_tfidf": 0.2088
+        },
+        {
+          "term": "abstrak",
+          "bobot_tfidf": 0.1882
+        },
+        {
+          "term": "tersedia",
+          "bobot_tfidf": 0.1882
+        },
+        {
+          "term": "ada abstrak",
+          "bobot_tfidf": 0.1882
+        },
+        {
+          "term": "ada",
+          "bobot_tfidf": 0.1882
+        }
+      ]
+    },
+    {
+      "dokumen": "D7",
+      "judul": "Teachable Machine: Approachable Web-Based Tool for Exploring",
+      "top_terms": [
+        {
+          "term": "teachable machine",
+          "bobot_tfidf": 0.1573
+        },
+        {
+          "term": "teachable",
+          "bobot_tfidf": 0.1573
+        },
+        {
+          "term": "tool",
+          "bobot_tfidf": 0.1462
+        },
+        {
+          "term": "created",
+          "bobot_tfidf": 0.1383
+        },
+        {
+          "term": "web based",
+          "bobot_tfidf": 0.1383
+        },
+        {
+          "term": "web",
+          "bobot_tfidf": 0.1383
+        },
+        {
+          "term": "approachable",
+          "bobot_tfidf": 0.1383
+        },
+        {
+          "term": "classification model",
+          "bobot_tfidf": 0.1337
+        },
+        {
+          "term": "learn",
+          "bobot_tfidf": 0.1176
+        },
+        {
+          "term": "people",
+          "bobot_tfidf": 0.1176
+        }
+      ]
+    },
+    {
+      "dokumen": "D8",
+      "judul": "Machine Learning Classification Model Comparison",
+      "top_terms": [
+        {
+          "term": "model comparison",
+          "bobot_tfidf": 0.4314
+        },
+        {
+          "term": "comparison",
+          "bobot_tfidf": 0.4314
+        },
+        {
+          "term": "classification model",
+          "bobot_tfidf": 0.3668
+        },
+        {
+          "term": "model",
+          "bobot_tfidf": 0.2853
+        },
+        {
+          "term": "comparison machine",
+          "bobot_tfidf": 0.2548
+        },
+        {
+          "term": "comparison tidak",
+          "bobot_tfidf": 0.2548
+        },
+        {
+          "term": "tidak",
+          "bobot_tfidf": 0.1895
+        },
+        {
+          "term": "ada",
+          "bobot_tfidf": 0.1895
+        },
+        {
+          "term": "tersedia",
+          "bobot_tfidf": 0.1895
+        },
+        {
+          "term": "tidak ada",
+          "bobot_tfidf": 0.1895
+        }
+      ]
+    },
+    {
+      "dokumen": "D9",
+      "judul": "Thumbs up? Sentiment Classification using Machine Learning T",
+      "top_terms": [
+        {
+          "term": "sentiment",
+          "bobot_tfidf": 0.2503
+        },
+        {
+          "term": "sentiment classification",
+          "bobot_tfidf": 0.2289
+        },
+        {
+          "term": "learning technique",
+          "bobot_tfidf": 0.1711
+        },
+        {
+          "term": "thumb",
+          "bobot_tfidf": 0.1624
+        },
+        {
+          "term": "thumb sentiment",
+          "bobot_tfidf": 0.1624
+        },
+        {
+          "term": "classification using",
+          "bobot_tfidf": 0.1624
+        },
+        {
+          "term": "problem",
+          "bobot_tfidf": 0.1381
+        },
+        {
+          "term": "topic",
+          "bobot_tfidf": 0.1381
+        },
+        {
+          "term": "technique",
+          "bobot_tfidf": 0.1331
+        },
+        {
+          "term": "using machine",
+          "bobot_tfidf": 0.1208
+        }
+      ]
+    },
+    {
+      "dokumen": "D10",
+      "judul": "Machine Learning Classification Based on Radom Forest Algori",
+      "top_terms": [
+        {
+          "term": "forest algorithm",
+          "bobot_tfidf": 0.3214
+        },
+        {
+          "term": "radom",
+          "bobot_tfidf": 0.3214
+        },
+        {
+          "term": "classification based",
+          "bobot_tfidf": 0.3214
+        },
+        {
+          "term": "based radom",
+          "bobot_tfidf": 0.3214
+        },
+        {
+          "term": "algorithm review",
+          "bobot_tfidf": 0.3214
+        },
+        {
+          "term": "radom forest",
+          "bobot_tfidf": 0.3214
+        },
+        {
+          "term": "forest",
+          "bobot_tfidf": 0.239
+        },
+        {
+          "term": "review",
+          "bobot_tfidf": 0.2125
+        },
+        {
+          "term": "review tidak",
+          "bobot_tfidf": 0.1898
+        },
+        {
+          "term": "based",
+          "bobot_tfidf": 0.1725
+        }
+      ]
+    }
+  ]
+}

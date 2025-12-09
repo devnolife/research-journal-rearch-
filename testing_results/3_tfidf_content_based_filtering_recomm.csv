@@ -1,0 +1,101 @@
+﻿Dokumen,Judul,Term,Bobot TF-IDF
+D1,Diversity Focused Content-Based Filterin,diversity,0.2217
+D1,Diversity Focused Content-Based Filterin,recommendation diversity,0.1752
+D1,Diversity Focused Content-Based Filterin,threshold,0.1602
+D1,Diversity Focused Content-Based Filterin,cluster,0.1409
+D1,Diversity Focused Content-Based Filterin,label,0.1409
+D1,Diversity Focused Content-Based Filterin,cluster label,0.1409
+D1,Diversity Focused Content-Based Filterin,issue,0.1137
+D1,Diversity Focused Content-Based Filterin,diversity focused,0.1137
+D1,Diversity Focused Content-Based Filterin,focus improving,0.1137
+D1,Diversity Focused Content-Based Filterin,focused content,0.1137
+D2,Stacked Bi-directional Long Short-Term M,resource,0.1665
+D2,Stacked Bi-directional Long Short-Term M,english,0.1349
+D2,Stacked Bi-directional Long Short-Term M,english teaching,0.1349
+D2,Stacked Bi-directional Long Short-Term M,teaching,0.1349
+D2,Stacked Bi-directional Long Short-Term M,teaching resource,0.1349
+D2,Stacked Bi-directional Long Short-Term M,lstm,0.1186
+D2,Stacked Bi-directional Long Short-Term M,long short,0.1186
+D2,Stacked Bi-directional Long Short-Term M,higher,0.1186
+D2,Stacked Bi-directional Long Short-Term M,higher vocational,0.1186
+D2,Stacked Bi-directional Long Short-Term M,stacked directional,0.1186
+D3,Content-Based Filtering Recommendation S,category,0.2571
+D3,Content-Based Filtering Recommendation S,search,0.2159
+D3,Content-Based Filtering Recommendation S,want,0.1999
+D3,Content-Based Filtering Recommendation S,category search,0.1668
+D3,Content-Based Filtering Recommendation S,keywords,0.1668
+D3,Content-Based Filtering Recommendation S,author,0.1668
+D3,Content-Based Filtering Recommendation S,search engine,0.1668
+D3,Content-Based Filtering Recommendation S,search according,0.1668
+D3,Content-Based Filtering Recommendation S,using category,0.1668
+D3,Content-Based Filtering Recommendation S,according,0.1418
+D4,A Constructive Content-Based Filtering R,coffee,0.198
+D4,A Constructive Content-Based Filtering R,coffee shop,0.1449
+D4,A Constructive Content-Based Filtering R,recommendation application,0.1449
+D4,A Constructive Content-Based Filtering R,shop,0.1449
+D4,A Constructive Content-Based Filtering R,application,0.1232
+D4,A Constructive Content-Based Filtering R,selection,0.1166
+D4,A Constructive Content-Based Filtering R,experience,0.1166
+D4,A Constructive Content-Based Filtering R,coffee selection,0.1166
+D4,A Constructive Content-Based Filtering R,choice,0.1127
+D4,A Constructive Content-Based Filtering R,optimizing coffee,0.094
+D5,Combining Collaborative Filtering and Co,collaborative,0.1567
+D5,Combining Collaborative Filtering and Co,filtering content,0.144
+D5,Combining Collaborative Filtering and Co,collaborative filtering,0.1433
+D5,Combining Collaborative Filtering and Co,combining collaborative,0.1367
+D5,Combining Collaborative Filtering and Co,hybrid,0.1367
+D5,Combining Collaborative Filtering and Co,state art,0.1367
+D5,Combining Collaborative Filtering and Co,state,0.1367
+D5,Combining Collaborative Filtering and Co,art,0.1367
+D5,Combining Collaborative Filtering and Co,combining,0.1367
+D5,Combining Collaborative Filtering and Co,method,0.1162
+D6,Library Book Recommendation System Using,book,0.2115
+D6,Library Book Recommendation System Using,library,0.1977
+D6,Library Book Recommendation System Using,library book,0.159
+D6,Library Book Recommendation System Using,book recommendation,0.159
+D6,Library Book Recommendation System Using,testing,0.1352
+D6,Library Book Recommendation System Using,student,0.1352
+D6,Library Book Recommendation System Using,box testing,0.1283
+D6,Library Book Recommendation System Using,box,0.1283
+D6,Library Book Recommendation System Using,frequency,0.1283
+D6,Library Book Recommendation System Using,digital,0.1283
+D7,Content-Based Filtering Recommendation i,neo,0.3779
+D7,Content-Based Filtering Recommendation i,search using,0.3779
+D7,Content-Based Filtering Recommendation i,using neo,0.3779
+D7,Content-Based Filtering Recommendation i,recommendation search,0.3779
+D7,Content-Based Filtering Recommendation i,search,0.281
+D7,Content-Based Filtering Recommendation i,neo tidak,0.2232
+D7,Content-Based Filtering Recommendation i,neo content,0.2232
+D7,Content-Based Filtering Recommendation i,filtering recommendation,0.1842
+D7,Content-Based Filtering Recommendation i,abstrak tersedia,0.166
+D7,Content-Based Filtering Recommendation i,tersedia,0.166
+D8,Music recommendation using dynamic feedb,music,0.3246
+D8,Music recommendation using dynamic feedb,using dynamic,0.3246
+D8,Music recommendation using dynamic feedb,music recommendation,0.3246
+D8,Music recommendation using dynamic feedb,dynamic feedback,0.3246
+D8,Music recommendation using dynamic feedb,dynamic,0.3246
+D8,Music recommendation using dynamic feedb,feedback content,0.3246
+D8,Music recommendation using dynamic feedb,feedback,0.276
+D8,Music recommendation using dynamic feedb,recommendation using,0.2414
+D8,Music recommendation using dynamic feedb,filtering tidak,0.1917
+D8,Music recommendation using dynamic feedb,filtering music,0.1917
+D9,Movie Recommendation System Based on Syn,movie,0.1831
+D9,Movie Recommendation System Based on Syn,film,0.1831
+D9,Movie Recommendation System Based on Syn,idf,0.1556
+D9,Movie Recommendation System Based on Syn,idf cosine,0.1369
+D9,Movie Recommendation System Based on Syn,filtering idf,0.1299
+D9,Movie Recommendation System Based on Syn,based synopsis,0.1299
+D9,Movie Recommendation System Based on Syn,movie recommendation,0.1299
+D9,Movie Recommendation System Based on Syn,synopsis,0.1299
+D9,Movie Recommendation System Based on Syn,industry,0.1299
+D9,Movie Recommendation System Based on Syn,synopsis using,0.1299
+D10,Content-Based Filtering Recommendation A,recommendation algorithm,0.3779
+D10,Content-Based Filtering Recommendation A,hmm,0.3779
+D10,Content-Based Filtering Recommendation A,using hmm,0.3779
+D10,Content-Based Filtering Recommendation A,algorithm using,0.3779
+D10,Content-Based Filtering Recommendation A,algorithm,0.281
+D10,Content-Based Filtering Recommendation A,hmm tidak,0.2232
+D10,Content-Based Filtering Recommendation A,hmm content,0.2232
+D10,Content-Based Filtering Recommendation A,filtering recommendation,0.1842
+D10,Content-Based Filtering Recommendation A,tersedia,0.166
+D10,Content-Based Filtering Recommendation A,tidak ada,0.166

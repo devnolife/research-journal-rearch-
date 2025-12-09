@@ -1,0 +1,67 @@
+{
+  "formula": "Cosine Similarity = (A · B) / (||A|| × ||B||)",
+  "deskripsi": "Mengukur kemiripan sudut antara vektor query dan vektor dokumen",
+  "query": "content based filtering recommendation",
+  "hasil_similarity": [
+    {
+      "dokumen": "D7",
+      "judul": "Content-Based Filtering Recommendation in Abstract Search Us",
+      "cosine_similarity": 0.1842,
+      "persentase": 18.42
+    },
+    {
+      "dokumen": "D10",
+      "judul": "Content-Based Filtering Recommendation Algorithm Using HMM",
+      "cosine_similarity": 0.1842,
+      "persentase": 18.42
+    },
+    {
+      "dokumen": "D3",
+      "judul": "Content-Based Filtering Recommendation System Using Categori",
+      "cosine_similarity": 0.0813,
+      "persentase": 8.13
+    },
+    {
+      "dokumen": "D5",
+      "judul": "Combining Collaborative Filtering and Content Based Filterin",
+      "cosine_similarity": 0.0666,
+      "persentase": 6.66
+    },
+    {
+      "dokumen": "D4",
+      "judul": "A Constructive Content-Based Filtering Recommendation Applic",
+      "cosine_similarity": 0.0568,
+      "persentase": 5.68
+    },
+    {
+      "dokumen": "D1",
+      "judul": "Diversity Focused Content-Based Filtering Recommendation Sys",
+      "cosine_similarity": 0.0554,
+      "persentase": 5.54
+    },
+    {
+      "dokumen": "D2",
+      "judul": "Stacked Bi-directional Long Short-Term Memory with Content-b",
+      "cosine_similarity": 0.0467,
+      "persentase": 4.67
+    },
+    {
+      "dokumen": "D6",
+      "judul": "Library Book Recommendation System Using Content-Based Filte",
+      "cosine_similarity": 0.0,
+      "persentase": 0.0
+    },
+    {
+      "dokumen": "D8",
+      "judul": "Music recommendation using dynamic feedback and content-base",
+      "cosine_similarity": 0.0,
+      "persentase": 0.0
+    },
+    {
+      "dokumen": "D9",
+      "judul": "Movie Recommendation System Based on Synopsis Using Content-",
+      "cosine_similarity": 0.0,
+      "persentase": 0.0
+    }
+  ]
+}

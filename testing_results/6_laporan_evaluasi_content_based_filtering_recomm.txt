@@ -1,0 +1,29 @@
+
+LAPORAN EVALUASI SISTEM PENCARIAN JURNAL
+==========================================
+Content-Based Filtering dengan TF-IDF + Cosine Similarity
+
+Query: content based filtering recommendation
+Tanggal: 08 December 2025, 01:52
+Total Hasil: 10 jurnal
+
+DISTRIBUSI RELEVANSI:
+---------------------
+• Relevansi Tinggi (≥70%)  : 0 jurnal (0.0%)
+• Relevansi Sedang (40-70%): 0 jurnal (0.0%)
+• Relevansi Rendah (<40%)  : 10 jurnal (100.0%)
+
+STATISTIK SKOR:
+---------------
+• Rata-rata   : 6.75%
+• Tertinggi   : 18.42%
+• Terendah    : 0.0%
+• Median      : 5.68%
+
+TOP 5 HASIL PALING RELEVAN:
+---------------------------
+1. [18.42%] Content-Based Filtering Recommendation in Abstract Search Us...
+2. [18.42%] Content-Based Filtering Recommendation Algorithm Using HMM...
+3. [8.13%] Content-Based Filtering Recommendation System Using Categori...
+4. [6.66%] Combining Collaborative Filtering and Content Based Filterin...
+5. [5.68%] A Constructive Content-Based Filtering Recommendation Applic...

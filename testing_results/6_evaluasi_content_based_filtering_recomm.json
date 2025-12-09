@@ -1,0 +1,18 @@
+{
+  "query": "content based filtering recommendation",
+  "total_hasil": 10,
+  "distribusi_relevansi": {
+    "tinggi_>=70%": 0,
+    "sedang_40-70%": 0,
+    "rendah_<40%": 10
+  },
+  "statistik": {
+    "rata_rata_skor": 6.75,
+    "skor_tertinggi": 18.42,
+    "skor_terendah": 0.0,
+    "median_skor": 5.68
+  },
+  "metrik": {
+    "precision_tinggi": 0.0
+  }
+}

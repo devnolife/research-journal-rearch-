@@ -1,0 +1,2819 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Inspirasi Jurnal Penelitian</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a4a6a;
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            color: var(--text-primary);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+            animation: pulse-bg 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse-bg {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .search-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .search-form {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .search-btn,
+        .generate-btn,
+        .upload-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .search-btn::before,
+        .generate-btn::before,
+        .upload-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .search-btn:hover::before,
+        .generate-btn:hover::before,
+        .upload-btn:hover::before {
+            left: 100%;
+        }
+
+        .search-btn:hover,
+        .generate-btn:hover,
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 60, 114, 0.4);
+        }
+
+        .search-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .options {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .option-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .option-group label {
+            font-weight: 500;
+            color: #555;
+        }
+
+        .option-group select,
+        .option-group input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .results-section {
+            background: rgba(255, 255, 255, 0.95);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .results-count {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .select-all-btn {
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .papers-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .paper-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .paper-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .paper-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .paper-card:hover::before {
+            opacity: 1;
+        }
+
+        .paper-card.selected {
+            border-color: #1e3c72;
+            background: linear-gradient(135deg, rgba(30, 60, 114, 0.05), rgba(42, 82, 152, 0.05));
+        }
+
+        .paper-card.selected::before {
+            opacity: 1;
+        }
+
+        .paper-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .paper-checkbox {
+            margin-top: 5px;
+            transform: scale(1.2);
+        }
+
+        .paper-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .paper-authors {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .paper-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            color: #888;
+        }
+
+        .paper-citations {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .paper-abstract {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .paper-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .paper-link {
+            padding: 8px 15px;
+            background: #f8f9fa;
+            color: #333;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .paper-link:hover {
+            background: #e9ecef;
+        }
+
+        .paper-link.pdf {
+            background: #dc3545;
+            color: white;
+        }
+
+        .paper-link.pdf:hover {
+            background: #c82333;
+        }
+
+        .topics-section {
+            background: rgba(255, 255, 255, 0.95);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .insights-summary {
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(30, 60, 114, 0.3);
+        }
+
+        .summary-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .insight-category {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-left: 4px solid #1e3c72;
+        }
+
+        .insight-category:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .insight-category h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .insight-list {
+            margin-bottom: 10px;
+        }
+
+        .insight-item {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 3px solid #28a745;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .insight-item:hover {
+            transform: translateX(5px);
+            background: linear-gradient(135deg, #e9ecef, #dee2e6);
+        }
+
+        .insight-item .priority {
+            display: inline-block;
+            background: #1e3c72;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+        }
+
+        .insight-item .priority.high {
+            background: #dc3545;
+        }
+
+        .insight-item .priority.medium {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .insight-item .priority.low {
+            background: #28a745;
+        }
+
+        .research-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-top: 4px solid #2a5298;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .metric-card h4 {
+            color: #2a5298;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .metric-content {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .metric-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .metric-item:last-child {
+            border-bottom: none;
+        }
+
+        .metric-value {
+            font-weight: 600;
+            color: #1e3c72;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 5px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1e3c72, #2a5298);
+            transition: width 0.3s ease;
+        }
+
+        .topic-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #1e3c72;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(30, 60, 114, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .topic-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .topic-card:hover::before {
+            left: 100%;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: #666;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #c33;
+        }
+
+        .success {
+            background: #efe;
+            color: #363;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #363;
+        }
+
+        .advanced-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            background: #f8f9fa;
+        }
+
+        .research-suggestions {
+            background: rgba(255, 255, 255, 0.95);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .suggestion-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            border-left: 4px solid #28a745;
+        }
+
+        .suggestion-section h4 {
+            color: #28a745;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .suggestion-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .suggestion-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .suggestion-list li:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-icon {
+            color: #28a745;
+            margin-top: 2px;
+        }
+
+        .auto-analysis {
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(40, 167, 69, 0.05));
+            border: 2px solid #28a745;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+            }
+        }
+
+        .analysis-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #28a745;
+        }
+
+        .trend-analysis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .trend-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #17a2b8;
+        }
+
+        .trend-card h5 {
+            color: #17a2b8;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+
+            .options {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .advanced-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Source Badge Styling */
+        .source-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .source-badge.scholar {
+            background: linear-gradient(135deg, #4285f4, #34a853);
+            color: white;
+        }
+        
+        
+        /* Semantic Scholar Badge */
+        .source-badge.semantic {
+            background: linear-gradient(135deg, #1857b6, #3498db);
+            color: white;
+        }
+
+        .source-badge.mendeley {
+            background: linear-gradient(135deg, #b31b1b, #d9534f);
+            color: white;
+        }
+        
+        /* Modern Button Styling */
+        .search-btn, .generate-btn {
+            background: var(--accent-gradient);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .search-btn:hover, .generate-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+        }
+        
+        /* Loading Skeleton */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+        }
+        
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: var(--accent-gradient);
+            color: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        /* Improved Card Hover */
+        .paper-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .paper-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Floating particles background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+
+        /* Relevance Score Badge */
+        .relevance-score {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .relevance-score i {
+            font-size: 10px;
+        }
+        
+        /* CBF Info Box */
+        .cbf-info {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .cbf-info i {
+            font-size: 24px;
+            color: #10b981;
+        }
+        
+        .cbf-info-text h4 {
+            margin: 0 0 5px 0;
+            color: #10b981;
+            font-size: 14px;
+        }
+        
+        .cbf-info-text p {
+            margin: 0;
+            font-size: 12px;
+            color: #666;
+        }
+
+
+        /* Evaluation Stats Panel */
+        .evaluation-panel {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .evaluation-panel h3 {
+            color: #6366f1;
+            margin-bottom: 15px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .eval-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+        }
+        
+        .eval-stat {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        
+        .eval-stat:hover {
+            transform: translateY(-2px);
+        }
+        
+        .eval-stat .value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        
+        .eval-stat .label {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 5px;
+        }
+        
+        .eval-stat.high .value { color: #10b981; }
+        .eval-stat.medium .value { color: #f59e0b; }
+        .eval-stat.low .value { color: #ef4444; }
+        
+        /* Export Buttons */
+        .export-section {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .export-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid #e2e8f0;
+            background: white;
+            color: #475569;
+            transition: all 0.2s;
+        }
+        
+        .export-btn:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+        
+        .export-btn.csv { border-color: #10b981; color: #10b981; }
+        .export-btn.csv:hover { background: #10b981; color: white; }
+        
+        .export-btn.json { border-color: #f59e0b; color: #f59e0b; }
+        .export-btn.json:hover { background: #f59e0b; color: white; }
+        
+        .export-btn.bibtex { border-color: #6366f1; color: #6366f1; }
+        .export-btn.bibtex:hover { background: #6366f1; color: white; }
+        
+        .export-btn.html { border-color: #ec4899; color: #ec4899; }
+        .export-btn.html:hover { background: #ec4899; color: white; }
+        
+        /* Similar Papers Button */
+        .similar-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            border: 1px solid #8b5cf6;
+            background: transparent;
+            color: #8b5cf6;
+            transition: all 0.2s;
+        }
+        
+        .similar-btn:hover {
+            background: #8b5cf6;
+            color: white;
+        }
+        
+        /* Similar Papers Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #94a3b8;
+        }
+        
+        .modal-close:hover {
+            color: #475569;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+        
+        .similar-paper-item {
+            padding: 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+        
+        .similar-paper-item:hover {
+            border-color: #8b5cf6;
+            background: #faf5ff;
+        }
+        
+        .similar-paper-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        
+        .similar-paper-meta {
+            font-size: 12px;
+            color: #64748b;
+        }
+        
+        .similarity-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+
+        /* CBF Calculation Panel */
+        .cbf-calculation-panel {
+            display: none;
+            background: linear-gradient(135deg, #1e3a5f, #2d5a87);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            color: white;
+        }
+        
+        .cbf-calculation-panel.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .cbf-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .cbf-panel-header h3 {
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .cbf-panel-close {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        .cbf-panel-close:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .cbf-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .cbf-section h4 {
+            font-size: 14px;
+            margin-bottom: 12px;
+            color: #a5d8ff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .formula-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+        
+        .formula-desc {
+            font-size: 12px;
+            color: #a5d8ff;
+            margin-top: 8px;
+        }
+        
+        .tfidf-terms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .paper-terms-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px;
+        }
+        
+        .paper-terms-card h5 {
+            font-size: 12px;
+            margin-bottom: 10px;
+            color: #ffd43b;
+        }
+        
+        .term-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .term-item:last-child {
+            border-bottom: none;
+        }
+        
+        .term-weight {
+            color: #69db7c;
+            font-weight: 600;
+        }
+        
+        .similarity-matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        
+        .similarity-matrix-table th,
+        .similarity-matrix-table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .similarity-matrix-table th {
+            color: #a5d8ff;
+            font-weight: 500;
+        }
+        
+        .similarity-badge-small {
+            display: inline-block;
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            margin-right: 5px;
+        }
+        
+        .cbf-stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .cbf-stat-item {
+            text-align: center;
+            padding: 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+        
+        .cbf-stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffd43b;
+        }
+        
+        .cbf-stat-label {
+            font-size: 11px;
+            color: #a5d8ff;
+            margin-top: 5px;
+        }
+        
+        /* Show calculation button */
+        .show-cbf-btn {
+            display: none;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 15px 0;
+            transition: all 0.2s;
+        }
+        
+        .show-cbf-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
+        }
+        
+        .show-cbf-btn.visible {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Selected count badge */
+        .selected-count-badge {
+            display: none;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-left: 15px;
+        }
+        
+        .selected-count-badge.visible {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Story Input Styles */
+        .story-textarea {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s ease;
+            resize: vertical;
+            min-height: 100px;
+            line-height: 1.6;
+        }
+        
+        .story-textarea:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        .story-textarea::placeholder {
+            color: #9ca3af;
+        }
+        
+        .extracted-keywords {
+            margin-top: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-radius: 12px;
+            border: 1px solid #bae6fd;
+        }
+        
+        .keywords-label {
+            font-weight: 600;
+            color: #0369a1;
+            font-size: 13px;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .keywords-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .keyword-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .keyword-tag:hover {
+            transform: scale(1.05);
+            box-shadow: 0 3px 10px rgba(99, 102, 241, 0.3);
+        }
+        
+        .keyword-tag .remove-keyword {
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        
+        .keyword-tag .remove-keyword:hover {
+            opacity: 1;
+        }
+
+        /* CBF Process Steps */
+        .cbf-process-section {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cbf-process-section.active {
+            display: block;
+            animation: fadeInUp 0.4s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .process-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .process-header h2 {
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+        
+        .process-header p {
+            color: #64748b;
+            font-size: 14px;
+        }
+        
+        .process-steps {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .step-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 20px;
+            background: #f1f5f9;
+            border-radius: 12px;
+            min-width: 120px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .step-indicator.active {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+        }
+        
+        .step-indicator.completed {
+            background: #10b981;
+            color: white;
+        }
+        
+        .step-indicator:hover {
+            transform: translateY(-2px);
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        
+        .step-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .step-content {
+            display: none;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 16px;
+            margin-top: 20px;
+        }
+        
+        .step-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Preprocessing Display */
+        .preprocessing-result {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .preprocess-item {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 4px solid #6366f1;
+        }
+        
+        .preprocess-label {
+            font-size: 12px;
+            color: #6366f1;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .preprocess-text {
+            font-size: 13px;
+            color: #334155;
+            line-height: 1.6;
+            word-break: break-word;
+        }
+        
+        /* TF-IDF Table */
+        .tfidf-container {
+            overflow-x: auto;
+        }
+        
+        .tfidf-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        
+        .tfidf-table th {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            position: sticky;
+            top: 0;
+        }
+        
+        .tfidf-table td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .tfidf-table tr:hover {
+            background: #f1f5f9;
+        }
+        
+        .tfidf-value {
+            font-family: 'Courier New', monospace;
+            color: #059669;
+            font-weight: 600;
+        }
+        
+        /* Cosine Similarity Matrix */
+        .similarity-matrix {
+            overflow-x: auto;
+            margin-top: 15px;
+        }
+        
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+        
+        .matrix-table th,
+        .matrix-table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .matrix-table th {
+            background: #1e293b;
+            color: white;
+            font-weight: 500;
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .matrix-table td {
+            font-family: 'Courier New', monospace;
+        }
+        
+        .similarity-high { background: #dcfce7; color: #166534; font-weight: 700; }
+        .similarity-medium { background: #fef9c3; color: #854d0e; }
+        .similarity-low { background: #fee2e2; color: #991b1b; }
+        
+        /* Ranking Result */
+        .ranking-list {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .ranking-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        
+        .ranking-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .rank-badge {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 800;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .rank-1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+        .rank-2 { background: linear-gradient(135deg, #94a3b8, #64748b); }
+        .rank-3 { background: linear-gradient(135deg, #c2410c, #ea580c); }
+        .rank-other { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+        
+        .ranking-content {
+            flex: 1;
+        }
+        
+        .ranking-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .ranking-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+            color: #64748b;
+        }
+        
+        .ranking-score {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+        }
+        
+        .score-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #10b981;
+        }
+        
+        .score-label {
+            font-size: 11px;
+            color: #64748b;
+        }
+
+        /* Formula Display */
+        .formula-box {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .formula-title {
+            color: #fbbf24;
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .formula-text {
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        
+        .formula-highlight {
+            color: #4ade80;
+        }
+
+        /* Show All Button */
+        .show-all-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .show-all-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Paper Ranking Badge */
+        .paper-rank-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+            color: white;
+            flex-shrink: 0;
+            margin-right: 10px;
+        }
+        
+        .paper-rank-badge.rank-gold {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            box-shadow: 0 3px 10px rgba(251, 191, 36, 0.4);
+        }
+        
+        .paper-rank-badge.rank-silver {
+            background: linear-gradient(135deg, #94a3b8, #64748b);
+            box-shadow: 0 3px 10px rgba(148, 163, 184, 0.4);
+        }
+        
+        .paper-rank-badge.rank-bronze {
+            background: linear-gradient(135deg, #ea580c, #c2410c);
+            box-shadow: 0 3px 10px rgba(234, 88, 12, 0.4);
+        }
+        
+        .paper-rank-badge.rank-normal {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1><i class="fas fa-microscope"></i> Sistem Pencarian Jurnal</h1>
+            <p>Content-Based Filtering dengan TF-IDF & Cosine Similarity</p>
+        </div>
+
+        <!-- Story Input Section -->
+        <div class="search-section">
+            <h2><i class="fas fa-lightbulb"></i> Ceritakan Penelitian Anda</h2>
+            <p style="color: #666; margin-bottom: 15px; font-size: 14px;">
+                Jelaskan topik penelitian yang ingin Anda cari. Sistem akan mengekstrak kata kunci dan mencari jurnal yang relevan.
+            </p>
+            
+            <div class="story-input-container" style="margin-bottom: 20px;">
+                <textarea id="storyInput" class="story-textarea" rows="4" 
+                    placeholder="Contoh: Saya ingin meneliti tentang penerapan machine learning untuk klasifikasi penyakit diabetes menggunakan algoritma decision tree dan random forest. Fokus penelitian pada akurasi prediksi dan perbandingan performa model."></textarea>
+                <div class="extracted-keywords" id="extractedKeywords" style="display: none;">
+                    <span class="keywords-label"><i class="fas fa-key"></i> Kata Kunci Terdeteksi:</span>
+                    <div class="keywords-list" id="keywordsList"></div>
+                </div>
+            </div>
+
+            <div class="search-form">
+                <input type="text" id="searchInput" class="search-input"
+                    placeholder="Atau masukkan kata kunci langsung..."
+                    value="">
+                <button id="searchBtn" class="search-btn">
+                    <i class="fas fa-search"></i> Cari Jurnal
+                </button>
+            </div>
+
+            <div class="options">
+                <div class="option-group">
+                    <label for="sourceSelect"><i class="fas fa-database"></i> Sumber:</label>
+                    <select id="sourceSelect">
+                        <option value="semantic" selected>Semantic Scholar (Recommended)</option>
+                        <option value="scholar">Google Scholar</option>
+                        <option value="mendeley">Mendeley</option>
+                        <option value="both">Multi-Source</option>
+                    </select>
+                </div>
+                <div class="option-group">
+                    <label for="maxResults">Maks Hasil:</label>
+                    <select id="maxResults">
+                        <option value="10">10</option>
+                        <option value="20" selected>20</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+                <div class="option-group">
+                    <label for="yearFilter">Tahun:</label>
+                    <select id="yearFilter">
+                        <option value="">Semua Tahun</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                        <option value="2019-2024">2019-2024</option>
+                        <option value="2015-2024">2015-2024</option>
+                    </select>
+                </div>
+                <div class="option-group">
+                    <label for="sortBy">Urutkan:</label>
+                    <select id="sortBy">
+                        <option value="relevance">Relevansi</option>
+                        <option value="date">Tanggal</option>
+                        <option value="citations">Sitasi</option>
+                    </select>
+                </div>
+                <div class="option-group">
+                    <label for="paperType">Jenis:</label>
+                    <select id="paperType">
+                        <option value="">Semua Jenis</option>
+                        <option value="pdf">PDF Saja</option>
+                        <option value="journal">Artikel Jurnal</option>
+                        <option value="conference">Jurnal Konferensi</option>
+                        <option value="thesis">Tesis</option>
+                    </select>
+                </div>
+                <div class="option-group">
+                    <label for="minCitations">Min Sitasi:</label>
+                    <input type="number" id="minCitations" min="0" placeholder="0" style="width: 80px;">
+                </div>
+            </div>
+
+            <!-- Advanced Filters (Collapsible) -->
+            <div class="advanced-filters" style="margin-top: 15px;">
+                <button type="button" id="toggleAdvanced" class="toggle-btn">
+                    <i class="fas fa-chevron-down"></i> Filter Lanjutan
+                </button>
+                <div id="advancedOptions" class="advanced-options"
+                    style="display: none; margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                    <div class="advanced-grid">
+                        <div class="option-group">
+                            <label for="authorFilter">Penulis:</label>
+                            <input type="text" id="authorFilter" placeholder="Nama penulis">
+                        </div>
+                        <div class="option-group">
+                            <label for="journalFilter">Jurnal/Konferensi:</label>
+                            <input type="text" id="journalFilter" placeholder="Tempat publikasi">
+                        </div>
+                        <div class="option-group">
+                            <label for="excludeWords">Kecualikan Kata:</label>
+                            <input type="text" id="excludeWords" placeholder="kata1, kata2">
+                        </div>
+                        <div class="option-group">
+                            <label for="includeWords">Harus Mengandung:</label>
+                            <input type="text" id="includeWords" placeholder="kata wajib">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CBF Process Section (Step-by-step) -->
+        <div id="cbfProcessSection" class="cbf-process-section">
+            <div class="process-header">
+                <h2><i class="fas fa-cogs"></i> Proses Content-Based Filtering</h2>
+                <p>Berikut adalah tahapan perhitungan untuk menemukan jurnal paling relevan dengan penelitian Anda</p>
+            </div>
+            
+            <div class="process-steps">
+                <div class="step-indicator" data-step="1" onclick="showStep(1)">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Preprocessing</div>
+                </div>
+                <div class="step-indicator" data-step="2" onclick="showStep(2)">
+                    <div class="step-number">2</div>
+                    <div class="step-label">TF-IDF</div>
+                </div>
+                <div class="step-indicator" data-step="3" onclick="showStep(3)">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Cosine Similarity</div>
+                </div>
+                <div class="step-indicator" data-step="4" onclick="showStep(4)">
+                    <div class="step-number">4</div>
+                    <div class="step-label">Ranking</div>
+                </div>
+            </div>
+            
+            <!-- Step 1: Preprocessing -->
+            <div id="step1Content" class="step-content">
+                <h3><i class="fas fa-broom"></i> Step 1: Text Preprocessing</h3>
+                <div class="formula-box">
+                    <div class="formula-title">Proses Preprocessing:</div>
+                    <div class="formula-text">
+                        1. <span class="formula-highlight">Case Folding</span> → Mengubah semua huruf menjadi lowercase<br>
+                        2. <span class="formula-highlight">Tokenization</span> → Memecah teks menjadi kata-kata<br>
+                        3. <span class="formula-highlight">Stopword Removal</span> → Menghapus kata umum (the, is, a, dll)<br>
+                        4. <span class="formula-highlight">Lemmatization</span> → Mengubah kata ke bentuk dasar
+                    </div>
+                </div>
+                <div id="preprocessingResults" class="preprocessing-result"></div>
+            </div>
+            
+            <!-- Step 2: TF-IDF -->
+            <div id="step2Content" class="step-content">
+                <h3><i class="fas fa-calculator"></i> Step 2: TF-IDF Calculation</h3>
+                <div class="formula-box">
+                    <div class="formula-title">Rumus TF-IDF:</div>
+                    <div class="formula-text">
+                        <span class="formula-highlight">TF(t,d)</span> = Frequency of term t in document d / Total terms in d<br>
+                        <span class="formula-highlight">IDF(t)</span> = log(Total documents / Documents containing t)<br>
+                        <span class="formula-highlight">TF-IDF(t,d)</span> = TF(t,d) × IDF(t)
+                    </div>
+                </div>
+                <div id="tfidfResults" class="tfidf-container"></div>
+            </div>
+            
+            <!-- Step 3: Cosine Similarity -->
+            <div id="step3Content" class="step-content">
+                <h3><i class="fas fa-project-diagram"></i> Step 3: Cosine Similarity</h3>
+                <div class="formula-box">
+                    <div class="formula-title">Rumus Cosine Similarity:</div>
+                    <div class="formula-text">
+                        <span class="formula-highlight">cos(θ)</span> = (A · B) / (||A|| × ||B||)<br><br>
+                        Dimana:<br>
+                        • A · B = Dot product dari vektor A dan B<br>
+                        • ||A|| = Magnitude (panjang) vektor A<br>
+                        • ||B|| = Magnitude (panjang) vektor B<br><br>
+                        Hasil: 0 (tidak mirip) hingga 1 (sangat mirip)
+                    </div>
+                </div>
+                <div id="similarityResults" class="similarity-matrix"></div>
+            </div>
+            
+            <!-- Step 4: Ranking -->
+            <div id="step4Content" class="step-content">
+                <h3><i class="fas fa-trophy"></i> Step 4: Ranking Results</h3>
+                <div class="formula-box">
+                    <div class="formula-title">Proses Ranking:</div>
+                    <div class="formula-text">
+                        Jurnal diurutkan berdasarkan nilai <span class="formula-highlight">Cosine Similarity</span> tertinggi.<br>
+                        Semakin tinggi nilai similarity, semakin relevan jurnal tersebut dengan query penelitian Anda.
+                    </div>
+                </div>
+                <div id="rankingResults" class="ranking-list"></div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="resultsSection" class="results-section">
+            <div id="evaluationPanel" class="evaluation-panel" style="display: none;"></div>
+            <div id="exportSection" class="export-section" style="display: none;"></div>
+            <div class="cbf-info">
+                <i class="fas fa-brain"></i>
+                <div class="cbf-info-text">
+                    <h4>🧠 Content-Based Filtering Aktif</h4>
+                    <p>Hasil diranking menggunakan <strong>TF-IDF + Cosine Similarity</strong> berdasarkan relevansi dengan kata kunci Anda</p>
+                </div>
+            </div>
+            <div class="results-header">
+                <h2><i class="fas fa-file-alt"></i> Hasil Pencarian</h2>
+                <span id="selectedCountBadge" class="selected-count-badge">
+                    <i class="fas fa-check-circle"></i> <span>0 jurnal dipilih</span>
+                </span>
+                <div>
+                    <span id="resultsCount" class="results-count"></span>
+                    <button id="selectAllBtn" class="select-all-btn">Pilih Semua</button>
+                    
+                </div>
+            </div>
+            <!-- CBF Calculation Button and Panel -->
+            <button id="showCbfBtn" class="show-cbf-btn" onclick="showCBFCalculation()">
+                <i class="fas fa-calculator"></i> Lihat Detail Perhitungan TF-IDF & Cosine Similarity
+            </button>
+            
+            <div id="cbfCalculationPanel" class="cbf-calculation-panel">
+                <div class="cbf-panel-header">
+                    <h3><i class="fas fa-brain"></i> Detail Perhitungan Content-Based Filtering</h3>
+                    <button class="cbf-panel-close" onclick="closeCBFPanel()">&times;</button>
+                </div>
+                <div id="cbfPanelContent"></div>
+            </div>
+            
+            <div id="papersGrid" class="papers-grid"></div>
+        </div>
+
+        </div>
+
+    <script>
+        // Global variables for CBF Process
+        let currentStep = 1;
+        let cbfData = null;
+        
+        // Extract keywords from story text
+        function extractKeywords(text) {
+            // Stopwords bahasa Indonesia dan Inggris
+            const stopwords = new Set([
+                'yang', 'dan', 'di', 'ke', 'dari', 'untuk', 'dengan', 'pada', 'adalah', 'ini', 'itu',
+                'atau', 'dalam', 'juga', 'tidak', 'akan', 'ada', 'saya', 'mereka', 'kami', 'bisa',
+                'dapat', 'telah', 'sudah', 'seperti', 'ketika', 'oleh', 'sebuah', 'sebagai', 'tentang',
+                'lebih', 'lain', 'hanya', 'semua', 'sangat', 'antara', 'saat', 'harus', 'karena',
+                'the', 'a', 'an', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has',
+                'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might',
+                'must', 'shall', 'can', 'need', 'dare', 'ought', 'used', 'to', 'of', 'in', 'for',
+                'on', 'with', 'at', 'by', 'from', 'as', 'into', 'through', 'during', 'before',
+                'after', 'above', 'below', 'between', 'under', 'again', 'further', 'then', 'once',
+                'here', 'there', 'when', 'where', 'why', 'how', 'all', 'each', 'few', 'more',
+                'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so',
+                'than', 'too', 'very', 'just', 'and', 'but', 'if', 'or', 'because', 'until', 'while',
+                'ingin', 'meneliti', 'menggunakan', 'fokus', 'penelitian', 'metode', 'berbasis'
+            ]);
+            
+            // Lowercase and split into words
+            const words = text.toLowerCase()
+                .replace(/[^\w\s]/g, ' ')
+                .split(/\s+/)
+                .filter(word => word.length > 2 && !stopwords.has(word));
+            
+            // Count frequency
+            const freq = {};
+            words.forEach(word => {
+                freq[word] = (freq[word] || 0) + 1;
+            });
+            
+            // Sort by frequency and return top keywords
+            return Object.entries(freq)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 8)
+                .map(([word]) => word);
+        }
+        
+        // Handle story input change
+        function handleStoryInput() {
+            const storyInput = document.getElementById('storyInput');
+            const extractedDiv = document.getElementById('extractedKeywords');
+            const keywordsList = document.getElementById('keywordsList');
+            const searchInput = document.getElementById('searchInput');
+            
+            if (!storyInput) return;
+            
+            const text = storyInput.value.trim();
+            
+            if (text.length > 20) {
+                const keywords = extractKeywords(text);
+                
+                if (keywords.length > 0) {
+                    extractedDiv.style.display = 'block';
+                    keywordsList.innerHTML = keywords.map(k => 
+                        `<span class="keyword-tag" onclick="addKeywordToSearch('${k}')">
+                            ${k}
+                            <i class="fas fa-plus"></i>
+                        </span>`
+                    ).join('');
+                    
+                    // Auto-fill search input with keywords
+                    searchInput.value = keywords.slice(0, 4).join(' ');
+                }
+            } else {
+                extractedDiv.style.display = 'none';
+            }
+        }
+        
+        // Add keyword to search
+        function addKeywordToSearch(keyword) {
+            const searchInput = document.getElementById('searchInput');
+            const currentValue = searchInput.value.trim();
+            
+            if (!currentValue.toLowerCase().includes(keyword.toLowerCase())) {
+                searchInput.value = currentValue ? `${currentValue} ${keyword}` : keyword;
+            }
+        }
+        
+        // Show specific step in CBF process
+        function showStep(step) {
+            currentStep = step;
+            
+            // Update step indicators
+            document.querySelectorAll('.step-indicator').forEach(el => {
+                const elStep = parseInt(el.dataset.step);
+                el.classList.remove('active', 'completed');
+                if (elStep === step) {
+                    el.classList.add('active');
+                } else if (elStep < step) {
+                    el.classList.add('completed');
+                }
+            });
+            
+            // Show corresponding content
+            document.querySelectorAll('.step-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            const stepContent = document.getElementById(`step${step}Content`);
+            if (stepContent) {
+                stepContent.classList.add('active');
+            }
+        }
+        
+        // Display CBF Process Section with data
+        async function displayCBFProcess(papers, query) {
+            const section = document.getElementById('cbfProcessSection');
+            if (!section) return;
+            
+            try {
+                // Fetch CBF details from backend
+                const response = await fetch('/api/cbf-details', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ papers: papers.slice(0, 10), query: query })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success && data.details) {
+                    cbfData = data.details;
+                    
+                    // Populate Step 1: Preprocessing
+                    populatePreprocessing(data.details.preprocessing || []);
+                    
+                    // Populate Step 2: TF-IDF
+                    populateTFIDF(data.details.tfidf || {});
+                    
+                    // Populate Step 3: Cosine Similarity
+                    populateSimilarity(data.details.similarity_matrix || [], data.details.papers || []);
+                    
+                    // Populate Step 4: Ranking
+                    populateRanking(data.details.ranking || []);
+                    
+                    // Show section and first step
+                    section.classList.add('active');
+                    showStep(1);
+                }
+            } catch (error) {
+                console.error('Error fetching CBF details:', error);
+            }
+        }
+        
+        // Populate preprocessing results
+        function populatePreprocessing(data) {
+            const container = document.getElementById('preprocessingResults');
+            if (!container || !data.length) return;
+            
+            container.innerHTML = data.slice(0, 5).map((item, i) => `
+                <div class="preprocess-item">
+                    <div class="preprocess-label">Dokumen ${i + 1}: ${(item.title || '').substring(0, 50)}...</div>
+                    <div style="margin-bottom: 10px;">
+                        <strong style="color: #ef4444; font-size: 11px;">ORIGINAL:</strong>
+                        <div class="preprocess-text" style="font-size: 11px; color: #666;">${(item.original || '').substring(0, 200)}...</div>
+                    </div>
+                    <div>
+                        <strong style="color: #10b981; font-size: 11px;">PREPROCESSED:</strong>
+                        <div class="preprocess-text">${(item.preprocessed || '').substring(0, 200)}...</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Populate TF-IDF results
+        function populateTFIDF(data) {
+            const container = document.getElementById('tfidfResults');
+            if (!container) return;
+            
+            const terms = data.top_terms || [];
+            const matrix = data.matrix || [];
+            
+            if (terms.length === 0) {
+                container.innerHTML = '<p style="color: #666;">Data TF-IDF tidak tersedia</p>';
+                return;
+            }
+            
+            let html = `
+                <p style="margin-bottom: 15px; color: #64748b;">
+                    <strong>Total Terms:</strong> ${data.total_terms || 0} | 
+                    <strong>Documents:</strong> ${data.total_docs || 0}
+                </p>
+                <table class="tfidf-table">
+                    <thead>
+                        <tr>
+                            <th>Term</th>
+                            <th>TF-IDF Score</th>
+                            <th>Document Frequency</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            terms.slice(0, 20).forEach(term => {
+                html += `
+                    <tr>
+                        <td><strong>${term.term}</strong></td>
+                        <td class="tfidf-value">${term.score.toFixed(4)}</td>
+                        <td>${term.df || '-'}</td>
+                    </tr>
+                `;
+            });
+            
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+        
+        // Populate similarity matrix
+        function populateSimilarity(matrix, papers) {
+            const container = document.getElementById('similarityResults');
+            if (!container || !matrix.length) return;
+            
+            const labels = papers.slice(0, 6).map((p, i) => `D${i+1}`);
+            
+            let html = `
+                <p style="margin-bottom: 15px; color: #64748b;">
+                    Matriks Cosine Similarity antara Query dan Dokumen
+                </p>
+                <table class="matrix-table">
+                    <thead>
+                        <tr>
+                            <th>Document</th>
+                            <th>Title</th>
+                            <th>Similarity to Query</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            papers.slice(0, 10).forEach((paper, i) => {
+                const sim = paper.similarity || 0;
+                const simClass = sim >= 0.5 ? 'similarity-high' : (sim >= 0.25 ? 'similarity-medium' : 'similarity-low');
+                
+                html += `
+                    <tr>
+                        <td><strong>D${i+1}</strong></td>
+                        <td style="text-align: left; max-width: 300px; overflow: hidden; text-overflow: ellipsis;">${(paper.title || '').substring(0, 50)}...</td>
+                        <td class="${simClass}">${(sim * 100).toFixed(2)}%</td>
+                    </tr>
+                `;
+            });
+            
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+        
+        // Populate ranking results
+        function populateRanking(ranking) {
+            const container = document.getElementById('rankingResults');
+            if (!container || !ranking.length) return;
+            
+            container.innerHTML = ranking.slice(0, 10).map((item, i) => {
+                const rank = i + 1;
+                const rankClass = rank === 1 ? 'rank-1' : (rank === 2 ? 'rank-2' : (rank === 3 ? 'rank-3' : 'rank-other'));
+                
+                return `
+                    <div class="ranking-item">
+                        <div class="rank-badge ${rankClass}">#${rank}</div>
+                        <div class="ranking-content">
+                            <div class="ranking-title">${item.title || 'Untitled'}</div>
+                            <div class="ranking-meta">
+                                <span><i class="fas fa-user"></i> ${(item.authors || 'Unknown').substring(0, 50)}</span>
+                                <span><i class="fas fa-calendar"></i> ${item.year || '-'}</span>
+                                <span><i class="fas fa-quote-right"></i> ${item.citations || 0} sitasi</span>
+                            </div>
+                        </div>
+                        <div class="ranking-score">
+                            <div class="score-value">${((item.similarity || 0) * 100).toFixed(1)}%</div>
+                            <div class="score-label">Relevance</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Initialize story input listener
+        document.addEventListener('DOMContentLoaded', function() {
+            const storyInput = document.getElementById('storyInput');
+            if (storyInput) {
+                storyInput.addEventListener('input', debounce(handleStoryInput, 500));
+            }
+        });
+        
+        // Debounce utility
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+        
+        class ResearchApp {
+            constructor() {
+                this.papers = [];
+                this.selectedPapers = [];
+                this.isLoading = false;
+                this.init();
+            }
+
+            init() {
+                this.bindEvents();
+            }
+
+            bindEvents() {
+                // Search functionality
+                
+                const searchBtn = document.getElementById('searchBtn');
+                if (searchBtn) {
+                    console.log('[ResearchApp] Found searchBtn');
+                    searchBtn.addEventListener('click', () => {
+                        console.log('[ResearchApp] Search button clicked');
+                        this.searchPapers();
+                    });
+                } else {
+                    console.error('[ResearchApp] searchBtn NOT FOUND');
+                }
+                document.getElementById('searchInput').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.searchPapers();
+                });
+
+                // Advanced filters toggle
+                document.getElementById('toggleAdvanced').addEventListener('click', () => {
+                    const advancedOptions = document.getElementById('advancedOptions');
+                    const toggleBtn = document.getElementById('toggleAdvanced');
+                    const isVisible = advancedOptions.style.display !== 'none';
+
+                    advancedOptions.style.display = isVisible ? 'none' : 'block';
+                    toggleBtn.innerHTML = isVisible ?
+                        '<i class="fas fa-chevron-down"></i> Filter Lanjutan' :
+                        '<i class="fas fa-chevron-up"></i> Sembunyikan Lanjutan';
+                });
+
+                // Select all functionality
+                const selectAllBtn = document.getElementById('selectAllBtn');
+                if (selectAllBtn) {
+                    selectAllBtn.addEventListener('click', () => this.toggleSelectAll());
+                }
+            }
+
+            async searchPapers() {
+                const query = document.getElementById('searchInput').value.trim();
+                const maxResults = parseInt(document.getElementById('maxResults').value);
+
+                // Get filter values
+                const filters = {
+                    year: document.getElementById('yearFilter').value,
+                    sortBy: document.getElementById('sortBy').value,
+                    paperType: document.getElementById('paperType').value,
+                    minCitations: parseInt(document.getElementById('minCitations').value) || 0,
+                    author: document.getElementById('authorFilter').value.trim(),
+                    journal: document.getElementById('journalFilter').value.trim(),
+                    excludeWords: document.getElementById('excludeWords').value.trim(),
+                    includeWords: document.getElementById('includeWords').value.trim()
+                };
+
+                if (!query) {
+                    this.showError('Silakan masukkan kata kunci pencarian');
+                    return;
+                }
+
+                this.setLoading(true);
+                this.hideError();
+
+                try {
+                    const response = await fetch('/api/search', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            query: query,
+                            max_results: maxResults,
+                            filters: filters,
+                            source: document.getElementById('sourceSelect') ? document.getElementById('sourceSelect').value : 'both'
+                        })
+                    });
+
+                    const data = await response.json();
+                    console.log('[DEBUG] Search response:', data);
+
+                    if (data.success) {
+                        console.log('[DEBUG] Papers received:', data.papers.length);
+                        this.papers = data.papers;
+                        this.renderPapers();
+                        this.showResults();
+                        this.showSuccess(`Ditemukan ${data.total} Jurnal dengan filter yang diterapkan`);
+                        
+                        // Display CBF Process Section
+                        if (data.papers.length > 0) {
+                            displayCBFProcess(data.papers, query);
+                        }
+                    } else {
+                        console.log('[ERROR] Search failed:', data.error);
+                        this.showError(data.error || 'Pencarian gagal');
+                    }
+                } catch (error) {
+                    this.showError('Kesalahan jaringan. Silakan coba lagi.');
+                    console.error('Search error:', error);
+                } finally {
+                    this.setLoading(false);
+                }
+            }
+
+            renderPapers(showAll = false) {
+                console.log('[DEBUG] Rendering papers:', this.papers.length, 'showAll:', showAll);
+                const grid = document.getElementById('papersGrid');
+                grid.innerHTML = '';
+                
+                // Default: tampilkan hanya top 5 ranking, kecuali showAll = true
+                const topCount = 5;
+                const papersToShow = showAll ? this.papers : this.papers.slice(0, topCount);
+                const hasMore = this.papers.length > topCount;
+
+                papersToShow.forEach((paper, index) => {
+                    console.log(`[DEBUG] Rendering paper ${index}:`, paper.title);
+                    const card = this.createPaperCard(paper, index);
+                    grid.appendChild(card);
+                });
+
+                // Update results count
+                if (showAll) {
+                    document.getElementById('resultsCount').textContent = `Menampilkan semua ${this.papers.length} Jurnal`;
+                } else {
+                    document.getElementById('resultsCount').textContent = `Top ${papersToShow.length} dari ${this.papers.length} Jurnal (berdasarkan relevansi)`;
+                }
+                
+                // Show/hide "Lihat Semua" button
+                let showAllBtn = document.getElementById('showAllPapersBtn');
+                if (!showAllBtn) {
+                    showAllBtn = document.createElement('button');
+                    showAllBtn.id = 'showAllPapersBtn';
+                    showAllBtn.className = 'show-all-btn';
+                    showAllBtn.onclick = () => this.renderPapers(true);
+                    grid.parentElement.insertBefore(showAllBtn, grid);
+                }
+                
+                if (hasMore && !showAll) {
+                    showAllBtn.style.display = 'inline-flex';
+                    showAllBtn.innerHTML = `<i class="fas fa-list"></i> Lihat Semua ${this.papers.length} Jurnal`;
+                } else if (showAll && hasMore) {
+                    showAllBtn.innerHTML = `<i class="fas fa-compress-alt"></i> Tampilkan Top ${topCount} Saja`;
+                    showAllBtn.onclick = () => this.renderPapers(false);
+                } else {
+                    showAllBtn.style.display = 'none';
+                }
+                
+                console.log('[DEBUG] Papers rendered successfully');
+            }
+
+            createPaperCard(paper, index) {
+                const card = document.createElement('div');
+                card.className = 'paper-card';
+
+                const abstract = paper.abstract || paper.snippet || 'Tidak ada abstrak tersedia';
+                const shortAbstract = abstract.length > 300 ? abstract.substring(0, 300) + '...' : abstract;
+                
+                // Ranking badge
+                const rank = index + 1;
+                const rankClass = rank === 1 ? 'rank-gold' : (rank === 2 ? 'rank-silver' : (rank === 3 ? 'rank-bronze' : 'rank-normal'));
+                const rankBadge = `<div class="paper-rank-badge ${rankClass}">#${rank}</div>`;
+
+                card.innerHTML = `
+                    <div class="paper-header">
+                        ${rankBadge}
+                        <input type="checkbox" class="paper-checkbox" data-index="${index}">
+                        <div style="flex: 1;">
+                            <div class="paper-title">${paper.title}</div>
+                            <div class="paper-authors">${paper.authors}</div>
+                            <div class="paper-meta">
+                                <div class="paper-citations">
+                                    <i class="fas fa-quote-right"></i>
+                                    <span>${paper.citations || '0'}</span>
+                                </div>
+                                ${paper.relevance_score ? `<div class="relevance-score" title="Skor Relevansi TF-IDF">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>${paper.relevance_score}%</span>
+                                </div>` : ''}
+                                <span class="source-badge ${paper.source === 'Mendeley' ? 'mendeley' : (paper.source === 'Semantic Scholar' ? 'semantic' : 'scholar')}">
+                                    <i class="fas ${paper.source === 'Mendeley' ? 'fa-book' : (paper.source === 'Semantic Scholar' ? 'fa-brain' : 'fa-graduation-cap')}"></i>
+                                    ${paper.source || 'Unknown'}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="paper-abstract">${shortAbstract}</div>
+                    <div class="paper-links">
+                        ${paper.scholar_url ? `<a href="${paper.scholar_url}" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> Lihat</a>` : ''}
+                        ${paper.pdf_link ? `<a href="${paper.pdf_link}" target="_blank" class="paper-link pdf"><i class="fas fa-file-pdf"></i> PDF</a>` : ''}
+                    </div>
+                `;
+
+                // Handle checkbox change
+                const checkbox = card.querySelector('.paper-checkbox');
+                checkbox.addEventListener('change', (e) => {
+                    if (e.target.checked) {
+                        card.classList.add('selected');
+                        this.selectedPapers.push(paper);
+                    } else {
+                        card.classList.remove('selected');
+                        this.selectedPapers = this.selectedPapers.filter(p => p !== paper);
+                    }
+                    this.updateGenerateButton();
+                });
+
+                return card;
+            }
+
+            updateGenerateButton() {
+                const generateBtn = document.getElementById('generateBtn');
+                if (generateBtn) {
+                    generateBtn.innerHTML = `<i class="fas fa-brain"></i> Analisis Jurnal (${this.selectedPapers.length})`;
+                }
+                
+                // Update selected count badge
+                const countBadge = document.getElementById('selectedCountBadge');
+                const showCbfBtn = document.getElementById('showCbfBtn');
+                if (countBadge) {
+                    if (this.selectedPapers.length > 0) {
+                        countBadge.querySelector('span').textContent = `${this.selectedPapers.length} jurnal dipilih`;
+                        countBadge.classList.add('visible');
+                        if (showCbfBtn) showCbfBtn.classList.add('visible');
+                    } else {
+                        countBadge.classList.remove('visible');
+                        if (showCbfBtn) showCbfBtn.classList.remove('visible');
+                    }
+                }
+            }
+
+            setLoading(isLoading) {
+                this.isLoading = isLoading;
+                const searchBtn = document.getElementById('searchBtn');
+                if (searchBtn) {
+                    if (isLoading) {
+                        searchBtn.disabled = true;
+                        searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mencari...';
+                    } else {
+                        searchBtn.disabled = false;
+                        searchBtn.innerHTML = '<i class="fas fa-search"></i> Cari';
+                    }
+                }
+            }
+
+            toggleSelectAll() {
+                const checkboxes = document.querySelectorAll('.paper-checkbox');
+                const selectAllBtn = document.getElementById('selectAllBtn');
+                const allSelected = Array.from(checkboxes).every(cb => cb.checked);
+
+                checkboxes.forEach((checkbox, index) => {
+                    checkbox.checked = !allSelected;
+                    const card = checkbox.closest('.paper-card');
+
+                    if (!allSelected) {
+                        card.classList.add('selected');
+                        if (!this.selectedPapers.includes(this.papers[index])) {
+                            this.selectedPapers.push(this.papers[index]);
+                        }
+                    } else {
+                        card.classList.remove('selected');
+                        this.selectedPapers = [];
+                    }
+                });
+
+                selectAllBtn.textContent = allSelected ? 'Pilih Semua' : 'Batalkan Pilihan';
+                this.updateGenerateButton();
+                
+                // Update CBF panel
+                if (typeof updateCBFPanelVisibility === 'function') {
+                    updateCBFPanelVisibility(this.selectedPapers);
+                }
+            }
+
+            showResults() {
+                document.getElementById('resultsSection').style.display = 'block';
+            }
+
+            showError(message) {
+                this.removeMessages();
+                const error = document.createElement('div');
+                error.className = 'error';
+                error.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
+                document.querySelector('.search-section').appendChild(error);
+            }
+
+            showSuccess(message) {
+                this.removeMessages();
+                const success = document.createElement('div');
+                success.className = 'success';
+                success.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+                document.querySelector('.search-section').appendChild(success);
+            }
+
+            hideError() {
+                this.removeMessages();
+            }
+
+            removeMessages() {
+                const messages = document.querySelectorAll('.error, .success');
+                messages.forEach(msg => msg.remove());
+            }
+        }
+
+        // Initialize app when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM loaded, initializing ResearchApp...');
+            try {
+                window.app = new ResearchApp();
+                console.log('ResearchApp initialized successfully');
+                
+                // Verify button listener
+                const btn = document.getElementById('searchBtn');
+                if(btn) {
+                    console.log('Search button found');
+                    btn.addEventListener('click', function() {
+                        console.log('Search button clicked (Direct Listener Check)');
+                    });
+                } else {
+                    console.error('Search button NOT found');
+                }
+            } catch (e) {
+                console.error('Failed to initialize ResearchApp:', e);
+                alert('Error initializing app: ' + e.message);
+            }
+        });
+    
+        // Store all papers for recommendations
+        let allPapers = [];
+        let currentQuery = '';
+        let currentEvaluation = {};
+        
+        // Override displayResults to store papers
+        const originalDisplayResults = window.displayResults;
+        
+        function displayResults(papers, query, evaluation) {
+            allPapers = papers;
+            currentQuery = query;
+            currentEvaluation = evaluation || {};
+            
+            // Display evaluation panel
+            displayEvaluationPanel(evaluation);
+            
+            // Display export section
+            displayExportSection();
+            
+            // Call original display or custom
+            const resultsContainer = document.getElementById('paperCards');
+            if (!resultsContainer) return;
+            
+            resultsContainer.innerHTML = papers.map((paper, index) => createPaperCard(paper, index)).join('');
+        }
+        
+        function displayEvaluationPanel(evaluation) {
+            if (!evaluation) return;
+            
+            const panel = document.getElementById('evaluationPanel');
+            if (!panel) return;
+            
+            panel.innerHTML = `
+                <h3><i class="fas fa-chart-bar"></i> Metrik Evaluasi</h3>
+                <div class="eval-stats">
+                    <div class="eval-stat">
+                        <div class="value">${evaluation.average_score || 0}%</div>
+                        <div class="label">Rata-rata Relevansi</div>
+                    </div>
+                    <div class="eval-stat high">
+                        <div class="value">${evaluation.high_relevance || 0}</div>
+                        <div class="label">Relevansi Tinggi (≥70%)</div>
+                    </div>
+                    <div class="eval-stat medium">
+                        <div class="value">${evaluation.medium_relevance || 0}</div>
+                        <div class="label">Relevansi Sedang (40-70%)</div>
+                    </div>
+                    <div class="eval-stat low">
+                        <div class="value">${evaluation.low_relevance || 0}</div>
+                        <div class="label">Relevansi Rendah (<40%)</div>
+                    </div>
+                </div>
+            `;
+            panel.style.display = 'block';
+        }
+        
+        function displayExportSection() {
+            const section = document.getElementById('exportSection');
+            if (!section) return;
+            
+            section.innerHTML = `
+                <button class="export-btn csv" onclick="exportResults('csv')">
+                    <i class="fas fa-file-csv"></i> Export CSV
+                </button>
+                <button class="export-btn json" onclick="exportResults('json')">
+                    <i class="fas fa-file-code"></i> Export JSON
+                </button>
+                <button class="export-btn bibtex" onclick="exportResults('bibtex')">
+                    <i class="fas fa-quote-left"></i> BibTeX
+                </button>
+                <button class="export-btn html" onclick="exportResults('html')">
+                    <i class="fas fa-file-alt"></i> Laporan HTML
+                </button>
+            `;
+            section.style.display = 'flex';
+        }
+        
+        async function exportResults(format) {
+            if (allPapers.length === 0) {
+                alert('Tidak ada data untuk diexport');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/export', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        papers: allPapers,
+                        format: format,
+                        query: currentQuery,
+                        evaluation: currentEvaluation
+                    })
+                });
+                
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = response.headers.get('Content-Disposition')?.split('filename=')[1] || `export.${format}`;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    window.URL.revokeObjectURL(url);
+                } else {
+                    alert('Gagal mengexport data');
+                }
+            } catch (error) {
+                console.error('Export error:', error);
+                alert('Terjadi kesalahan saat export');
+            }
+        }
+        
+        async function showSimilarPapers(paperIndex) {
+            const paper = allPapers[paperIndex];
+            if (!paper) return;
+            
+            const modal = document.getElementById('similarModal');
+            const modalBody = document.getElementById('similarModalBody');
+            
+            modalBody.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Mencari jurnal terkait...</div>';
+            modal.classList.add('active');
+            
+            try {
+                const response = await fetch('/api/similar-papers', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        reference_paper: paper,
+                        all_papers: allPapers,
+                        top_n: 5
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success && data.similar_papers.length > 0) {
+                    modalBody.innerHTML = `
+                        <p style="margin-bottom: 15px; color: #64748b;">
+                            Jurnal yang mirip dengan "<strong>${paper.title.substring(0, 60)}...</strong>"
+                        </p>
+                        ${data.similar_papers.map(sp => `
+                            <div class="similar-paper-item">
+                                <div class="similar-paper-title">${sp.title}</div>
+                                <div class="similar-paper-meta">
+                                    ${sp.authors || 'Unknown'} | ${sp.year || '-'} | ${sp.source || '-'}
+                                    <span class="similarity-badge">${sp.similarity_score}% mirip</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    `;
+                } else {
+                    modalBody.innerHTML = '<p>Tidak ditemukan jurnal terkait yang cukup mirip.</p>';
+                }
+            } catch (error) {
+                modalBody.innerHTML = '<p>Terjadi kesalahan saat mencari jurnal terkait.</p>';
+            }
+        }
+        
+        function closeSimilarModal() {
+            document.getElementById('similarModal').classList.remove('active');
+        }
+
+        // CBF functions are loaded from /static/cbf-calculation.js
+        
+        </script>
+
+    <!-- Similar Papers Modal -->
+    <div id="similarModal" class="modal-overlay" onclick="if(event.target === this) closeSimilarModal()">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeSimilarModal()">&times;</button>
+            <h3 class="modal-title"><i class="fas fa-link"></i> Jurnal Terkait</h3>
+            <div id="similarModalBody"></div>
+        </div>
+    </div>
+
+    <script src="/static/cbf-calculation.js"></script>
+</body>
+
+</html>

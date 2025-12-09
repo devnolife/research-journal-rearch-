@@ -1,0 +1,472 @@
+{
+  "tahap": "Pembobotan TF-IDF",
+  "formula": {
+    "tfidf": "TF-IDF(t,d) = TF(t,d) × IDF(t)",
+    "tf": "TF(t,d) = frekuensi term t dalam dokumen d",
+    "idf": "IDF(t) = log(N / df(t)) + 1"
+  },
+  "total_dokumen": 10,
+  "total_terms_unik": 1046,
+  "hasil_per_dokumen": [
+    {
+      "dokumen": "D1",
+      "judul": "Diversity Focused Content-Based Filtering Recommendation Sys",
+      "top_terms": [
+        {
+          "term": "diversity",
+          "bobot_tfidf": 0.2217
+        },
+        {
+          "term": "recommendation diversity",
+          "bobot_tfidf": 0.1752
+        },
+        {
+          "term": "threshold",
+          "bobot_tfidf": 0.1602
+        },
+        {
+          "term": "cluster",
+          "bobot_tfidf": 0.1409
+        },
+        {
+          "term": "label",
+          "bobot_tfidf": 0.1409
+        },
+        {
+          "term": "cluster label",
+          "bobot_tfidf": 0.1409
+        },
+        {
+          "term": "issue",
+          "bobot_tfidf": 0.1137
+        },
+        {
+          "term": "diversity focused",
+          "bobot_tfidf": 0.1137
+        },
+        {
+          "term": "focus improving",
+          "bobot_tfidf": 0.1137
+        },
+        {
+          "term": "focused content",
+          "bobot_tfidf": 0.1137
+        }
+      ]
+    },
+    {
+      "dokumen": "D2",
+      "judul": "Stacked Bi-directional Long Short-Term Memory with Content-b",
+      "top_terms": [
+        {
+          "term": "resource",
+          "bobot_tfidf": 0.1665
+        },
+        {
+          "term": "english",
+          "bobot_tfidf": 0.1349
+        },
+        {
+          "term": "english teaching",
+          "bobot_tfidf": 0.1349
+        },
+        {
+          "term": "teaching",
+          "bobot_tfidf": 0.1349
+        },
+        {
+          "term": "teaching resource",
+          "bobot_tfidf": 0.1349
+        },
+        {
+          "term": "lstm",
+          "bobot_tfidf": 0.1186
+        },
+        {
+          "term": "long short",
+          "bobot_tfidf": 0.1186
+        },
+        {
+          "term": "higher",
+          "bobot_tfidf": 0.1186
+        },
+        {
+          "term": "higher vocational",
+          "bobot_tfidf": 0.1186
+        },
+        {
+          "term": "stacked directional",
+          "bobot_tfidf": 0.1186
+        }
+      ]
+    },
+    {
+      "dokumen": "D3",
+      "judul": "Content-Based Filtering Recommendation System Using Categori",
+      "top_terms": [
+        {
+          "term": "category",
+          "bobot_tfidf": 0.2571
+        },
+        {
+          "term": "search",
+          "bobot_tfidf": 0.2159
+        },
+        {
+          "term": "want",
+          "bobot_tfidf": 0.1999
+        },
+        {
+          "term": "category search",
+          "bobot_tfidf": 0.1668
+        },
+        {
+          "term": "keywords",
+          "bobot_tfidf": 0.1668
+        },
+        {
+          "term": "author",
+          "bobot_tfidf": 0.1668
+        },
+        {
+          "term": "search engine",
+          "bobot_tfidf": 0.1668
+        },
+        {
+          "term": "search according",
+          "bobot_tfidf": 0.1668
+        },
+        {
+          "term": "using category",
+          "bobot_tfidf": 0.1668
+        },
+        {
+          "term": "according",
+          "bobot_tfidf": 0.1418
+        }
+      ]
+    },
+    {
+      "dokumen": "D4",
+      "judul": "A Constructive Content-Based Filtering Recommendation Applic",
+      "top_terms": [
+        {
+          "term": "coffee",
+          "bobot_tfidf": 0.198
+        },
+        {
+          "term": "coffee shop",
+          "bobot_tfidf": 0.1449
+        },
+        {
+          "term": "recommendation application",
+          "bobot_tfidf": 0.1449
+        },
+        {
+          "term": "shop",
+          "bobot_tfidf": 0.1449
+        },
+        {
+          "term": "application",
+          "bobot_tfidf": 0.1232
+        },
+        {
+          "term": "selection",
+          "bobot_tfidf": 0.1166
+        },
+        {
+          "term": "experience",
+          "bobot_tfidf": 0.1166
+        },
+        {
+          "term": "coffee selection",
+          "bobot_tfidf": 0.1166
+        },
+        {
+          "term": "choice",
+          "bobot_tfidf": 0.1127
+        },
+        {
+          "term": "optimizing coffee",
+          "bobot_tfidf": 0.094
+        }
+      ]
+    },
+    {
+      "dokumen": "D5",
+      "judul": "Combining Collaborative Filtering and Content Based Filterin",
+      "top_terms": [
+        {
+          "term": "collaborative",
+          "bobot_tfidf": 0.1567
+        },
+        {
+          "term": "filtering content",
+          "bobot_tfidf": 0.144
+        },
+        {
+          "term": "collaborative filtering",
+          "bobot_tfidf": 0.1433
+        },
+        {
+          "term": "combining collaborative",
+          "bobot_tfidf": 0.1367
+        },
+        {
+          "term": "hybrid",
+          "bobot_tfidf": 0.1367
+        },
+        {
+          "term": "state art",
+          "bobot_tfidf": 0.1367
+        },
+        {
+          "term": "state",
+          "bobot_tfidf": 0.1367
+        },
+        {
+          "term": "art",
+          "bobot_tfidf": 0.1367
+        },
+        {
+          "term": "combining",
+          "bobot_tfidf": 0.1367
+        },
+        {
+          "term": "method",
+          "bobot_tfidf": 0.1162
+        }
+      ]
+    },
+    {
+      "dokumen": "D6",
+      "judul": "Library Book Recommendation System Using Content-Based Filte",
+      "top_terms": [
+        {
+          "term": "book",
+          "bobot_tfidf": 0.2115
+        },
+        {
+          "term": "library",
+          "bobot_tfidf": 0.1977
+        },
+        {
+          "term": "library book",
+          "bobot_tfidf": 0.159
+        },
+        {
+          "term": "book recommendation",
+          "bobot_tfidf": 0.159
+        },
+        {
+          "term": "testing",
+          "bobot_tfidf": 0.1352
+        },
+        {
+          "term": "student",
+          "bobot_tfidf": 0.1352
+        },
+        {
+          "term": "box testing",
+          "bobot_tfidf": 0.1283
+        },
+        {
+          "term": "box",
+          "bobot_tfidf": 0.1283
+        },
+        {
+          "term": "frequency",
+          "bobot_tfidf": 0.1283
+        },
+        {
+          "term": "digital",
+          "bobot_tfidf": 0.1283
+        }
+      ]
+    },
+    {
+      "dokumen": "D7",
+      "judul": "Content-Based Filtering Recommendation in Abstract Search Us",
+      "top_terms": [
+        {
+          "term": "neo",
+          "bobot_tfidf": 0.3779
+        },
+        {
+          "term": "search using",
+          "bobot_tfidf": 0.3779
+        },
+        {
+          "term": "using neo",
+          "bobot_tfidf": 0.3779
+        },
+        {
+          "term": "recommendation search",
+          "bobot_tfidf": 0.3779
+        },
+        {
+          "term": "search",
+          "bobot_tfidf": 0.281
+        },
+        {
+          "term": "neo tidak",
+          "bobot_tfidf": 0.2232
+        },
+        {
+          "term": "neo content",
+          "bobot_tfidf": 0.2232
+        },
+        {
+          "term": "filtering recommendation",
+          "bobot_tfidf": 0.1842
+        },
+        {
+          "term": "abstrak tersedia",
+          "bobot_tfidf": 0.166
+        },
+        {
+          "term": "tersedia",
+          "bobot_tfidf": 0.166
+        }
+      ]
+    },
+    {
+      "dokumen": "D8",
+      "judul": "Music recommendation using dynamic feedback and content-base",
+      "top_terms": [
+        {
+          "term": "music",
+          "bobot_tfidf": 0.3246
+        },
+        {
+          "term": "using dynamic",
+          "bobot_tfidf": 0.3246
+        },
+        {
+          "term": "music recommendation",
+          "bobot_tfidf": 0.3246
+        },
+        {
+          "term": "dynamic feedback",
+          "bobot_tfidf": 0.3246
+        },
+        {
+          "term": "dynamic",
+          "bobot_tfidf": 0.3246
+        },
+        {
+          "term": "feedback content",
+          "bobot_tfidf": 0.3246
+        },
+        {
+          "term": "feedback",
+          "bobot_tfidf": 0.276
+        },
+        {
+          "term": "recommendation using",
+          "bobot_tfidf": 0.2414
+        },
+        {
+          "term": "filtering tidak",
+          "bobot_tfidf": 0.1917
+        },
+        {
+          "term": "filtering music",
+          "bobot_tfidf": 0.1917
+        }
+      ]
+    },
+    {
+      "dokumen": "D9",
+      "judul": "Movie Recommendation System Based on Synopsis Using Content-",
+      "top_terms": [
+        {
+          "term": "movie",
+          "bobot_tfidf": 0.1831
+        },
+        {
+          "term": "film",
+          "bobot_tfidf": 0.1831
+        },
+        {
+          "term": "idf",
+          "bobot_tfidf": 0.1556
+        },
+        {
+          "term": "idf cosine",
+          "bobot_tfidf": 0.1369
+        },
+        {
+          "term": "filtering idf",
+          "bobot_tfidf": 0.1299
+        },
+        {
+          "term": "based synopsis",
+          "bobot_tfidf": 0.1299
+        },
+        {
+          "term": "movie recommendation",
+          "bobot_tfidf": 0.1299
+        },
+        {
+          "term": "synopsis",
+          "bobot_tfidf": 0.1299
+        },
+        {
+          "term": "industry",
+          "bobot_tfidf": 0.1299
+        },
+        {
+          "term": "synopsis using",
+          "bobot_tfidf": 0.1299
+        }
+      ]
+    },
+    {
+      "dokumen": "D10",
+      "judul": "Content-Based Filtering Recommendation Algorithm Using HMM",
+      "top_terms": [
+        {
+          "term": "recommendation algorithm",
+          "bobot_tfidf": 0.3779
+        },
+        {
+          "term": "hmm",
+          "bobot_tfidf": 0.3779
+        },
+        {
+          "term": "using hmm",
+          "bobot_tfidf": 0.3779
+        },
+        {
+          "term": "algorithm using",
+          "bobot_tfidf": 0.3779
+        },
+        {
+          "term": "algorithm",
+          "bobot_tfidf": 0.281
+        },
+        {
+          "term": "hmm tidak",
+          "bobot_tfidf": 0.2232
+        },
+        {
+          "term": "hmm content",
+          "bobot_tfidf": 0.2232
+        },
+        {
+          "term": "filtering recommendation",
+          "bobot_tfidf": 0.1842
+        },
+        {
+          "term": "tersedia",
+          "bobot_tfidf": 0.166
+        },
+        {
+          "term": "tidak ada",
+          "bobot_tfidf": 0.166
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+﻿Dokumen,Judul,Term,Bobot TF-IDF
+D1,An overview of machine learning classifi,supervised,0.1263
+D1,An overview of machine learning classifi,classification technique,0.1111
+D1,An overview of machine learning classifi,supervised learning,0.1111
+D1,An overview of machine learning classifi,statistical,0.1054
+D1,An overview of machine learning classifi,valuable,0.1054
+D1,An overview of machine learning classifi,categorical,0.1054
+D1,An overview of machine learning classifi,guide,0.1054
+D1,An overview of machine learning classifi,computer,0.1054
+D1,An overview of machine learning classifi,predict,0.1054
+D1,An overview of machine learning classifi,output,0.0896
+D2,Implementation of machine-learning class,applied,0.1549
+D2,Implementation of machine-learning class,issue,0.1549
+D2,Implementation of machine-learning class,sensed,0.125
+D2,Implementation of machine-learning class,remote sensing,0.125
+D2,Implementation of machine-learning class,sensing,0.125
+D2,Implementation of machine-learning class,implementation,0.125
+D2,Implementation of machine-learning class,classification remote,0.125
+D2,Implementation of machine-learning class,applied review,0.125
+D2,Implementation of machine-learning class,implementation machine,0.125
+D2,Implementation of machine-learning class,remote,0.125
+D3,Recurrence microstates for machine learn,microstates,0.2258
+D3,Recurrence microstates for machine learn,recurrence,0.214
+D3,Recurrence microstates for machine learn,recurrence microstates,0.1608
+D3,Recurrence microstates for machine learn,probability,0.1608
+D3,Recurrence microstates for machine learn,occurrence,0.1298
+D3,Recurrence microstates for machine learn,classification recurrence,0.1298
+D3,Recurrence microstates for machine learn,probability occurrence,0.1298
+D3,Recurrence microstates for machine learn,microstates machine,0.1298
+D3,Recurrence microstates for machine learn,microstate,0.1298
+D3,Recurrence microstates for machine learn,mmlp,0.1298
+D4,Heart Disease Identification Method Usin,heart disease,0.1642
+D4,Heart Disease Identification Method Usin,heart,0.1642
+D4,Heart Disease Identification Method Usin,disease,0.1515
+D4,Heart Disease Identification Method Usin,selection algorithm,0.1454
+D4,Heart Disease Identification Method Usin,feature selection,0.1396
+D4,Heart Disease Identification Method Usin,identification,0.133
+D4,Heart Disease Identification Method Usin,healthcare,0.133
+D4,Heart Disease Identification Method Usin,selection,0.1276
+D4,Heart Disease Identification Method Usin,proposed,0.1236
+D4,Heart Disease Identification Method Usin,performance,0.117
+D5,Liver Disease Prediction using Machine l,patient,0.2038
+D5,Liver Disease Prediction using Machine l,liver,0.1905
+D5,Liver Disease Prediction using Machine l,liver patient,0.1532
+D5,Liver Disease Prediction using Machine l,supervised,0.1302
+D5,Liver Disease Prediction using Machine l,learning process,0.1236
+D5,Liver Disease Prediction using Machine l,prediction,0.1236
+D5,Liver Disease Prediction using Machine l,data patient,0.1236
+D5,Liver Disease Prediction using Machine l,liver disease,0.1236
+D5,Liver Disease Prediction using Machine l,prediction using,0.1236
+D5,Liver Disease Prediction using Machine l,gradient boosting,0.1236
+D6,Machine Learning Classification over Enc,classification encrypted,0.4284
+D6,Machine Learning Classification over Enc,encrypted,0.4284
+D6,Machine Learning Classification over Enc,encrypted data,0.4284
+D6,Machine Learning Classification over Enc,data machine,0.253
+D6,Machine Learning Classification over Enc,data tidak,0.253
+D6,Machine Learning Classification over Enc,data,0.2088
+D6,Machine Learning Classification over Enc,abstrak,0.1882
+D6,Machine Learning Classification over Enc,tersedia,0.1882
+D6,Machine Learning Classification over Enc,ada abstrak,0.1882
+D6,Machine Learning Classification over Enc,ada,0.1882
+D7,Teachable Machine: Approachable Web-Base,teachable machine,0.1573
+D7,Teachable Machine: Approachable Web-Base,teachable,0.1573
+D7,Teachable Machine: Approachable Web-Base,tool,0.1462
+D7,Teachable Machine: Approachable Web-Base,created,0.1383
+D7,Teachable Machine: Approachable Web-Base,web based,0.1383
+D7,Teachable Machine: Approachable Web-Base,web,0.1383
+D7,Teachable Machine: Approachable Web-Base,approachable,0.1383
+D7,Teachable Machine: Approachable Web-Base,classification model,0.1337
+D7,Teachable Machine: Approachable Web-Base,learn,0.1176
+D7,Teachable Machine: Approachable Web-Base,people,0.1176
+D8,Machine Learning Classification Model Co,model comparison,0.4314
+D8,Machine Learning Classification Model Co,comparison,0.4314
+D8,Machine Learning Classification Model Co,classification model,0.3668
+D8,Machine Learning Classification Model Co,model,0.2853
+D8,Machine Learning Classification Model Co,comparison machine,0.2548
+D8,Machine Learning Classification Model Co,comparison tidak,0.2548
+D8,Machine Learning Classification Model Co,tidak,0.1895
+D8,Machine Learning Classification Model Co,ada,0.1895
+D8,Machine Learning Classification Model Co,tersedia,0.1895
+D8,Machine Learning Classification Model Co,tidak ada,0.1895
+D9,Thumbs up? Sentiment Classification usin,sentiment,0.2503
+D9,Thumbs up? Sentiment Classification usin,sentiment classification,0.2289
+D9,Thumbs up? Sentiment Classification usin,learning technique,0.1711
+D9,Thumbs up? Sentiment Classification usin,thumb,0.1624
+D9,Thumbs up? Sentiment Classification usin,thumb sentiment,0.1624
+D9,Thumbs up? Sentiment Classification usin,classification using,0.1624
+D9,Thumbs up? Sentiment Classification usin,problem,0.1381
+D9,Thumbs up? Sentiment Classification usin,topic,0.1381
+D9,Thumbs up? Sentiment Classification usin,technique,0.1331
+D9,Thumbs up? Sentiment Classification usin,using machine,0.1208
+D10,Machine Learning Classification Based on,forest algorithm,0.3214
+D10,Machine Learning Classification Based on,radom,0.3214
+D10,Machine Learning Classification Based on,classification based,0.3214
+D10,Machine Learning Classification Based on,based radom,0.3214
+D10,Machine Learning Classification Based on,algorithm review,0.3214
+D10,Machine Learning Classification Based on,radom forest,0.3214
+D10,Machine Learning Classification Based on,forest,0.239
+D10,Machine Learning Classification Based on,review,0.2125
+D10,Machine Learning Classification Based on,review tidak,0.1898
+D10,Machine Learning Classification Based on,based,0.1725

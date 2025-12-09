@@ -1,0 +1,86 @@
+{
+  "query": "content based filtering recommendation",
+  "metode": "Content-Based Filtering dengan TF-IDF dan Cosine Similarity",
+  "hasil_ranking": [
+    {
+      "ranking": 1,
+      "judul": "Content-Based Filtering Recommendation in Abstract Search Using Neo4j",
+      "penulis": "Ratsameetip Wita, Kawinwit Bubphachuen, Jakarin Chawachat",
+      "tahun": "2017",
+      "skor_relevansi": 18.42,
+      "sitasi": "9"
+    },
+    {
+      "ranking": 2,
+      "judul": "Content-Based Filtering Recommendation Algorithm Using HMM",
+      "penulis": "Hui Li, Fei Cai, Zhifang Liao",
+      "tahun": "2012",
+      "skor_relevansi": 18.42,
+      "sitasi": "42"
+    },
+    {
+      "ranking": 3,
+      "judul": "Content-Based Filtering Recommendation System Using Categories Search Engine",
+      "penulis": "Vicky Rolanda, T. Gunawan, Wanayumini",
+      "tahun": "2023",
+      "skor_relevansi": 8.13,
+      "sitasi": "2"
+    },
+    {
+      "ranking": 4,
+      "judul": "Combining Collaborative Filtering and Content Based Filtering for Recommendation Systems",
+      "penulis": "Mohamed Mouhiha, Omar Ait Oualhaj, Abdelfettah Mabrouk",
+      "tahun": "2024",
+      "skor_relevansi": 6.66,
+      "sitasi": "6"
+    },
+    {
+      "ranking": 5,
+      "judul": "A Constructive Content-Based Filtering Recommendation Application: Optimizing Coffee Selection Based on User Preferences",
+      "penulis": "Nur Asyira Naziron, Norzatul Bazamah Azman Shah, Muhammad Haziq Raji",
+      "tahun": "2025",
+      "skor_relevansi": 5.68,
+      "sitasi": "0"
+    },
+    {
+      "ranking": 6,
+      "judul": "Diversity Focused Content-Based Filtering Recommendation System",
+      "penulis": "Chandro Pardede, Parmonangan R. Togatorop, Ary Aritonang, Rosni Lumbantoruan",
+      "tahun": "2024",
+      "skor_relevansi": 5.54,
+      "sitasi": "1"
+    },
+    {
+      "ranking": 7,
+      "judul": "Stacked Bi-directional Long Short-Term Memory with Content-based Filtering Recommendation of Higher Vocational English Teaching Resources",
+      "penulis": "Jingjing Wang",
+      "tahun": "2025",
+      "skor_relevansi": 4.67,
+      "sitasi": "1"
+    },
+    {
+      "ranking": 8,
+      "judul": "Library Book Recommendation System Using Content-Based Filtering",
+      "penulis": "Lailatul Rosidah, Prita Dellia",
+      "tahun": "2024",
+      "skor_relevansi": 0.0,
+      "sitasi": "6"
+    },
+    {
+      "ranking": 9,
+      "judul": "Music recommendation using dynamic feedback and content-based filtering",
+      "penulis": "Hrishikesh Magadum, Dr. Hiteshwar Kumar Azad, Harpal Patel, Rohan H R",
+      "tahun": "2024",
+      "skor_relevansi": 0.0,
+      "sitasi": "8"
+    },
+    {
+      "ranking": 10,
+      "judul": "Movie Recommendation System Based on Synopsis Using Content-Based Filtering with TF-IDF and Cosine Similarity",
+      "penulis": "Armadhani Hiro, Juni Permana, Agung Toto Wibowo",
+      "tahun": "2023",
+      "skor_relevansi": 0.0,
+      "sitasi": "19"
+    }
+  ]
+}

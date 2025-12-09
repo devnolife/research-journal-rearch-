@@ -1,0 +1,34 @@
+{
+  "tanggal_testing": "2025-12-08T01:52:37.465956",
+  "jumlah_query": 3,
+  "ringkasan": [
+    {
+      "query": "machine learning classification",
+      "total_papers": 10,
+      "evaluation": {
+        "high_relevance": 0,
+        "medium_relevance": 0,
+        "low_relevance": 10,
+        "high_percentage": 0.0,
+        "medium_percentage": 0.0,
+        "low_percentage": 100.0,
+        "average_score": 7.99,
+        "total_papers": 10
+      }
+    },
+    {
+      "query": "content based filtering recommendation",
+      "total_papers": 10,
+      "evaluation": {
+        "high_relevance": 0,
+        "medium_relevance": 0,
+        "low_relevance": 10,
+        "high_percentage": 0.0,
+        "medium_percentage": 0.0,
+        "low_percentage": 100.0,
+        "average_score": 6.75,
+        "total_papers": 10
+      }
+    }
+  ]
+}

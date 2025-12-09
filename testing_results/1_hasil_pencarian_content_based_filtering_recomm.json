@@ -1,0 +1,127 @@
+{
+  "query": "content based filtering recommendation",
+  "timestamp": "20251208_015236",
+  "total_results": 10,
+  "papers": [
+    {
+      "title": "Diversity Focused Content-Based Filtering Recommendation System",
+      "authors": "Chandro Pardede, Parmonangan R. Togatorop, Ary Aritonang, Rosni Lumbantoruan",
+      "abstract": "Determining choices can be a challenging task for consumers. Recommendation systems serve as tools to provide suggestions, aiding users in decision-making processes. A major concern in recommendation systems is the issue of diversity, particularly in content-based approaches where recommendations are based on the attributes of items that users have previously liked. This can lead to overspecialization, where the system provides recommendations that are highly similar to each other, reducing the variety or diversity of suggestions. To address this issue, this research focuses on improving the recommendations diversity in a content-based filtering system. The proposed method in this study can be applied to recommendation systems that focus on improving recommendation diversity. The method used to improve recommendation diversity is the implementation of a similarity threshold. This threshold acts as a filtering mechanism, ensuring that the recommended items fall within a specific similarity range relative to the user's preferences, calculated using cosine similarity. Additionally, clustering is used to compare the performance of the model with and without cluster labels. The results demonstrate that applying a similarity threshold effectively enhances recommendation diversity, as reflected by improved individual diversity scores. Notably, the highest individual diversity values were achieved at the first threshold with top-n = 30, where scores reached 0.8240 without cluster labels and 0.8750 with cluster labels.",
+      "year": "2024",
+      "citations": "1",
+      "url": "https://www.semanticscholar.org/paper/c36d0733c0fd66f9728b6565b2f37e521b1d7550",
+      "scholar_url": "https://www.semanticscholar.org/paper/c36d0733c0fd66f9728b6565b2f37e521b1d7550",
+      "pdf_link": "",
+      "source": "Semantic Scholar",
+      "venue": "2024 2nd International Conference on Technology Innovation and Its Applications (ICTIIA)"
+    },
+    {
+      "title": "Stacked Bi-directional Long Short-Term Memory with Content-based Filtering Recommendation of Higher Vocational English Teaching Resources",
+      "authors": "Jingjing Wang",
+      "abstract": "In recent scenario, the demand for high-quality English teaching resources has increased with the development of online learning platforms. Although, the huge number of available resources led to challenging task for teachers and students to find suitable materials. The existing Knowledge-based Filtering is time consuming and limited in their capability to capture complex relationships among resources. Hence, this research proposes a Stacked Bi-directional Long Short-Term Memory with Content-Based Filtering (SBi-LSTM-CBF) to recommend English teaching resources for higher vocational colleges. Initially, the input data is collected from Energy data eXchange (Edx) dataset and preprocessed with stop words and punctuation removal to eliminate the unnecessary words as well as punctations. Then, Glove is employed to capture the semantic features among words by representing them as vectors. After that, SBi-LSTM is utilized to identify the student reviews either positive or negative. Finally, CBF is introduced to recommend the resources based on the positive reviews. From the results, the proposed SBi-LSTM-CBF achieved superior results based on Mean Absolute Error (MAE) and Root Mean Squared Error (RMSE) of 0.65 and 0.48 when compared to existing Optimized Collaborative Filtering (O-CF) model.",
+      "year": "2025",
+      "citations": "1",
+      "url": "https://www.semanticscholar.org/paper/c0af30c2ecb87d36ace387f00c8dfe975f7641f9",
+      "scholar_url": "https://www.semanticscholar.org/paper/c0af30c2ecb87d36ace387f00c8dfe975f7641f9",
+      "pdf_link": "",
+      "source": "Semantic Scholar",
+      "venue": "2025 International Conference on Intelligent Systems and Computational Networks (ICISCN)"
+    },
+    {
+      "title": "Content-Based Filtering Recommendation System Using Categories Search Engine",
+      "authors": "Vicky Rolanda, T. Gunawan, Wanayumini",
+      "abstract": "The search function is often used with certain keywords, usually using keywords and also catagories, someone knows what they want to search for, but some people often search according not to what they want to find but what is recommended to be seen based on ratings that can be by categories. Based on the recommendation system that is often applied, it is often developed based on the similarity between one item and another. So, this time the author wants to develop a search by users based on the same category so that users can reduce their desire to search according to the category they want, in this paper the author uses a recommendation system based on content base filtering. \n ",
+      "year": "2023",
+      "citations": "2",
+      "url": "https://www.semanticscholar.org/paper/ae844fe504abaecf87dbfd24306fd2def9ff23b0",
+      "scholar_url": "https://www.semanticscholar.org/paper/ae844fe504abaecf87dbfd24306fd2def9ff23b0",
+      "pdf_link": "https://journal.gpp.or.id/index.php/ijrvocas/article/download/177/110",
+      "source": "Semantic Scholar",
+      "venue": "International Journal of Research in Vocational Studies (IJRVOCAS)"
+    },
+    {
+      "title": "A Constructive Content-Based Filtering Recommendation Application: Optimizing Coffee Selection Based on User Preferences",
+      "authors": "Nur Asyira Naziron, Norzatul Bazamah Azman Shah, Muhammad Haziq Raji",
+      "abstract": "Coffee, a typical beverage consumed worldwide, offers various options, from bean origin to brewing methods. However, this abundance of choice often leads consumers to experience decision-making challenges, a phenomenon known as choice overload. Therefore, this study focuses on developing and implementing a recommendation application to help users make informed coffee choices based on their preferences. The study employs a system development life cycle (SDLC) approach and utilizes content-based filtering techniques to achieve the purpose. Data for this study was gathered from three prominent coffee shops: Zus Coffee Shop, Richiamo Coffee Shop and Gigi Coffee Shop, providing a diverse dataset for analysis. The study employs usability testing to evaluate the usefulness, perspicuity, dependability, and attractiveness of the developed recommendation application. Through rigorous testing, we assess user acceptance and overall system performance. The results indicate a significant reduction in choice overload and an enhanced user experience, validating the competence of the recommendation application. The study implies that by using a content-based filtering recommendation system, coffee drinkers can enjoy more personalized suggestions tailored to their taste preferences, such as roast level, milk type, etc. For users who may feel overwhelmed by the variety of options at a coffee shop, this system simplifies the decision process by recommending coffee types that match their stated preferences. By exploring avenues such as collaborative filtering, sentiment analysis, and incorporating additional user feedback, we aim to further enhance the accuracy and personalization of coffee recommendations, ultimately improving the overall coffee selection experience for consumers.",
+      "year": "2025",
+      "citations": "0",
+      "url": "https://www.semanticscholar.org/paper/971b7ac728991212b06fb4c270143fa056ccc132",
+      "scholar_url": "https://www.semanticscholar.org/paper/971b7ac728991212b06fb4c270143fa056ccc132",
+      "pdf_link": "",
+      "source": "Semantic Scholar",
+      "venue": "Information Management and Business Review"
+    },
+    {
+      "title": "Combining Collaborative Filtering and Content Based Filtering for Recommendation Systems",
+      "authors": "Mohamed Mouhiha, Omar Ait Oualhaj, Abdelfettah Mabrouk",
+      "abstract": "Collaborative filtering (CF) and content-based filtering (CBF) are the two primary methods for building Recommender Systems (RS), aiming to predict items that users may like based on their preferences. Each method has its own set of pros and cons, tailored to specific applications. To address limitations and enhance accuracy, the hybrid approach combines both techniques in various ways. In our study, we propose a hybrid recommendation engine to increase precision. While content-based recommendations are based on the similarity of the attributes of the items, collaborative recommendations are based on the similarity of the users. We implement collaborative filtering through deep neural networks, merging it with a content-based model using cosine similarity to forecast item ratings for each user. Our goal is to minimize errors and provide recommendations that align closely with user preferences. We used the MovieLens dataset to evaluate our model, and upon comparison with state-of-the-art methods, we found that our model surpasses the current state-of-the-art.",
+      "year": "2024",
+      "citations": "6",
+      "url": "https://www.semanticscholar.org/paper/55759d9750e63853b012362f469f718442ac83a7",
+      "scholar_url": "https://www.semanticscholar.org/paper/55759d9750e63853b012362f469f718442ac83a7",
+      "pdf_link": "",
+      "source": "Semantic Scholar",
+      "venue": "International Conference on Wireless Networks and Mobile Communications"
+    },
+    {
+      "title": "Library Book Recommendation System Using Content-Based Filtering",
+      "authors": "Lailatul Rosidah, Prita Dellia",
+      "abstract": "In today's digital era, libraries are developed to adapt to student needs. Students can easily search for books on digital library services. However, the large number of books sometimes makes it difficult for students to find the books they want. Overcoming this problem can be done by using a recommendation system. A recommendation system is a system used to provide suggestions to users. This research aims to develop a library book recommendation system at Darul Mustofa Bangkalan Vocational School using content-based filtering. The content-based filtering method offers recommendations based on user preferences according to the item description. The algorithms used are Term Frequency Inverse Document Frequency (TF-IDF) and Cosine similarity. The method used in this research is research and development with a waterfall model. The researcher's testing stage used black box testing. Black box testing results were obtained from validation by system experts, website experts, and user tests with the qualification \"Very Eligible.\"\n ",
+      "year": "2024",
+      "citations": "6",
+      "url": "https://www.semanticscholar.org/paper/6eb5189b4df6aac3bf5225901178f33b519d244a",
+      "scholar_url": "https://www.semanticscholar.org/paper/6eb5189b4df6aac3bf5225901178f33b519d244a",
+      "pdf_link": "https://pubs.ascee.org/index.php/iota/article/download/693/311",
+      "source": "Semantic Scholar",
+      "venue": "Internet of Things and Artificial Intelligence Journal"
+    },
+    {
+      "title": "Content-Based Filtering Recommendation in Abstract Search Using Neo4j",
+      "authors": "Ratsameetip Wita, Kawinwit Bubphachuen, Jakarin Chawachat",
+      "abstract": "Tidak ada abstrak tersedia",
+      "year": "2017",
+      "citations": "9",
+      "url": "https://www.semanticscholar.org/paper/0e7d9754a72d646287d1873add16821a00c9ef6d",
+      "scholar_url": "https://www.semanticscholar.org/paper/0e7d9754a72d646287d1873add16821a00c9ef6d",
+      "pdf_link": "",
+      "source": "Semantic Scholar",
+      "venue": "International Computer Science and Engineering Conference"
+    },
+    {
+      "title": "Music recommendation using dynamic feedback and content-based filtering",
+      "authors": "Hrishikesh Magadum, Dr. Hiteshwar Kumar Azad, Harpal Patel, Rohan H R",
+      "abstract": "Tidak ada abstrak tersedia",
+      "year": "2024",
+      "citations": "8",
+      "url": "https://www.semanticscholar.org/paper/513d05851016ae42cc6808c96c95b688969c0ace",
+      "scholar_url": "https://www.semanticscholar.org/paper/513d05851016ae42cc6808c96c95b688969c0ace",
+      "pdf_link": "",
+      "source": "Semantic Scholar",
+      "venue": "Multimedia tools and applications"
+    },
+    {
+      "title": "Movie Recommendation System Based on Synopsis Using Content-Based Filtering with TF-IDF and Cosine Similarity",
+      "authors": "Armadhani Hiro, Juni Permana, Agung Toto Wibowo",
+      "abstract": "Recommendation systems have become an interesting topic in the field of artificial intelligence and data analysis. In the current era of technological advancement, the entertainment industry is rapidly growing, particularly the film industry, which is highly popular among the public due to their enthusiasm for watching movies. The increasing number and variety of films with various genres and titles have made it challenging for users to choose a film. To assist them in selecting movies, the presence of a recommendation system is necessary to provide information or film recommendations based on user interests and preferences. In this research, the development of the recommendation system will utilize the content-based filtering method, employing the TF-IDF algorithm and cosine similarity. The dataset used in this study is derived from publicly available data (MovieLens). The results of this research demonstrate that the TF-IDF and cosine similarity algorithms provide recommendations that align with the viewers' interests, as measured by precision, recall, and f1-score calculations.",
+      "year": "2023",
+      "citations": "19",
+      "url": "https://www.semanticscholar.org/paper/0b3eb89c9cba7e3d5a7bbb72450814f6d014dd53",
+      "scholar_url": "https://www.semanticscholar.org/paper/0b3eb89c9cba7e3d5a7bbb72450814f6d014dd53",
+      "pdf_link": "https://doi.org/10.21108/ijoict.v9i2.747",
+      "source": "Semantic Scholar",
+      "venue": "International Journal on Information and Communication Technology (IJoICT)"
+    },
+    {
+      "title": "Content-Based Filtering Recommendation Algorithm Using HMM",
+      "authors": "Hui Li, Fei Cai, Zhifang Liao",
+      "abstract": "Tidak ada abstrak tersedia",
+      "year": "2012",
+      "citations": "42",
+      "url": "https://www.semanticscholar.org/paper/f620163823cba4886b31b28b38447d94aef3fe66",
+      "scholar_url": "https://www.semanticscholar.org/paper/f620163823cba4886b31b28b38447d94aef3fe66",
+      "pdf_link": "",
+      "source": "Semantic Scholar",
+      "venue": "2012 Fourth International Conference on Computational and Information Sciences"
+    }
+  ]
+}
