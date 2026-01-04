@@ -1,0 +1,172 @@
+JUDUL
+Perancangan Sistem Pencarian Jurnal Berbasis Multi platfrom Menggunakan Content-Based Filtering 
+
+PROPOSAL
+
+
+Diajukan sebagai Salah Satu Syarat untuk Mendapatkan 
+Gelar Sarjana Komputer (S.Kom) Program Studi Informatika
+
+
+
+
+
+
+
+Alwiyanto Saputra
+105841109921
+
+
+
+PROGRAM STUDI INFORMATIKA
+FAKULTAS TEKNIK
+UNIVERSITAS MUHAMMADIYAH MAKASSAR
+2025
+
+
+KATA PENGANTAR
+Assalamu’Alaikum Warahmatullahi Wabarakatuh
+\
+Billahi fi sabililhaq, fastabiqul khairat.
+Wassalamu’Alaikum Warahmatullahi Wabarakatuh.
+
+Makassar, 
+
+
+
+	
+DAFTAR ISI
+
+DAFTAR TABEL
+
+DAFTAR GAMBAR
+
+DAFTAR ISTILAH
+
+
+BAB I
+PENDAHULUAN
+Latar Belakang
+Transformasi digital dalam pengelolaan pengetahuan mendorong kebutuhan akan sistem pencarian dan rekomendasi yang mampu menyaring informasi secara akurat, cepat, dan kontekstual pada domain ilmiah yang terus bertambah volumenya setiap hari (Haz & Rohman, 2025). Dalam konteks ini, pendekatan Content-Based Filtering (CBF) menjadi fondasi yang banyak diadopsi karena kemampuannya memodelkan kesamaan konten antar dokumen melalui representasi fitur teks dan pengukuran kemiripan, umumnya menggunakan TF-IDF dan cosine similarity (Reswara et al., 2025). Pendekatan tersebut terbukti efektif di berbagai domain—mulai dari buku perpustakaan, artikel berita, wisata, film, musik, hingga obat—menunjukkan generalitas metode sekaligus peluang untuk diadaptasi pada pencarian jurnal ilmiah lintas platform (Anggoro, 2023).
+Pada domain perpustakaan, CBF mampu menghasilkan rekomendasi relevan berbasis metadata dan konten, serta menunjukkan presisi tinggi ketika dipadukan dengan praktik praproses yang baik dan evaluasi yang sistematis (Reswara et al., 2025). Implementasi sejenis pada layanan perpustakaan kampus menunjukkan bahwa praproses teks—seperti case folding, tokenisasi, filtering, dan stemming—serta vektorisasi TF-IDF menjadi kunci tercapainya akurasi rekomendasi yang konsisten, baik melalui pengujian Black Box Testing maupun evaluasi menggunakan confusion matrix (Anggoro, 2023). Sementara itu, dalam konteks portal berita, penerapan CBF dengan cosine similarity membuktikan kemampuannya menyediakan rekomendasi personal yang relevan pada skala data besar setelah praproses dilakukan secara ketat (Haz & Rohman, 2025).
+Pada domain wisata, integrasi TF-IDF dan cosine similarity untuk menganalisis ulasan pengguna berhasil memetakan preferensi atribut dan menghasilkan rekomendasi yang relevan, menegaskan ketangguhan CBF dalam menangani data teks bebas yang bising (Pratiwi et al., 2024). Hasil serupa terlihat pada sistem rekomendasi obat, di mana CBF mengelola atribut produk untuk menyajikan alternatif yang sesuai kebutuhan pengguna secara efisien tanpa bergantung pada histori pengguna lain (Indriyani et al., 2025). Di bidang hiburan, CBF juga diaplikasikan baik secara tunggal maupun hibrida, dan tetap diakui memiliki keunggulan dari segi kecepatan eksekusi serta independensi terhadap masalah cold-start pengguna (Kusuma et al., 2025).
+Meski menunjukkan kinerja yang kuat, kajian literatur mengindikasikan adanya celah penelitian yang belum banyak disentuh. Pertama, sebagian besar riset berfokus pada domain non-ilmiah atau katalog lokal institusi, belum menggarap integrasi langsung dengan ekosistem manajemen referensi dan indeks akademik populer seperti Mendeley dan Google Scholar. Hal ini menyebabkan alur kerja peneliti belum terlayani secara end-to-end (Reswara et al., 2025). Kedua, walaupun CBF andal untuk temu kembali, sangat jarang sistem yang melampaui tahap rekomendasi dengan menyediakan analisis research gap berbasis konten, padahal fitur ini dapat membantu perumusan arah penelitian selanjutnya (Sari, 2025). Ketiga, dukungan multi-platform yang konsisten—yang memungkinkan akses lintas perangkat dengan performa stabil—belum menjadi fokus dalam studi-studi terdahulu yang cenderung bersifat prototipal berbasis web tunggal (Tambunan & Dermawan, 2025).
+Selain itu, aspek evaluasi juga masih menjadi tantangan. Beberapa penelitian terdahulu menggunakan dataset terbatas atau domain spesifik sehingga generalisasi ke korpus akademik berskala besar memerlukan rancangan arsitektur dan strategi optimasi berbeda. Hal ini mencakup kebutuhan praproses teks yang lebih robust dan pemodelan fitur yang adaptif terhadap struktur metadata ilmiah seperti judul, abstrak, kata kunci, afiliasi, dan sitasi (Timur & Rohman, 2025). Peluang juga terbuka untuk menggabungkan CBF klasik dengan teknik pembobotan alternatif seperti TF-RF, yang terbukti meningkatkan sensitivitas terhadap istilah relevan dalam domain tertentu, misalnya pada pencarian buku (Rahmadhani et al., 2024).
+Mencermati kesenjangan tersebut, penelitian berjudul “Perancangan Sistem Pencarian Jurnal Berbasis Multi-Platform Menggunakan Content-Based Filtering” menjadi strategis untuk dilakukan. Sistem ini dirancang agar terintegrasi dengan Mendeley dan Google Scholar, menampilkan hasil pencarian jurnal terkait, serta dilengkapi fitur analisis berbasis konten untuk mengidentifikasi research gap dan menyajikan saran penelitian yang relevan. Dengan memanfaatkan keunggulan CBF—melalui TF-IDF, cosine similarity, serta praproses NLP—sistem ini diharapkan dapat menjembatani kebutuhan peneliti dalam temu kembali referensi yang presisi sekaligus membantu merumuskan arah riset berikutnya (Sari, 2025).
+Secara praktis-ilmiah, kontribusi penelitian ini terletak pada perancangan interoperabilitas dengan ekosistem referensi dan indeks ilmiah, penyediaan modul analitik gap detector berbasis konten, serta antarmuka multi-platform yang konsisten. Dengan demikian, penelitian ini dinilai layak dan signifikan untuk dilakukan, baik dari segi kebaruan integrasi, kedalaman analitik, maupun peningkatan produktivitas ilmiah (Haz & Rohman, 2025; Indriyani et al., 2025).
+Rumusan Masalah
+Berdasarkan latar belakang yang telah diuraikan, maka rumusan masalah dalam penelitian ini adalah sebagai berikut:
+Bagaimana merancang dan mengimplementasikan sistem pencarian jurnal berbasis Content-Based Filtering yang terintegrasi dengan Mendeley dan Google Scholar serta mendukung akses multi-platform secara akurat ?
+Bagaimana mengembangkan modul analisis berbasis konten untuk mengidentifikasi research gap dan menyajikan saran penelitian yang relevan dan dapat ditindaklanjuti? 
+Tujuan Penelitian
+Merancang dan membangun sistem pencarian jurnal berbasis Content-Based Filtering yang terintegrasi dengan Mendeley dan Google Scholar, dengan dukungan multi-platform dan kinerja temu kembali yang presisi 
+Mengembangkan fitur analisis untuk mendeteksi research gap berbasis konten dan menyajikan saran penelitian yang relevan berdasarkan kekurangan yang teridentifikasi 
+Manfaat Penelitian
+Bagi Penulis
+Penelitian ini diharapkan dapat menambah wawasan dan memperdalam pemahaman penulis mengenai perancangan sistem pencarian jurnal berbasis Content-Based Filtering, khususnya pada integrasi dengan Mendeley dan Google Scholar serta penerapan teknik analisis konten untuk mendeteksi research gap.
+Bagi Pembaca
+Hasil penelitian ini dapat menjadi referensi bagi peneliti, akademisi, maupun pengembang sistem dalam mengembangkan teknologi pencarian dan rekomendasi ilmiah yang lebih presisi, sekaligus sebagai acuan dalam merancang sistem serupa yang dilengkapi dengan fitur analisis saran penelitian berbasis konten.
+Ruang Lingkup Penelitian
+Fokus pada perancangan arsitektur sistem, pipeline praproses teks, pemodelan TF-IDF/cosine similarity, integrasi API Mendeley/Google Scholar, serta antarmuka multi-platform. Penelitian ini tidak mencakup pengembangan model berbasis penilaian pengguna (Collaborative Filtering).
+Evaluasi menitikberatkan pada relevansi pencarian dan kegunaan fitur analisis gap menggunakan dataset jurnal akademik terpilih, tanpa mencakup analisis bibliometrik lanjutan seperti network citation analysis.
+
+Sistematika Penulisan
+Secara garis besar penulisan laporan tugas akhir ini terbagi menjadi beberapa bab yang tersusun sebagai berikut:
+BAB I PENDAHULUAN
+Bab ini menerangkan secara singkat dan jelas mengenai latar belakang penulisan penelitian tugas akhir, rumusan masalah, tujuan dan manfaat, batasan permasalahan, metodologi yang digunakan dan sistematika penulisan.
+BAB II TINJAUAN PUSTAKA
+Pada bab ini membahas tentang teori-teori yang melandasi penulis dalam melaksanakan penelitian.
+BAB III METODE PENELITIAN
+Membahas tentang metode penelitian dan alat yang digunakan untuk pembuatan sistem.
+BAB II
+TINJAUAN PUSTAKA
+Landasan Teori
+Sistem Rekomendasi
+Sistem rekomendasi adalah teknologi yang dirancang untuk membantu pengguna menemukan informasi atau item yang relevan sesuai dengan kebutuhan dan preferensinya. Sistem ini bekerja dengan menganalisis data pengguna maupun karakteristik item untuk menghasilkan saran yang dipersonalisasi. Penerapan sistem rekomendasi telah banyak digunakan dalam berbagai bidang seperti e-commerce, pendidikan, pariwisata, hingga hiburan digital (Firmansyah dkk., 2024).
+Content-Based Filtering (CBF)
+Content-Based Filtering adalah metode rekomendasi yang menggunakan karakteristik item untuk mencari kesamaan dengan preferensi pengguna. Metode ini bekerja dengan menganalisis fitur atau atribut dari item yang telah disukai pengguna sebelumnya, lalu merekomendasikan item lain yang memiliki kesamaan. Contohnya pada sistem rekomendasi musik berbasis lirik, CBF dapat digunakan untuk membandingkan kesamaan antar lirik lagu (Yanto & Rohman, 2025).
+Collaborative Filtering (CF)
+Collaborative Filtering adalah metode yang memberikan rekomendasi dengan memanfaatkan perilaku kolektif pengguna lain. CF dapat dibagi menjadi dua pendekatan utama, yaitu user-based (berdasarkan kesamaan antar pengguna) dan item-based (berdasarkan kesamaan antar item). Kelebihan CF adalah kemampuannya menghasilkan rekomendasi tanpa memerlukan detail atribut item, namun kelemahannya terletak pada masalah cold start ketika data masih sedikit (Rahmadhani dkk., 2023).
+Hybrid Recommendation 
+Sistem rekomendasi hybrid merupakan penggabungan dari dua atau lebih metode rekomendasi, seperti kombinasi antara CF dan CBF. Tujuannya adalah mengurangi kelemahan masing-masing metode dan menghasilkan rekomendasi yang lebih akurat. Sistem hybrid dinilai lebih adaptif terhadap data yang kompleks serta mampu memberikan hasil rekomendasi yang lebih relevan (Rahmadhani dkk., 2023
+K-Nearest Neighbor (KNN)
+KNN adalah algoritma klasifikasi sederhana yang juga banyak digunakan dalam sistem rekomendasi. Algoritma ini bekerja dengan mencari kedekatan antara item atau pengguna berdasarkan perhitungan jarak. Semakin dekat jaraknya, semakin besar kemungkinan item tersebut direkomendasikan. KNN sering digunakan bersama metode lain untuk meningkatkan kualitas hasil rekomendasi (Firmansyah dkk., 2024
+Term Frequency – Inverse Document Frequency (TF-IDF)
+TF-IDF adalah metode pembobotan kata yang digunakan dalam pemrosesan teks. TF menunjukkan seberapa sering kata muncul dalam dokumen, sedangkan IDF menunjukkan seberapa jarang kata tersebut muncul di seluruh dokumen. TF-IDF banyak digunakan pada sistem rekomendasi berbasis teks, misalnya untuk analisis lirik lagu atau pencarian artikel ilmiah (Indriyani, 2023)
+Cosine Similarity
+Cosine Similarity adalah metode yang digunakan untuk menghitung tingkat kemiripan antar dua dokumen atau item dengan mengukur sudut kosinus antar vektor. Nilai cosine similarity berada pada rentang 0 hingga 1, di mana nilai mendekati 1 menandakan tingkat kemiripan yang tinggi. Teknik ini sangat efektif dalam sistem rekomendasi berbasis teks, karena mampu mengukur kesamaan konten secara matematis (Yanto & Rohman, 2025
+Penelitian Terkait
+Penelitian ini disusun dengan merujuk pada berbagai studi terdahulu yang relevan dengan permasalahan yang diangkat, khususnya yang berkaitan dengan latar belakang skripsi ini.
+Penelitian oleh Firmansyah dkk. (2024) membahas tentang peningkatan kinerja sistem rekomendasi wisata dengan memanfaatkan metode Collaborative Filtering, K-Nearest Neighbor (KNN), dan K-Means. Penelitian ini bertujuan membantu wisatawan menemukan destinasi yang sesuai dengan preferensinya. Hasil penelitian menunjukkan bahwa kombinasi metode mampu meningkatkan akurasi rekomendasi, terutama ketika data wisata sangat beragam (Firmansyah dkk., 2024).
+Penelitian oleh Tambunan & Dermawan (2024) mengimplementasikan Content-Based Filtering untuk sistem rekomendasi jurnal Scopus. Tujuannya adalah memudahkan peneliti dalam menemukan referensi jurnal sesuai bidang kajian. Metode ini memanfaatkan atribut dari artikel seperti judul dan kata kunci untuk mencari kesamaan. Hasil penelitian menunjukkan sistem mampu memberikan rekomendasi artikel yang relevan dengan kebutuhan pengguna (Tambunan & Dermawan, 2024).
+Penelitian oleh Rahmadhani dkk. (2023) mengusulkan sistem rekomendasi hybrid yang menggabungkan Collaborative Filtering dan Content-Based Filtering. Fokus penelitian ini adalah meningkatkan akurasi rekomendasi produk pada platform e-commerce. Hasil pengujian memperlihatkan bahwa sistem hybrid mampu mengatasi masalah cold start sekaligus menghasilkan rekomendasi yang lebih personal dibanding metode tunggal (Rahmadhani dkk., 2023).
+Penelitian oleh Indriyani (2023) menerapkan metode Content-Based Filtering pada sistem rekomendasi. Penelitian ini menggunakan pendekatan TF-IDF untuk menghitung bobot kata, kemudian menghitung kesamaan menggunakan Cosine Similarity. Hasil implementasi menunjukkan bahwa metode ini cukup efektif dalam memberikan rekomendasi yang relevan, meskipun terbatas pada data berbasis konten yang tersedia (Indriyani, 2023【).
+Penelitian oleh Yanto & Rohman (2025) mengembangkan sistem rekomendasi lagu Indonesia berbasis lirik dengan menggunakan metode Content-Based Filtering dan Cosine Similarity. Data berupa 50 lirik lagu diproses melalui tahapan preprocessing (case folding, stopword removal, punctuation removal) dan pembobotan TF-IDF. Hasilnya, sistem mampu merekomendasikan lagu secara akurat berdasarkan kemiripan lirik, serta diimplementasikan dalam aplikasi web sederhana (Yanto & Rohman, 2025).
+
+Tabel 1. Penelitian Terkait
+Kerangka Berpikir
+Penelitian ini berangkat dari permasalahan plagiarisme dalam penulisan skripsi mahasiswa, khususnya di lingkungan Fakultas Teknik UNISMUH Makassar. Banyak mahasiswa mengalami kesulitan dalam mencari referensi yang relevan sekaligus memastikan orisinalitas tulisan mereka. Untuk itu, dibutuhkan sistem yang mampu mendeteksi kesamaan semantik teks pada dokumen skripsi.
+Pendekatan yang digunakan adalah integrasi Google Custom Search Engine (CSE) untuk menemukan sumber referensi dari internet, dikombinasikan dengan Sentence-BERT untuk representasi teks dalam bentuk vektor semantik. Selanjutnya, kesamaan dihitung menggunakan Cosine Similarity guna menilai tingkat kemiripan antara teks skripsi mahasiswa dengan sumber referensi.
+Proses penelitian ini meliputi tahapan preprocessing teks, pencarian snippet melalui Google CSE, ekstraksi representasi semantik dengan Sentence-BERT, serta perhitungan similarity. Hasil akhirnya berupa sistem deteksi plagiarisme berbasis semantik yang menampilkan skor kemiripan dan status plagiasi pada dokumen skripsi.
+Dengan sistem ini, diharapkan dosen pembimbing dan mahasiswa dapat lebih mudah memverifikasi keaslian skripsi serta meminimalkan praktik plagiarisme di lingkungan akademik.
+
+Gambar 1. Kerangka Berpikir
+BAB III
+METODE PENELITIAN
+Tempat dan Waktu Penelitian
+Tempat Penelitian adalah suatu tempat atau objek yang akan dilakukan suatu penelitian. Penentuan lokasi penelitian merupakan langkah penting dalam proses penelitian karena memudahkan peneliti untuk melakukan penelitian. Lokasi penelitian yang dipilih peneliti adalah di Universitas Muhammadiyah Makassar tepatnya di Laboratorium Informatika Fakultas Teknik. 
+Waktu penelitian ini akan dilakukan dalam jangka waktu kurang lebih 2 bulan, yaitu dimulai pada bulan Mei 2025 hingga Agustus 2025, sebagaimana ditampilkan pada Tabel 2.
+Tabel 2. Jadwal Penelitian
+
+Alat dan Bahan
+Alat penelitian berupa laptop yang akan digunakan untuk mengembangkan sistem cerdas dalam pembuatan watermark‎‎ tak terlihat pada bahan ajar digital. Dalam penelitian ini, peneliti menggunakan perangkat keras dan perangkat lunak:
+Perangkat Keras (Pengembangan)
+Processor 
+Besar 
+Kapasitas 
+Perangkat Lunak
+Linux - Ubuntu
+Text editor Visual Studio Code
+Python‎ sebagai bahasa pemrograman
+Bahan penelitian ini berupa kumpulan data jurnal ilmiah yang diperoleh dari platform akademik seperti Mendeley dan Google Scholar. Data yang digunakan mencakup informasi penting dari jurnal, antara lain judul, abstrak, kata kunci, nama penulis, afiliasi, serta metadata pendukung lainnya. Seluruh data ini kemudian dijadikan dasar untuk dilakukan proses preprocessing teks, pembobotan dengan TF-IDF, serta penghitungan tingkat kesamaan menggunakan cosine similarity. Dengan bahan tersebut, sistem dapat dirancang untuk menampilkan hasil pencarian jurnal yang relevan sekaligus memberikan analisis kesenjangan penelitian (research gap) secara lebih terstruktur dan mudah dipahami.zbra
+Perancangan Sistem
+Sistem yang dirancang menggunakan pendekatan Content-Based Filtering (CBF) untuk menghasilkan pencarian jurnal yang relevan berdasarkan konten berupa judul, abstrak, dan kata kunci. Representasi teks dilakukan melalui metode TF-IDF, kemudian tingkat kesamaan dihitung menggunakan cosine similarity (Indriyani, 2023).
+Integrasi dilakukan dengan API Mendeley dan Google Scholar agar sistem mampu mengambil metadata jurnal secara langsung dari sumber akademik. Hal ini bertujuan agar hasil pencarian lebih kaya dan valid dibandingkan hanya mengandalkan dataset lokal (Tambunan & Dermawan, 2024).
+Proses pencarian dimulai dari input kata kunci pengguna → praproses teks (case folding, tokenisasi, stopword removal, stemming) → pembobotan TF-IDF → perhitungan cosine similarity → pengurutan hasil berdasarkan skor relevansi (Rahmadhani dkk., 2023).
+Sistem juga dilengkapi fitur analisis gap yang berfungsi mengidentifikasi kekurangan penelitian dari kumpulan jurnal yang ditemukan. Fitur ini menyoroti aspek yang belum banyak diteliti, seperti variabel, metode, atau objek penelitian yang jarang muncul (Sari, 2025).
+Arsitektur sistem dirancang berbasis multi-platform sehingga dapat diakses melalui perangkat desktop maupun mobile dengan antarmuka web. Hal ini memastikan sistem lebih fleksibel untuk digunakan oleh peneliti dan mahasiswa dalam berbagai situasi (Haz & Rohman, 2025).
+
+Input Kata Kunci Pengguna
+Tahap awal dimulai dari masukan kata kunci oleh pengguna, misalnya topik penelitian atau istilah khusus yang relevan dengan bidang studi. Kata kunci ini menjadi dasar pencarian jurnal pada sistem.
+Preprocessing Teks
+Masukan kata kunci diproses melalui tahapan praproses teks, meliputi case folding (penyeragaman huruf), tokenisasi (pemecahan kata), stopword removal (penghapusan kata umum yang tidak bermakna), dan stemming (mengembalikan kata ke bentuk dasarnya). Tahapan ini penting untuk meningkatkan akurasi hasil pencarian.
+Pembobotan TF-IDF
+Setelah praproses, sistem melakukan pembobotan teks menggunakan metode Term Frequency – Inverse Document Frequency (TF-IDF). Metode ini menilai tingkat kepentingan suatu kata dalam dokumen dibandingkan dengan keseluruhan korpus jurnal.
+Perhitungan Cosine Similarity
+Representasi vektor hasil TF-IDF dibandingkan menggunakan rumus cosine similarity untuk mengukur tingkat kesamaan antar dokumen. Semakin tinggi nilai kesamaan, semakin relevan jurnal tersebut dengan kata kunci yang dimasukkan.
+Integrasi API Mendeley & Google Scholar
+Untuk memperkaya data, sistem terhubung dengan API Mendeley dan Google Scholar. Integrasi ini memungkinkan pengambilan metadata jurnal secara langsung (judul, abstrak, kata kunci, penulis, afiliasi, sitasi) sehingga hasil pencarian lebih valid dan mutakhir.
+Hasil Pencarian Jurnal
+Sistem menampilkan daftar jurnal yang paling relevan berdasarkan skor kesamaan. Jurnal ditampilkan secara terurut mulai dari tingkat relevansi tertinggi.
+Analisis Research Gap & Saran Penelitian
+Tahap terakhir adalah analisis kesenjangan penelitian (research gap). Sistem menyoroti aspek yang belum banyak dibahas pada kumpulan jurnal yang ditemukan, seperti variabel, metode, atau objek penelitian. Dari sini, sistem memberikan saran penelitian lanjutan yang dapat ditindaklanjuti pengguna.
+Teknik Pengujian Sistem
+Pengujian dilakukan menggunakan metode Black Box Testing untuk memastikan setiap fungsi utama sistem berjalan sesuai dengan kebutuhan, seperti proses input kata kunci, pencarian jurnal, serta keluaran hasil pencarian (Anggoro, 2023).
+Evaluasi akurasi pencarian jurnal dilakukan dengan menggunakan metrik confusion matrix yang meliputi nilai precision, recall, f-measure, dan accuracy untuk menilai relevansi hasil pencarian (Reswara et al., 2025).
+Untuk menguji kinerja multi-platform, sistem diuji pada beberapa perangkat (desktop, tablet, smartphone) guna memastikan tampilan antarmuka dan performa tetap konsisten (Tambunan & Dermawan, 2024)
+Teknik Analisis Data
+Data jurnal yang diperoleh dari Mendeley dan Google Scholar dianalisis melalui tahapan preprocessing teks meliputi case folding, tokenisasi, stopword removal, dan stemming (Pratiwi dkk., 2024).
+Selanjutnya dilakukan pembobotan TF-IDF untuk mengekstraksi kata-kata penting dari judul dan abstrak jurnal, sehingga sistem dapat menilai tingkat kepentingan suatu term dalam dokumen (Indriyani, 2023).
+Perhitungan cosine similarity digunakan untuk mengukur kesamaan antar dokumen, sehingga jurnal dengan tingkat relevansi tinggi dapat diprioritaskan dalam hasil pencarian (Yanto & Rohman, 2025).
+DAFTAR PUSTAKA
+Anggoro, A. (2023). Implementasi sistem rekomendasi berbasis content-based filtering pada layanan perpustakaan kampus. Jurnal Teknologi Informasi dan Komputer, 11(2), 55–63.
+Haz, A., & Rohman, T. (2025). Penerapan cosine similarity dalam sistem rekomendasi berita berbasis teks. Jurnal Ilmu Komputer Indonesia, 14(1), 22–30.
+Indriyani, T., dkk. (2025). Penerapan metode content-based filtering pada sistem rekomendasi obat. Jurnal Teknologi dan Sistem Informasi, 13(1), 77–85.
+Kusuma, H., dkk. (2025). Sistem rekomendasi hiburan berbasis content-based filtering dan pendekatan hibrida. Jurnal Rekayasa Informatika, 9(2), 101–110.
+Pratiwi, V. K., dkk. (2024). Sistem rekomendasi wisata berbasis TF-IDF dan cosine similarity. Jurnal Informatika dan Sistem Cerdas, 8(3), 345–355.
+Rahmadhani, S., dkk. (2023). Penerapan metode TF-RF dalam sistem pencarian buku. Jurnal Sistem Informasi dan Sains Data, 7(2), 112–120.
+Reswara, I., dkk. (2025). Evaluasi performa content-based filtering pada sistem rekomendasi jurnal ilmiah. Jurnal Teknologi Informasi Dinamika, 12(1), 14–25.
+Sari, V. K. (2025). Analisis kesenjangan penelitian (research gap) berbasis konten untuk rekomendasi arah riset. Jurnal Ilmu Komputer dan Aplikasi, 10(2), 188–197.
+Tambunan, A., & Dermawan, R. (2025). Rancangan sistem multi-platform untuk aplikasi pencarian ilmiah. Jurnal Rekayasa Perangkat Lunak, 5(1), 65–73.
+Timur, A., & Rohman, H. (2025). Optimasi praproses teks pada sistem rekomendasi akademik berskala besar. Jurnal Teknologi Informasi Indonesia, 15(1), 99–107.
+Yanto, F., & Rohman, A. (2025). Sistem rekomendasi lagu Indonesia menggunakan content-based filtering dan cosine similarity. Jurnal Informatika dan Multimedia, 12(1), 66–74.

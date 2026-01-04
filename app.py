@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, Response
+from flask import Flask, render_template, request, jsonify, Response, send_from_directory
 import json
 import os
 
@@ -361,6 +361,26 @@ def get_cbf_details():
     except Exception as e:
         print(f"[ERROR] CBF details error: {str(e)}")
         return jsonify({'error': str(e)}), 500
+
+@app.route('/methodology')
+def methodology():
+    """Halaman metodologi TF-IDF dan Content-Based Filtering"""
+    return render_template('methodology.html')
+
+@app.route('/proposal')
+def proposal():
+    """Halaman proposal penelitian lengkap (BAB 1-5)"""
+    return render_template('proposal.html')
+
+@app.route('/bab4')
+def bab4_dokumentasi():
+    """Halaman dokumentasi visual BAB IV - Hasil dan Pembahasan"""
+    return render_template('bab4_simple.html')
+
+@app.route('/screenshots/<path:filename>')
+def serve_screenshot(filename):
+    """Serve screenshot files"""
+    return send_from_directory('screenshots', filename)
 
 
 if __name__ == '__main__':

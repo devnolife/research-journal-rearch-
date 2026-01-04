@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metodologi TF-IDF - Sistem Pencarian Jurnal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a4a6a;
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            color: var(--text-primary);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+            animation: pulse-bg 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse-bg {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+            opacity: 0.8;
+        }
+
+        .back-link i {
+            font-size: 1.1rem;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        /* Section Cards */
+        .section-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-card h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-card h3 {
+            font-size: 1.5rem;
+            margin: 25px 0 15px 0;
+            color: var(--text-primary);
+        }
+
+        .section-card p {
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        .section-card ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .section-card li {
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+
+        /* Flow Diagram */
+        .tfidf-flow {
+            margin: 40px 0;
+        }
+
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .step-item {
+            flex: 1;
+            min-width: 150px;
+            background: white;
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: 12px;
+            padding: 25px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .step-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+            border-color: var(--accent-primary);
+        }
+
+        .step-item.active {
+            background: var(--accent-gradient);
+            color: white;
+            border-color: var(--accent-primary);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        .step-number {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px auto;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .step-item.active .step-number {
+            background: white;
+            color: var(--accent-primary);
+        }
+
+        .step-icon {
+            font-size: 2.5rem;
+            margin: 10px 0;
+        }
+
+        .step-title {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        .flow-arrow {
+            font-size: 2rem;
+            color: rgba(99, 102, 241, 0.5);
+            animation: pulse-arrow 2s ease-in-out infinite;
+            flex: 0;
+        }
+
+        @keyframes pulse-arrow {
+            0%, 100% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+        }
+
+        /* Step Details */
+        .step-details {
+            margin-top: 30px;
+        }
+
+        .step-detail-panel {
+            display: none;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            border-left: 4px solid var(--accent-primary);
+            animation: slideIn 0.4s ease-out;
+        }
+
+        .step-detail-panel.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .step-detail-panel h4 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-primary);
+        }
+
+        .step-detail-panel p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .detail-box {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #e5e7eb;
+        }
+
+        .detail-box h5 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .example-transform {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 15px;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .example-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+
+        .example-text.before {
+            border-left: 3px solid #ef4444;
+        }
+
+        .example-text.after {
+            border-left: 3px solid #10b981;
+        }
+
+        .transform-arrow {
+            font-size: 1.5rem;
+            color: var(--accent-primary);
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .formula-main {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .formula-explanation {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .formula-part {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .formula-part h5 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .formula-part p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .example-calc {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 25px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .comparison-table thead {
+            background: var(--accent-gradient);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 18px 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            background: white;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight-row {
+            background: rgba(99, 102, 241, 0.1) !important;
+        }
+
+        .highlight-row td {
+            font-weight: 600;
+        }
+
+        .comparison-table strong {
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Score Visualization */
+        .score-visual {
+            margin: 25px 0;
+        }
+
+        .score-bar-container {
+            background: #f1f5f9;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .score-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .score-bar {
+            height: 30px;
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .score-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Ranking Visual */
+        .ranking-visual {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .rank-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .rank-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .rank-badge {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px auto;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .rank-card.first .rank-badge {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        }
+
+        .rank-card.second .rank-badge {
+            background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+        }
+
+        .rank-card.third .rank-badge {
+            background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%);
+        }
+
+        .rank-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .rank-score {
+            color: var(--accent-primary);
+            font-weight: 500;
+        }
+
+        /* CTA Button */
+        .cta-section {
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 40px;
+            background: var(--accent-gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(99, 102, 241, 0.5);
+        }
+
+        .cta-button i {
+            margin-left: 8px;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            background: linear-gradient(135deg, #e0e7ff 0%, #ddd6fe 100%);
+            border-left: 4px solid var(--accent-primary);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .info-box h5 {
+            color: var(--accent-primary);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .info-box p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .section-card {
+                padding: 25px;
+            }
+
+            .section-card h2 {
+                font-size: 1.6rem;
+            }
+
+            .flow-steps {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+                margin: 10px 0;
+            }
+
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 12px 10px;
+            }
+
+            .example-transform {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .transform-arrow {
+                transform: rotate(90deg);
+            }
+
+            .formula-main {
+                font-size: 1.5rem;
+            }
+
+            .formula-explanation {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection */
+        ::selection {
+            background: var(--accent-primary);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <a href="/" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Kembali ke Pencarian
+            </a>
+        </div>
+
+        <!-- Header Section -->
+        <div class="header">
+            <h1><i class="fas fa-book-open"></i> Memahami Metodologi Pencarian</h1>
+            <p>Bagaimana TF-IDF dan Content-Based Filtering Bekerja</p>
+        </div>
+
+        <!-- Section 1: Pengenalan CBF -->
+        <div class="section-card">
+            <h2><i class="fas fa-lightbulb"></i> Apa itu Content-Based Filtering?</h2>
+            <p>
+                <strong>Content-Based Filtering (CBF)</strong> adalah metode pencarian yang cerdas.
+                Berbeda dengan pencarian konvensional yang hanya mencocokkan kata kunci secara persis,
+                CBF menganalisis <strong>isi dan makna</strong> dari setiap dokumen untuk menemukan
+                paper yang benar-benar relevan dengan kebutuhan Anda.
+            </p>
+
+            <h3>Mengapa Menggunakan TF-IDF?</h3>
+            <p>
+                TF-IDF (Term Frequency-Inverse Document Frequency) adalah jantung dari sistem ini.
+                Algoritma ini membantu kita memahami:
+            </p>
+            <ul class="feature-list">
+                <li><strong>Kata mana yang penting</strong> dalam sebuah paper</li>
+                <li><strong>Kata mana yang unik</strong> dan membedakan paper satu dengan lainnya</li>
+                <li><strong>Seberapa relevan</strong> sebuah paper dengan query pencarian Anda</li>
+            </ul>
+
+            <div class="info-box">
+                <h5><i class="fas fa-info-circle"></i> Fun Fact</h5>
+                <p>
+                    Sistem seperti ini digunakan oleh mesin pencari besar seperti Google untuk
+                    memberikan hasil yang paling relevan kepada pengguna. Namun, sistem kami
+                    dikhususkan untuk pencarian jurnal ilmiah!
+                </p>
+            </div>
+
+            <h3>Keunggulan untuk Pencarian Jurnal</h3>
+            <p>Sistem CBF kami memberikan beberapa keunggulan:</p>
+            <ul>
+                <li><strong>Ranking Otomatis:</strong> Paper diurutkan berdasarkan relevansi (0-100%)</li>
+                <li><strong>Pencarian Semantik:</strong> Menemukan paper terkait meski kata kuncinya berbeda</li>
+                <li><strong>Efisien:</strong> Tidak perlu membaca semua paper satu per satu</li>
+                <li><strong>Transparan:</strong> Anda bisa melihat mengapa sebuah paper mendapat skor tinggi</li>
+            </ul>
+        </div>
+
+        <!-- Section 2: Flow Diagram -->
+        <div class="section-card">
+            <h2><i class="fas fa-project-diagram"></i> Alur Kerja TF-IDF: 5 Langkah Utama</h2>
+            <p>
+                Berikut adalah proses lengkap bagaimana sistem mengubah query pencarian Anda
+                menjadi daftar paper yang terurut berdasarkan relevansi. Klik setiap langkah
+                untuk melihat detail!
+            </p>
+
+            <div class="tfidf-flow">
+                <!-- Flow Steps -->
+                <div class="flow-steps">
+                    <div class="step-item" data-step="1" onclick="showStepDetail(1)">
+                        <div class="step-number">1</div>
+                        <div class="step-icon">📄</div>
+                        <div class="step-title">Pengumpulan</div>
+                    </div>
+
+                    <div class="flow-arrow">→</div>
+
+                    <div class="step-item" data-step="2" onclick="showStepDetail(2)">
+                        <div class="step-number">2</div>
+                        <div class="step-icon">🔤</div>
+                        <div class="step-title">Preprocessing</div>
+                    </div>
+
+                    <div class="flow-arrow">→</div>
+
+                    <div class="step-item" data-step="3" onclick="showStepDetail(3)">
+                        <div class="step-number">3</div>
+                        <div class="step-icon">🧮</div>
+                        <div class="step-title">TF-IDF</div>
+                    </div>
+
+                    <div class="flow-arrow">→</div>
+
+                    <div class="step-item" data-step="4" onclick="showStepDetail(4)">
+                        <div class="step-number">4</div>
+                        <div class="step-icon">📊</div>
+                        <div class="step-title">Similarity</div>
+                    </div>
+
+                    <div class="flow-arrow">→</div>
+
+                    <div class="step-item" data-step="5" onclick="showStepDetail(5)">
+                        <div class="step-number">5</div>
+                        <div class="step-icon">🏆</div>
+                        <div class="step-title">Ranking</div>
+                    </div>
+                </div>
+
+                <!-- Step Details -->
+                <div class="step-details">
+                    <!-- Step 1 Detail -->
+                    <div id="step-1-detail" class="step-detail-panel">
+                        <h4>📄 Langkah 1: Pengumpulan Dokumen Jurnal</h4>
+                        <p>
+                            Sistem mengumpulkan paper dari berbagai sumber akademik terpercaya.
+                            Ini adalah fondasi dari proses pencarian kita.
+                        </p>
+
+                        <div class="detail-box">
+                            <h5>Sumber Data:</h5>
+                            <ul class="feature-list">
+                                <li><strong>Google Scholar</strong> - Database terbesar paper akademik</li>
+                                <li><strong>Semantic Scholar</strong> - Database dengan AI untuk analisis paper</li>
+                                <li><strong>Mendeley</strong> - Platform manajemen referensi</li>
+                            </ul>
+                        </div>
+
+                        <div class="detail-box">
+                            <h5>Data yang Dikumpulkan:</h5>
+                            <ul>
+                                <li><strong>Judul</strong> - Nama lengkap paper</li>
+                                <li><strong>Abstrak</strong> - Ringkasan isi paper</li>
+                                <li><strong>Penulis</strong> - Siapa yang menulis</li>
+                                <li><strong>Tahun Publikasi</strong> - Kapan diterbitkan</li>
+                                <li><strong>Sitasi</strong> - Berapa kali dikutip</li>
+                            </ul>
+                        </div>
+
+                        <p style="margin-top: 15px;">
+                            💡 <strong>Tip:</strong> Semakin lengkap data abstrak, semakin akurat
+                            hasil pencarian Anda!
+                        </p>
+                    </div>
+
+                    <!-- Step 2 Detail -->
+                    <div id="step-2-detail" class="step-detail-panel">
+                        <h4>🔤 Langkah 2: Preprocessing Teks</h4>
+                        <p>
+                            Sebelum dianalisis, teks perlu "dibersihkan" dan distandarisasi.
+                            Ini memastikan algoritma bekerja dengan data yang konsisten.
+                        </p>
+
+                        <div class="detail-box">
+                            <h5>4 Tahap Preprocessing:</h5>
+                            <ol>
+                                <li><strong>Lowercase:</strong> Semua huruf diubah jadi huruf kecil</li>
+                                <li><strong>Hapus Simbol:</strong> Hanya huruf yang tersisa, angka dan simbol dihapus</li>
+                                <li><strong>Tokenisasi:</strong> Teks dipecah jadi kata-kata individual</li>
+                                <li><strong>Lemmatisasi:</strong> Kata dikembalikan ke bentuk dasarnya</li>
+                            </ol>
+                        </div>
+
+                        <h5>Contoh Transformasi:</h5>
+                        <div class="example-transform">
+                            <div class="example-text before">
+                                <strong>Sebelum:</strong><br>
+                                "Machine Learning algorithms ARE very powerful!"
+                            </div>
+                            <div class="transform-arrow">→</div>
+                            <div class="example-text after">
+                                <strong>Sesudah:</strong><br>
+                                "machine learning algorithm powerful"
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <h5><i class="fas fa-question-circle"></i> Mengapa Perlu Preprocessing?</h5>
+                            <p>
+                                Tanpa preprocessing, "Machine" dan "machine" akan dianggap berbeda.
+                                Kata "algorithms" dan "algorithm" juga akan dianggap berbeda,
+                                padahal maknanya sama. Preprocessing memastikan sistem fokus pada
+                                <strong>makna kata</strong>, bukan bentuk penulisannya.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 Detail -->
+                    <div id="step-3-detail" class="step-detail-panel">
+                        <h4>🧮 Langkah 3: Perhitungan TF-IDF</h4>
+                        <p>
+                            Ini adalah inti dari sistem! TF-IDF memberikan <strong>bobot</strong>
+                            pada setiap kata untuk menentukan seberapa penting kata tersebut.
+                        </p>
+
+                        <div class="formula-box">
+                            <div class="formula-main">TF-IDF = TF × IDF</div>
+                            <div class="formula-explanation">
+                                <div class="formula-part">
+                                    <h5>TF (Term Frequency)</h5>
+                                    <p>Seberapa sering kata muncul di dokumen ini?</p>
+                                    <div class="example-calc">
+                                        Contoh: "machine" muncul 5 kali di 100 kata total
+                                        <br>
+                                        TF = 5 / 100 = 0.05 atau 5%
+                                    </div>
+                                </div>
+                                <div class="formula-part">
+                                    <h5>IDF (Inverse Document Frequency)</h5>
+                                    <p>Seberapa unik kata ini di semua dokumen?</p>
+                                    <div class="example-calc">
+                                        Jika "machine" muncul di 10 dari 100 paper
+                                        <br>
+                                        IDF = log(100 / 10) ≈ 1.0
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-box">
+                            <h5>Prinsip Kerja TF-IDF:</h5>
+                            <ul>
+                                <li>
+                                    <strong>Kata yang SERING di satu paper tapi JARANG di paper lain</strong>
+                                    → Bobot TINGGI (kata ini penting dan unik!)
+                                </li>
+                                <li>
+                                    <strong>Kata yang SERING di semua paper</strong> (seperti "the", "and", "is")
+                                    → Bobot RENDAH (kata umum, tidak informatif)
+                                </li>
+                                <li>
+                                    <strong>Kata yang JARANG muncul dimana-mana</strong>
+                                    → Bobot SEDANG
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="info-box">
+                            <h5><i class="fas fa-star"></i> Contoh Sederhana</h5>
+                            <p>
+                                Bayangkan Anda mencari paper tentang "neural networks". Kata "neural"
+                                hanya muncul di paper-paper tentang AI/ML, jadi bobotnya tinggi.
+                                Sementara kata "study" atau "research" muncul di hampir semua paper,
+                                jadi bobotnya rendah. TF-IDF membantu sistem fokus pada kata-kata
+                                yang benar-benar penting!
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 Detail -->
+                    <div id="step-4-detail" class="step-detail-panel">
+                        <h4>📊 Langkah 4: Cosine Similarity</h4>
+                        <p>
+                            Setelah setiap paper punya bobot TF-IDF, sistem mengukur
+                            <strong>seberapa mirip</strong> query Anda dengan setiap paper.
+                        </p>
+
+                        <div class="detail-box">
+                            <h5>Apa itu Cosine Similarity?</h5>
+                            <p>
+                                Cosine Similarity mengukur kemiripan dengan membandingkan "pola kata"
+                                antara query dan paper. Hasilnya adalah skor dari <strong>0% hingga 100%</strong>:
+                            </p>
+                        </div>
+
+                        <div class="score-visual">
+                            <div class="score-bar-container">
+                                <div class="score-label">
+                                    <span>Paper A - Sangat Mirip</span>
+                                    <span><strong>95%</strong></span>
+                                </div>
+                                <div class="score-bar" style="width: 95%"></div>
+                            </div>
+
+                            <div class="score-bar-container">
+                                <div class="score-label">
+                                    <span>Paper B - Cukup Mirip</span>
+                                    <span><strong>72%</strong></span>
+                                </div>
+                                <div class="score-bar" style="width: 72%; background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%)"></div>
+                            </div>
+
+                            <div class="score-bar-container">
+                                <div class="score-label">
+                                    <span>Paper C - Kurang Mirip</span>
+                                    <span><strong>45%</strong></span>
+                                </div>
+                                <div class="score-bar" style="width: 45%; background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%)"></div>
+                            </div>
+
+                            <div class="score-bar-container">
+                                <div class="score-label">
+                                    <span>Paper D - Tidak Mirip</span>
+                                    <span><strong>18%</strong></span>
+                                </div>
+                                <div class="score-bar" style="width: 18%; background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%)"></div>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <h5><i class="fas fa-brain"></i> Cara Kerja Sederhana</h5>
+                            <p>
+                                Bayangkan setiap paper sebagai "resep masakan" dengan berbagai bahan.
+                                Query Anda juga seperti resep. Cosine Similarity membandingkan:
+                                "Seberapa mirip bahan-bahan dalam resep ini?" Jika banyak bahan yang sama
+                                dengan proporsi yang mirip, skornya tinggi!
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Step 5 Detail -->
+                    <div id="step-5-detail" class="step-detail-panel">
+                        <h4>🏆 Langkah 5: Ranking Hasil</h4>
+                        <p>
+                            Langkah terakhir: mengurutkan semua paper dari yang paling relevan
+                            hingga yang kurang relevan berdasarkan skor similarity.
+                        </p>
+
+                        <div class="ranking-visual">
+                            <div class="rank-card first">
+                                <div class="rank-badge">#1</div>
+                                <div class="rank-title">Paper A</div>
+                                <div class="rank-score">95% Relevan</div>
+                                <p style="margin-top: 10px; font-size: 0.9rem; color: #6b7280;">
+                                    Paling cocok dengan pencarian Anda
+                                </p>
+                            </div>
+
+                            <div class="rank-card second">
+                                <div class="rank-badge">#2</div>
+                                <div class="rank-title">Paper B</div>
+                                <div class="rank-score">87% Relevan</div>
+                                <p style="margin-top: 10px; font-size: 0.9rem; color: #6b7280;">
+                                    Sangat relevan dan direkomendasikan
+                                </p>
+                            </div>
+
+                            <div class="rank-card third">
+                                <div class="rank-badge">#3</div>
+                                <div class="rank-title">Paper C</div>
+                                <div class="rank-score">76% Relevan</div>
+                                <p style="margin-top: 10px; font-size: 0.9rem; color: #6b7280;">
+                                    Masih relevan untuk dibaca
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="detail-box">
+                            <h5>Keuntungan Sistem Ranking:</h5>
+                            <ul class="feature-list">
+                                <li>Paper terbaik selalu di atas - hemat waktu!</li>
+                                <li>Anda bisa lihat skor relevansi setiap paper</li>
+                                <li>Tidak perlu membaca semua paper satu per satu</li>
+                                <li>Fokus pada paper yang benar-benar penting</li>
+                            </ul>
+                        </div>
+
+                        <div class="info-box">
+                            <h5><i class="fas fa-lightbulb"></i> Tips Membaca Hasil</h5>
+                            <p>
+                                Paper dengan skor <strong>80%+</strong> biasanya sangat relevan dan
+                                layak dibaca penuh. Paper dengan skor <strong>60-80%</strong> relevan
+                                tapi mungkin tidak sepenuhnya sesuai. Paper di bawah <strong>60%</strong>
+                                mungkin hanya terkait secara tangensial.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Comparison Table -->
+        <div class="section-card">
+            <h2><i class="fas fa-balance-scale"></i> Perbandingan Sistem Pencarian</h2>
+            <p>
+                Mari kita bandingkan pencarian konvensional (keyword matching) dengan
+                Content-Based Filtering menggunakan TF-IDF. Mana yang lebih cocok untuk Anda?
+            </p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th style="width: 20%">Aspek</th>
+                        <th style="width: 40%"><i class="fas fa-search"></i> Pencarian Konvensional</th>
+                        <th style="width: 40%"><i class="fas fa-robot"></i> Content-Based Filtering (TF-IDF)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Cara Kerja</strong></td>
+                        <td>Mencocokkan kata kunci persis (exact match)</td>
+                        <td>Mengukur relevansi semantik dengan TF-IDF</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hasil Pencarian</strong></td>
+                        <td>Ada atau tidak ada (binary)</td>
+                        <td>Skor relevansi 0-100% untuk setiap paper</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ranking</strong></td>
+                        <td>Tidak ada ranking otomatis, biasanya urutkan berdasarkan tanggal atau sitasi</td>
+                        <td>Ranking otomatis berdasarkan tingkat relevansi</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kelebihan</strong></td>
+                        <td>
+                            ✓ Sangat cepat<br>
+                            ✓ Sederhana dan mudah dipahami<br>
+                            ✓ Hasil pasti dan deterministik
+                        </td>
+                        <td>
+                            ✓ Menemukan paper terkait meski kata berbeda<br>
+                            ✓ Ranking berdasarkan relevansi<br>
+                            ✓ Lebih pintar (semantic search)<br>
+                            ✓ Memahami konteks kata
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kekurangan</strong></td>
+                        <td>
+                            ✗ Tidak ada ranking relevansi<br>
+                            ✗ Melewatkan sinonim dan kata terkait<br>
+                            ✗ Harus tahu kata kunci yang tepat<br>
+                            ✗ Banyak hasil tidak relevan
+                        </td>
+                        <td>
+                            ✗ Lebih lambat (perlu preprocessing)<br>
+                            ✗ Membutuhkan komputasi lebih berat<br>
+                            ✗ Lebih kompleks
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cocok Untuk</strong></td>
+                        <td>
+                            • Mencari judul spesifik<br>
+                            • Mencari penulis tertentu<br>
+                            • Mencari DOI atau identifier<br>
+                            • Query sangat spesifik
+                        </td>
+                        <td>
+                            • Eksplorasi topik riset<br>
+                            • Mencari paper serupa<br>
+                            • Research discovery<br>
+                            • Query konseptual/deskriptif
+                        </td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td><strong>Contoh Query</strong></td>
+                        <td>
+                            "title:machine learning"<br>
+                            "author:John Smith"
+                        </td>
+                        <td>
+                            "Saya butuh paper tentang neural networks untuk klasifikasi gambar"<br>
+                            "deep learning untuk NLP"
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box" style="margin-top: 30px;">
+                <h5><i class="fas fa-star"></i> Kesimpulan</h5>
+                <p>
+                    Kedua sistem punya kelebihan masing-masing! <strong>Pencarian konvensional</strong>
+                    bagus untuk query yang sangat spesifik, sedangkan <strong>CBF dengan TF-IDF</strong>
+                    unggul untuk eksplorasi topik dan menemukan paper yang relevan secara semantik.
+                    Sistem kami menggabungkan keduanya untuk hasil terbaik!
+                </p>
+            </div>
+        </div>
+
+        <!-- Section 4: Practical Example -->
+        <div class="section-card">
+            <h2><i class="fas fa-flask"></i> Contoh Praktis</h2>
+            <p>
+                Mari kita lihat contoh nyata bagaimana sistem bekerja dengan query
+                "<strong>machine learning untuk klasifikasi teks</strong>".
+            </p>
+
+            <div class="detail-box" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);">
+                <h5>Query Anda:</h5>
+                <p style="font-size: 1.2rem; font-weight: 600; color: var(--accent-primary);">
+                    "machine learning untuk klasifikasi teks"
+                </p>
+            </div>
+
+            <h3 style="margin-top: 30px;">Proses yang Terjadi:</h3>
+
+            <div class="detail-box">
+                <h5>1. Preprocessing Query</h5>
+                <div class="example-transform">
+                    <div class="example-text before">
+                        "machine learning untuk klasifikasi teks"
+                    </div>
+                    <div class="transform-arrow">→</div>
+                    <div class="example-text after">
+                        "machine learning klasifikasi teks"
+                    </div>
+                </div>
+                <p style="margin-top: 10px; color: #6b7280;">
+                    Kata "untuk" dihapus karena stopword (kata umum yang tidak informatif)
+                </p>
+            </div>
+
+            <div class="detail-box">
+                <h5>2. TF-IDF Calculation</h5>
+                <p>Sistem menghitung bobot untuk setiap kata:</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                    <div style="background: #f0fdf4; padding: 15px; border-radius: 8px; border-left: 3px solid #10b981;">
+                        <strong>machine:</strong> TF-IDF = 0.42<br>
+                        <span style="color: #6b7280; font-size: 0.9rem;">Kata penting & cukup unik</span>
+                    </div>
+                    <div style="background: #f0fdf4; padding: 15px; border-radius: 8px; border-left: 3px solid #10b981;">
+                        <strong>learning:</strong> TF-IDF = 0.38<br>
+                        <span style="color: #6b7280; font-size: 0.9rem;">Kata penting</span>
+                    </div>
+                    <div style="background: #ecfeff; padding: 15px; border-radius: 8px; border-left: 3px solid #06b6d4;">
+                        <strong>klasifikasi:</strong> TF-IDF = 0.51<br>
+                        <span style="color: #6b7280; font-size: 0.9rem;">Sangat spesifik!</span>
+                    </div>
+                    <div style="background: #ecfeff; padding: 15px; border-radius: 8px; border-left: 3px solid #06b6d4;">
+                        <strong>teks:</strong> TF-IDF = 0.47<br>
+                        <span style="color: #6b7280; font-size: 0.9rem;">Spesifik untuk domain</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-box">
+                <h5>3. Similarity Matching & Ranking</h5>
+                <p>Sistem membandingkan dengan semua paper dan menghasilkan ranking:</p>
+
+                <div class="ranking-visual" style="margin-top: 20px;">
+                    <div class="rank-card first">
+                        <div class="rank-badge">#1</div>
+                        <div class="rank-title">Text Classification using ML</div>
+                        <div class="rank-score">94% Match</div>
+                        <p style="margin-top: 10px; font-size: 0.85rem; color: #6b7280;">
+                            Semua kata kunci cocok dengan bobot tinggi
+                        </p>
+                    </div>
+
+                    <div class="rank-card second">
+                        <div class="rank-badge">#2</div>
+                        <div class="rank-title">Machine Learning Algorithms</div>
+                        <div class="rank-score">78% Match</div>
+                        <p style="margin-top: 10px; font-size: 0.85rem; color: #6b7280;">
+                            Fokus ML tapi tidak spesifik teks
+                        </p>
+                    </div>
+
+                    <div class="rank-card third">
+                        <div class="rank-badge">#3</div>
+                        <div class="rank-title">NLP and Text Mining</div>
+                        <div class="rank-score">71% Match</div>
+                        <p style="margin-top: 10px; font-size: 0.85rem; color: #6b7280;">
+                            Terkait teks tapi metode berbeda
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h5><i class="fas fa-check-circle"></i> Hasil Akhir</h5>
+                <p>
+                    Paper pertama mendapat skor tertinggi (94%) karena mengandung semua kata kunci
+                    penting dengan bobot TF-IDF yang tinggi. Paper kedua dan ketiga juga relevan
+                    tapi tidak se-spesifik paper pertama. Anda bisa membaca paper sesuai urutan
+                    prioritas berdasarkan skor!
+                </p>
+            </div>
+        </div>
+
+        <!-- Section 5: CTA -->
+        <div class="section-card cta-section">
+            <h2 style="margin-bottom: 20px;">Siap Mencoba Sistem Pencarian?</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 30px; color: var(--text-secondary);">
+                Sekarang Anda sudah paham bagaimana TF-IDF dan Content-Based Filtering bekerja.
+                Saatnya mencoba sendiri!
+            </p>
+            <a href="/" class="cta-button">
+                Coba Sistem Pencarian Sekarang
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='methodology-viz.js') }}"></script>
+</body>
+
+</html>

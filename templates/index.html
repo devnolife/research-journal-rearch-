@@ -89,6 +89,32 @@
             opacity: 0.9;
         }
 
+        .methodology-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        .methodology-link:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .methodology-link i {
+            margin-right: 8px;
+        }
+
         .search-section {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -1764,27 +1790,21 @@
         <div class="header">
             <h1><i class="fas fa-microscope"></i> Sistem Pencarian Jurnal</h1>
             <p>Content-Based Filtering dengan TF-IDF & Cosine Similarity</p>
+            <a href="/methodology" class="methodology-link" target="_blank">
+                <i class="fas fa-book-open"></i> Pelajari Metodologi TF-IDF
+            </a>
         </div>
 
-        <!-- Story Input Section -->
+        <!-- Search Section -->
         <div class="search-section">
-            <h2><i class="fas fa-lightbulb"></i> Ceritakan Penelitian Anda</h2>
+            <h2><i class="fas fa-search"></i> Pencarian Jurnal</h2>
             <p style="color: #666; margin-bottom: 15px; font-size: 14px;">
-                Jelaskan topik penelitian yang ingin Anda cari. Sistem akan mengekstrak kata kunci dan mencari jurnal yang relevan.
+                Masukkan kata kunci untuk mencari jurnal yang relevan dengan penelitian Anda.
             </p>
             
-            <div class="story-input-container" style="margin-bottom: 20px;">
-                <textarea id="storyInput" class="story-textarea" rows="4" 
-                    placeholder="Contoh: Saya ingin meneliti tentang penerapan machine learning untuk klasifikasi penyakit diabetes menggunakan algoritma decision tree dan random forest. Fokus penelitian pada akurasi prediksi dan perbandingan performa model."></textarea>
-                <div class="extracted-keywords" id="extractedKeywords" style="display: none;">
-                    <span class="keywords-label"><i class="fas fa-key"></i> Kata Kunci Terdeteksi:</span>
-                    <div class="keywords-list" id="keywordsList"></div>
-                </div>
-            </div>
-
             <div class="search-form">
                 <input type="text" id="searchInput" class="search-input"
-                    placeholder="Atau masukkan kata kunci langsung..."
+                    placeholder="Masukkan kata kunci pencarian, contoh: machine learning classification"
                     value="">
                 <button id="searchBtn" class="search-btn">
                     <i class="fas fa-search"></i> Cari Jurnal
@@ -1885,7 +1905,6 @@
             
             <div class="process-steps">
                 <div class="step-indicator" data-step="1" onclick="showStep(1)">
-                    <div class="step-number">1</div>
                     <div class="step-label">Preprocessing</div>
                 </div>
                 <div class="step-indicator" data-step="2" onclick="showStep(2)">

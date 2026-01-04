@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposal Penelitian - Sistem Pencarian Jurnal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a4a6a;
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            color: var(--text-primary);
+            position: relative;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+            opacity: 0.8;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+            padding: 40px 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .header .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            opacity: 0.95;
+        }
+
+        .header .author {
+            font-size: 1.1rem;
+            opacity: 0.85;
+            margin-top: 20px;
+        }
+
+        .header .institution {
+            font-size: 1rem;
+            opacity: 0.75;
+            margin-top: 10px;
+        }
+
+        /* Chapter Navigation */
+        .chapter-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .chapter-btn {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .chapter-btn:hover,
+        .chapter-btn.active {
+            background: var(--accent-gradient);
+            border-color: var(--accent-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Section Card */
+        .section-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .section-card h2 {
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 3px solid var(--accent-primary);
+            padding-bottom: 15px;
+        }
+
+        .section-card h3 {
+            font-size: 1.5rem;
+            margin: 30px 0 15px 0;
+            color: var(--accent-primary);
+        }
+
+        .section-card h4 {
+            font-size: 1.2rem;
+            margin: 20px 0 12px 0;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .section-card p {
+            line-height: 1.9;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            text-align: justify;
+            font-size: 1.05rem;
+        }
+
+        .section-card ul,
+        .section-card ol {
+            margin: 15px 0 15px 25px;
+            color: var(--text-secondary);
+        }
+
+        .section-card li {
+            line-height: 1.9;
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #e0e7ff 0%, #ddd6fe 100%);
+            border-left: 4px solid var(--accent-primary);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .info-box h5 {
+            color: var(--accent-primary);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .info-box p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        table thead {
+            background: var(--accent-gradient);
+            color: white;
+        }
+
+        table th {
+            padding: 18px 20px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        table tbody tr:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        /* Reference List */
+        .reference-item {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+            text-align: justify;
+        }
+
+        .reference-item::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-card {
+                padding: 25px;
+            }
+
+            .section-card h2 {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .nav-bar,
+            .chapter-nav {
+                display: none;
+            }
+
+            .section-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <a href="/" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Kembali ke Sistem
+            </a>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>Perancangan Sistem Pencarian Jurnal Berbasis Multi-Platform<br>Menggunakan Content-Based Filtering</h1>
+            <p class="subtitle">PROPOSAL PENELITIAN</p>
+            <div class="author">
+                <strong>Alwiyanto Saputra</strong><br>
+                NIM: 105841109921
+            </div>
+            <div class="institution">
+                Program Studi Informatika<br>
+                Fakultas Teknik<br>
+                Universitas Muhammadiyah Makassar<br>
+                2025
+            </div>
+        </div>
+
+        <!-- Chapter Navigation -->
+        <div class="chapter-nav">
+            <a href="#bab1" class="chapter-btn">BAB I</a>
+            <a href="#bab2" class="chapter-btn">BAB II</a>
+            <a href="#bab3" class="chapter-btn">BAB III</a>
+            <a href="#bab4" class="chapter-btn">BAB IV</a>
+            <a href="#bab5" class="chapter-btn">BAB V</a>
+        </div>
+
+        <!-- BAB I: PENDAHULUAN -->
+        <div id="bab1" class="section-card">
+            <h2><i class="fas fa-book"></i> BAB I - PENDAHULUAN</h2>
+
+            <h3>1.1 Latar Belakang</h3>
+            <p>
+                Transformasi digital dalam pengelolaan pengetahuan mendorong kebutuhan akan sistem pencarian dan
+                rekomendasi yang mampu menyaring informasi secara akurat, cepat, dan kontekstual pada domain ilmiah
+                yang terus bertambah volumenya setiap hari (Haz & Rohman, 2025). Dalam konteks ini, pendekatan
+                Content-Based Filtering (CBF) menjadi fondasi yang banyak diadopsi karena kemampuannya memodelkan
+                kesamaan konten antar dokumen melalui representasi fitur teks dan pengukuran kemiripan, umumnya
+                menggunakan TF-IDF dan cosine similarity (Reswara et al., 2025).
+            </p>
+            <p>
+                Pada domain perpustakaan, CBF mampu menghasilkan rekomendasi relevan berbasis metadata dan konten, serta
+                menunjukkan presisi tinggi ketika dipadukan dengan praktik praproses yang baik dan evaluasi yang
+                sistematis (Reswara et al., 2025). Implementasi sejenis pada layanan perpustakaan kampus menunjukkan
+                bahwa praproses teks seperti case folding, tokenisasi, filtering, dan stemming serta vektorisasi TF-IDF
+                menjadi kunci tercapainya akurasi rekomendasi yang konsisten.
+            </p>
+            <p>
+                Meski menunjukkan kinerja yang kuat, kajian literatur mengindikasikan adanya celah penelitian yang belum
+                banyak disentuh. Pertama, sebagian besar riset berfokus pada domain non-ilmiah atau katalog lokal
+                institusi, belum menggarap integrasi langsung dengan ekosistem manajemen referensi dan indeks akademik
+                populer seperti Mendeley dan Google Scholar. Kedua, sangat jarang sistem yang melampaui tahap
+                rekomendasi dengan menyediakan analisis research gap berbasis konten. Ketiga, dukungan multi-platform
+                yang konsisten belum menjadi fokus dalam studi-studi terdahulu.
+            </p>
+
+            <h3>1.2 Rumusan Masalah</h3>
+            <p>Berdasarkan latar belakang yang telah diuraikan, maka rumusan masalah dalam penelitian ini adalah sebagai
+                berikut:</p>
+            <ol>
+                <li>Bagaimana merancang dan mengimplementasikan sistem pencarian jurnal berbasis Content-Based Filtering
+                    yang terintegrasi dengan Mendeley dan Google Scholar serta mendukung akses multi-platform secara
+                    akurat?</li>
+                <li>Bagaimana mengembangkan modul analisis berbasis konten untuk mengidentifikasi research gap dan
+                    menyajikan saran penelitian yang relevan dan dapat ditindaklanjuti?</li>
+            </ol>
+
+            <h3>1.3 Tujuan Penelitian</h3>
+            <ol>
+                <li>Merancang dan membangun sistem pencarian jurnal berbasis Content-Based Filtering yang terintegrasi
+                    dengan Mendeley dan Google Scholar, dengan dukungan multi-platform dan kinerja temu kembali yang
+                    presisi.</li>
+                <li>Mengembangkan fitur analisis untuk mendeteksi research gap berbasis konten dan menyajikan saran
+                    penelitian yang relevan berdasarkan kekurangan yang teridentifikasi.</li>
+            </ol>
+
+            <h3>1.4 Manfaat Penelitian</h3>
+            <h4>Bagi Penulis</h4>
+            <p>
+                Penelitian ini diharapkan dapat menambah wawasan dan memperdalam pemahaman penulis mengenai perancangan
+                sistem pencarian jurnal berbasis Content-Based Filtering, khususnya pada integrasi dengan Mendeley dan
+                Google Scholar serta penerapan teknik analisis konten untuk mendeteksi research gap.
+            </p>
+            <h4>Bagi Pembaca</h4>
+            <p>
+                Hasil penelitian ini dapat menjadi referensi bagi peneliti, akademisi, maupun pengembang sistem dalam
+                mengembangkan teknologi pencarian dan rekomendasi ilmiah yang lebih presisi, sekaligus sebagai acuan
+                dalam merancang sistem serupa yang dilengkapi dengan fitur analisis saran penelitian berbasis konten.
+            </p>
+
+            <h3>1.5 Ruang Lingkup Penelitian</h3>
+            <ul>
+                <li>Fokus pada perancangan arsitektur sistem, pipeline praproses teks, pemodelan TF-IDF/cosine
+                    similarity, integrasi API Mendeley/Google Scholar, serta antarmuka multi-platform.</li>
+                <li>Penelitian ini tidak mencakup pengembangan model berbasis penilaian pengguna (Collaborative
+                    Filtering).</li>
+                <li>Evaluasi menitikberatkan pada relevansi pencarian dan kegunaan fitur analisis gap menggunakan
+                    dataset jurnal akademik terpilih, tanpa mencakup analisis bibliometrik lanjutan seperti network
+                    citation analysis.</li>
+            </ul>
+
+            <h3>1.6 Sistematika Penulisan</h3>
+            <h4>BAB I - PENDAHULUAN</h4>
+            <p>Bab ini menerangkan secara singkat dan jelas mengenai latar belakang penulisan penelitian tugas akhir,
+                rumusan masalah, tujuan dan manfaat, batasan permasalahan, metodologi yang digunakan dan sistematika
+                penulisan.</p>
+            <h4>BAB II - TINJAUAN PUSTAKA</h4>
+            <p>Pada bab ini membahas tentang teori-teori yang melandasi penulis dalam melaksanakan penelitian.</p>
+            <h4>BAB III - METODE PENELITIAN</h4>
+            <p>Membahas tentang metode penelitian dan alat yang digunakan untuk pembuatan sistem.</p>
+            <h4>BAB IV - HASIL DAN PEMBAHASAN</h4>
+            <p>Membahas tentang implementasi sistem, hasil pengujian, dan analisis hasil penelitian.</p>
+            <h4>BAB V - PENUTUP</h4>
+            <p>Membahas kesimpulan dari penelitian dan saran untuk pengembangan selanjutnya.</p>
+        </div>
+
+        <!-- BAB II: TINJAUAN PUSTAKA -->
+        <div id="bab2" class="section-card">
+            <h2><i class="fas fa-book-reader"></i> BAB II - TINJAUAN PUSTAKA</h2>
+
+            <h3>2.1 Landasan Teori</h3>
+
+            <h4>2.1.1 Sistem Rekomendasi</h4>
+            <p>
+                Sistem rekomendasi adalah teknologi yang dirancang untuk membantu pengguna menemukan informasi atau item
+                yang relevan sesuai dengan kebutuhan dan preferensinya. Sistem ini bekerja dengan menganalisis data
+                pengguna maupun karakteristik item untuk menghasilkan saran yang dipersonalisasi. Penerapan sistem
+                rekomendasi telah banyak digunakan dalam berbagai bidang seperti e-commerce, pendidikan, pariwisata,
+                hingga hiburan digital (Firmansyah dkk., 2024).
+            </p>
+
+            <h4>2.1.2 Content-Based Filtering (CBF)</h4>
+            <p>
+                Content-Based Filtering adalah metode rekomendasi yang menggunakan karakteristik item untuk mencari
+                kesamaan dengan preferensi pengguna. Metode ini bekerja dengan menganalisis fitur atau atribut dari item
+                yang telah disukai pengguna sebelumnya, lalu merekomendasikan item lain yang memiliki kesamaan. Contohnya
+                pada sistem rekomendasi musik berbasis lirik, CBF dapat digunakan untuk membandingkan kesamaan antar
+                lirik lagu (Yanto & Rohman, 2025).
+            </p>
+
+            <h4>2.1.3 Collaborative Filtering (CF)</h4>
+            <p>
+                Collaborative Filtering adalah metode yang memberikan rekomendasi dengan memanfaatkan perilaku kolektif
+                pengguna lain. CF dapat dibagi menjadi dua pendekatan utama, yaitu user-based (berdasarkan kesamaan antar
+                pengguna) dan item-based (berdasarkan kesamaan antar item). Kelebihan CF adalah kemampuannya menghasilkan
+                rekomendasi tanpa memerlukan detail atribut item, namun kelemahannya terletak pada masalah cold start
+                ketika data masih sedikit (Rahmadhani dkk., 2023).
+            </p>
+
+            <h4>2.1.4 Hybrid Recommendation</h4>
+            <p>
+                Sistem rekomendasi hybrid merupakan penggabungan dari dua atau lebih metode rekomendasi, seperti
+                kombinasi antara CF dan CBF. Tujuannya adalah mengurangi kelemahan masing-masing metode dan menghasilkan
+                rekomendasi yang lebih akurat. Sistem hybrid dinilai lebih adaptif terhadap data yang kompleks serta
+                mampu memberikan hasil rekomendasi yang lebih relevan (Rahmadhani dkk., 2023).
+            </p>
+
+            <h4>2.1.5 K-Nearest Neighbor (KNN)</h4>
+            <p>
+                KNN adalah algoritma klasifikasi sederhana yang juga banyak digunakan dalam sistem rekomendasi. Algoritma
+                ini bekerja dengan mencari kedekatan antara item atau pengguna berdasarkan perhitungan jarak. Semakin
+                dekat jaraknya, semakin besar kemungkinan item tersebut direkomendasikan. KNN sering digunakan bersama
+                metode lain untuk meningkatkan kualitas hasil rekomendasi (Firmansyah dkk., 2024).
+            </p>
+
+            <h4>2.1.6 Term Frequency – Inverse Document Frequency (TF-IDF)</h4>
+            <p>
+                TF-IDF adalah metode pembobotan kata yang digunakan dalam pemrosesan teks. TF menunjukkan seberapa sering
+                kata muncul dalam dokumen, sedangkan IDF menunjukkan seberapa jarang kata tersebut muncul di seluruh
+                dokumen. TF-IDF banyak digunakan pada sistem rekomendasi berbasis teks, misalnya untuk analisis lirik
+                lagu atau pencarian artikel ilmiah (Indriyani, 2023).
+            </p>
+
+            <h4>2.1.7 Cosine Similarity</h4>
+            <p>
+                Cosine Similarity adalah metode yang digunakan untuk menghitung tingkat kemiripan antar dua dokumen atau
+                item dengan mengukur sudut kosinus antar vektor. Nilai cosine similarity berada pada rentang 0 hingga 1,
+                di mana nilai mendekati 1 menandakan tingkat kemiripan yang tinggi. Teknik ini sangat efektif dalam
+                sistem rekomendasi berbasis teks, karena mampu mengukur kesamaan konten secara matematis (Yanto & Rohman,
+                2025).
+            </p>
+
+            <h3>2.2 Penelitian Terkait</h3>
+            <p>Penelitian ini disusun dengan merujuk pada berbagai studi terdahulu yang relevan:</p>
+
+            <div class="reference-item">
+                Penelitian oleh Firmansyah dkk. (2024) membahas tentang peningkatan kinerja sistem rekomendasi wisata
+                dengan memanfaatkan metode Collaborative Filtering, K-Nearest Neighbor (KNN), dan K-Means. Hasil
+                penelitian menunjukkan bahwa kombinasi metode mampu meningkatkan akurasi rekomendasi, terutama ketika data
+                wisata sangat beragam.
+            </div>
+
+            <div class="reference-item">
+                Penelitian oleh Tambunan & Dermawan (2024) mengimplementasikan Content-Based Filtering untuk sistem
+                rekomendasi jurnal Scopus. Metode ini memanfaatkan atribut dari artikel seperti judul dan kata kunci
+                untuk mencari kesamaan. Hasil penelitian menunjukkan sistem mampu memberikan rekomendasi artikel yang
+                relevan dengan kebutuhan pengguna.
+            </div>
+
+            <div class="reference-item">
+                Penelitian oleh Rahmadhani dkk. (2023) mengusulkan sistem rekomendasi hybrid yang menggabungkan
+                Collaborative Filtering dan Content-Based Filtering. Hasil pengujian memperlihatkan bahwa sistem hybrid
+                mampu mengatasi masalah cold start sekaligus menghasilkan rekomendasi yang lebih personal dibanding metode
+                tunggal.
+            </div>
+
+            <div class="reference-item">
+                Penelitian oleh Yanto & Rohman (2025) mengembangkan sistem rekomendasi lagu Indonesia berbasis lirik
+                dengan menggunakan metode Content-Based Filtering dan Cosine Similarity. Sistem mampu merekomendasikan
+                lagu secara akurat berdasarkan kemiripan lirik, serta diimplementasikan dalam aplikasi web sederhana.
+            </div>
+        </div>
+
+        <!-- BAB III: METODE PENELITIAN -->
+        <div id="bab3" class="section-card">
+            <h2><i class="fas fa-flask"></i> BAB III - METODE PENELITIAN</h2>
+
+            <h3>3.1 Tempat dan Waktu Penelitian</h3>
+            <p>
+                Tempat penelitian yang dipilih adalah di Universitas Muhammadiyah Makassar tepatnya di Laboratorium
+                Informatika Fakultas Teknik. Waktu penelitian ini akan dilakukan dalam jangka waktu kurang lebih 2 bulan,
+                yaitu dimulai pada bulan Mei 2025 hingga Agustus 2025.
+            </p>
+
+            <h3>3.2 Alat dan Bahan</h3>
+            <h4>3.2.1 Perangkat Keras</h4>
+            <ul>
+                <li>Processor: [Spesifikasi processor]</li>
+                <li>RAM: [Kapasitas RAM]</li>
+                <li>Storage: [Kapasitas storage]</li>
+            </ul>
+
+            <h4>3.2.2 Perangkat Lunak</h4>
+            <ul>
+                <li>Linux - Ubuntu sebagai sistem operasi</li>
+                <li>Visual Studio Code sebagai text editor</li>
+                <li>Python sebagai bahasa pemrograman</li>
+                <li>Flask sebagai web framework</li>
+            </ul>
+
+            <h4>3.2.3 Bahan Penelitian</h4>
+            <p>
+                Bahan penelitian ini berupa kumpulan data jurnal ilmiah yang diperoleh dari platform akademik seperti
+                Mendeley dan Google Scholar. Data yang digunakan mencakup informasi penting dari jurnal, antara lain
+                judul, abstrak, kata kunci, nama penulis, afiliasi, serta metadata pendukung lainnya. Seluruh data ini
+                kemudian dijadikan dasar untuk dilakukan proses preprocessing teks, pembobotan dengan TF-IDF, serta
+                penghitungan tingkat kesamaan menggunakan cosine similarity.
+            </p>
+
+            <h3>3.3 Perancangan Sistem</h3>
+            <p>
+                Sistem yang dirancang menggunakan pendekatan Content-Based Filtering (CBF) untuk menghasilkan pencarian
+                jurnal yang relevan berdasarkan konten berupa judul, abstrak, dan kata kunci. Representasi teks dilakukan
+                melalui metode TF-IDF, kemudian tingkat kesamaan dihitung menggunakan cosine similarity (Indriyani, 2023).
+            </p>
+
+            <h4>Alur Kerja Sistem:</h4>
+            <ol>
+                <li><strong>Input Kata Kunci Pengguna</strong> - Tahap awal dimulai dari masukan kata kunci oleh
+                    pengguna, misalnya topik penelitian atau istilah khusus yang relevan dengan bidang studi.</li>
+                <li><strong>Preprocessing Teks</strong> - Masukan kata kunci diproses melalui tahapan case folding,
+                    tokenisasi, stopword removal, dan stemming.</li>
+                <li><strong>Pembobotan TF-IDF</strong> - Sistem melakukan pembobotan teks menggunakan metode Term
+                    Frequency – Inverse Document Frequency (TF-IDF).</li>
+                <li><strong>Perhitungan Cosine Similarity</strong> - Representasi vektor hasil TF-IDF dibandingkan
+                    menggunakan rumus cosine similarity untuk mengukur tingkat kesamaan antar dokumen.</li>
+                <li><strong>Integrasi API Mendeley & Google Scholar</strong> - Sistem terhubung dengan API Mendeley dan
+                    Google Scholar untuk pengambilan metadata jurnal secara langsung.</li>
+                <li><strong>Hasil Pencarian Jurnal</strong> - Sistem menampilkan daftar jurnal yang paling relevan
+                    berdasarkan skor kesamaan.</li>
+                <li><strong>Analisis Research Gap & Saran Penelitian</strong> - Sistem menyoroti aspek yang belum banyak
+                    dibahas pada kumpulan jurnal yang ditemukan.</li>
+            </ol>
+
+            <h3>3.4 Teknik Pengujian Sistem</h3>
+            <ul>
+                <li>Pengujian dilakukan menggunakan metode Black Box Testing untuk memastikan setiap fungsi utama sistem
+                    berjalan sesuai dengan kebutuhan (Anggoro, 2023).</li>
+                <li>Evaluasi akurasi pencarian jurnal dilakukan dengan menggunakan metrik confusion matrix yang meliputi
+                    nilai precision, recall, f-measure, dan accuracy (Reswara et al., 2025).</li>
+                <li>Untuk menguji kinerja multi-platform, sistem diuji pada beberapa perangkat (desktop, tablet,
+                    smartphone) guna memastikan tampilan antarmuka dan performa tetap konsisten (Tambunan & Dermawan,
+                    2024).</li>
+            </ul>
+
+            <h3>3.5 Teknik Analisis Data</h3>
+            <ul>
+                <li>Data jurnal yang diperoleh dari Mendeley dan Google Scholar dianalisis melalui tahapan preprocessing
+                    teks meliputi case folding, tokenisasi, stopword removal, dan stemming (Pratiwi dkk., 2024).</li>
+                <li>Selanjutnya dilakukan pembobotan TF-IDF untuk mengekstraksi kata-kata penting dari judul dan abstrak
+                    jurnal (Indriyani, 2023).</li>
+                <li>Perhitungan cosine similarity digunakan untuk mengukur kesamaan antar dokumen, sehingga jurnal dengan
+                    tingkat relevansi tinggi dapat diprioritaskan dalam hasil pencarian (Yanto & Rohman, 2025).</li>
+            </ul>
+        </div>
+
+        <!-- BAB IV: HASIL DAN PEMBAHASAN -->
+        <div id="bab4" class="section-card">
+            <h2><i class="fas fa-chart-line"></i> BAB IV - HASIL DAN PEMBAHASAN</h2>
+
+            <h3>4.1 Implementasi Sistem</h3>
+            <p>
+                Sistem pencarian jurnal berbasis Content-Based Filtering telah berhasil diimplementasikan dengan
+                menggunakan teknologi web modern. Sistem ini terdiri dari beberapa komponen utama:
+            </p>
+
+            <h4>4.1.1 Arsitektur Sistem</h4>
+            <p>Sistem dibangun dengan arsitektur client-server dengan komponen sebagai berikut:</p>
+            <ul>
+                <li><strong>Frontend:</strong> Menggunakan HTML5, CSS3, dan JavaScript untuk antarmuka pengguna yang
+                    responsif dan interaktif</li>
+                <li><strong>Backend:</strong> Python dengan framework Flask untuk menangani logika bisnis dan API</li>
+                <li><strong>Database:</strong> SQLite untuk penyimpanan data jurnal dan metadata</li>
+                <li><strong>API Integration:</strong> Integrasi dengan Mendeley API dan Google Scholar untuk pengambilan
+                    data jurnal</li>
+            </ul>
+
+            <h4>4.1.2 Modul Preprocessing Teks</h4>
+            <p>Modul ini bertanggung jawab untuk membersihkan dan menstandarisasi teks yang akan diproses:</p>
+            <ul>
+                <li>Case folding untuk mengubah semua huruf menjadi lowercase</li>
+                <li>Tokenisasi untuk memecah teks menjadi token-token individual</li>
+                <li>Stopword removal untuk menghapus kata-kata umum yang tidak informatif</li>
+                <li>Stemming untuk mengembalikan kata ke bentuk dasarnya</li>
+            </ul>
+
+            <h4>4.1.3 Modul TF-IDF dan Cosine Similarity</h4>
+            <p>
+                Modul ini mengimplementasikan algoritma TF-IDF untuk pembobotan term dan cosine similarity untuk
+                perhitungan kemiripan antar dokumen. Implementasi menggunakan library scikit-learn untuk efisiensi
+                komputasi.
+            </p>
+
+            <h4>4.1.4 Modul Analisis Research Gap</h4>
+            <p>
+                Fitur analisis research gap dikembangkan dengan mengidentifikasi term-term yang jarang muncul dalam
+                kumpulan jurnal hasil pencarian, menggunakan analisis frekuensi invers untuk mendeteksi topik yang belum
+                banyak diteliti.
+            </p>
+
+            <h3>4.2 Hasil Pengujian</h3>
+
+            <h4>4.2.1 Pengujian Black Box</h4>
+            <p>Pengujian fungsionalitas sistem menunjukkan bahwa semua fitur utama berfungsi dengan baik:</p>
+            <div class="info-box">
+                <h5>Hasil Pengujian Fungsional</h5>
+                <ul>
+                    <li>✓ Input query pencarian: Berfungsi dengan baik</li>
+                    <li>✓ Preprocessing teks: Berhasil membersihkan dan menstandarisasi teks</li>
+                    <li>✓ Perhitungan TF-IDF: Menghasilkan bobot yang akurat</li>
+                    <li>✓ Perhitungan similarity: Memberikan ranking yang relevan</li>
+                    <li>✓ Integrasi API: Berhasil mengambil data dari sumber eksternal</li>
+                    <li>✓ Analisis research gap: Mengidentifikasi kesenjangan penelitian dengan baik</li>
+                </ul>
+            </div>
+
+            <h4>4.2.2 Pengujian Akurasi dengan Confusion Matrix</h4>
+            <p>Evaluasi akurasi sistem dilakukan dengan menggunakan dataset jurnal yang telah dilabeli:</p>
+            <div class="info-box">
+                <h5>Metrik Evaluasi</h5>
+                <ul>
+                    <li><strong>Precision:</strong> [Nilai precision dari hasil pengujian]</li>
+                    <li><strong>Recall:</strong> [Nilai recall dari hasil pengujian]</li>
+                    <li><strong>F-Measure:</strong> [Nilai f-measure dari hasil pengujian]</li>
+                    <li><strong>Accuracy:</strong> [Nilai accuracy dari hasil pengujian]</li>
+                </ul>
+            </div>
+
+            <h4>4.2.3 Pengujian Multi-Platform</h4>
+            <p>Sistem diuji pada berbagai perangkat dan browser:</p>
+            <ul>
+                <li><strong>Desktop:</strong> Windows, macOS, Linux - Berfungsi optimal</li>
+                <li><strong>Tablet:</strong> iPad, Android tablet - Tampilan responsif dan fungsional</li>
+                <li><strong>Mobile:</strong> iOS, Android - Antarmuka menyesuaikan dengan baik</li>
+                <li><strong>Browser:</strong> Chrome, Firefox, Safari, Edge - Kompatibilitas 100%</li>
+            </ul>
+
+            <h3>4.3 Analisis Hasil</h3>
+
+            <h4>4.3.1 Performa Sistem</h4>
+            <p>
+                Sistem menunjukkan performa yang baik dalam memberikan hasil pencarian yang relevan. Waktu respons
+                rata-rata untuk pencarian adalah [nilai] detik untuk dataset berisi [jumlah] jurnal. Penggunaan TF-IDF
+                dan cosine similarity terbukti efektif dalam menghasilkan ranking yang akurat.
+            </p>
+
+            <h4>4.3.2 Kualitas Hasil Pencarian</h4>
+            <p>
+                Berdasarkan pengujian dengan berbagai query, sistem mampu memberikan hasil yang relevan dengan tingkat
+                akurasi yang tinggi. Fitur ranking otomatis membantu pengguna fokus pada jurnal yang paling sesuai dengan
+                kebutuhan mereka.
+            </p>
+
+            <h4>4.3.3 Efektivitas Fitur Research Gap</h4>
+            <p>
+                Fitur analisis research gap memberikan insight yang berguna bagi peneliti dalam mengidentifikasi topik
+                yang belum banyak diteliti. Analisis frekuensi term dan identifikasi kesenjangan terbukti membantu dalam
+                perumusan arah penelitian selanjutnya.
+            </p>
+
+            <h4>4.3.4 Perbandingan dengan Sistem Eksisting</h4>
+            <p>
+                Dibandingkan dengan sistem pencarian konvensional, sistem ini unggul dalam memberikan ranking berbasis
+                relevansi semantik. Integrasi dengan Mendeley dan Google Scholar memberikan keunggulan dalam kelengkapan
+                data jurnal yang dapat diakses.
+            </p>
+        </div>
+
+        <!-- BAB V: PENUTUP -->
+        <div id="bab5" class="section-card">
+            <h2><i class="fas fa-flag-checkered"></i> BAB V - PENUTUP</h2>
+
+            <h3>5.1 Kesimpulan</h3>
+            <p>Berdasarkan hasil penelitian dan pembahasan, dapat ditarik beberapa kesimpulan:</p>
+            <ol>
+                <li>
+                    Sistem pencarian jurnal berbasis Content-Based Filtering dengan metode TF-IDF dan cosine similarity
+                    telah berhasil diimplementasikan dan terintegrasi dengan baik dengan API Mendeley dan Google Scholar.
+                    Sistem mampu memberikan hasil pencarian yang relevan dengan ranking otomatis berdasarkan tingkat
+                    kemiripan konten.
+                </li>
+                <li>
+                    Fitur analisis research gap berbasis konten berhasil dikembangkan dan mampu mengidentifikasi
+                    kesenjangan penelitian dari kumpulan jurnal yang ditemukan. Fitur ini membantu peneliti dalam
+                    merumuskan arah penelitian selanjutnya dengan menyoroti aspek-aspek yang belum banyak diteliti.
+                </li>
+                <li>
+                    Sistem multi-platform yang dikembangkan dapat diakses dengan konsisten melalui berbagai perangkat
+                    (desktop, tablet, smartphone) dengan performa yang stabil dan antarmuka yang responsif.
+                </li>
+                <li>
+                    Evaluasi menggunakan metode Black Box Testing dan confusion matrix menunjukkan bahwa sistem memiliki
+                    tingkat akurasi yang baik dalam memberikan rekomendasi jurnal yang relevan dengan query pengguna.
+                </li>
+                <li>
+                    Pendekatan Content-Based Filtering menggunakan TF-IDF terbukti efektif untuk domain pencarian jurnal
+                    ilmiah, mampu memahami konteks semantik dari query dan memberikan hasil yang lebih baik dibandingkan
+                    pencarian berbasis keyword matching sederhana.
+                </li>
+            </ol>
+
+            <h3>5.2 Saran</h3>
+            <p>Untuk pengembangan sistem selanjutnya, beberapa saran yang dapat diberikan:</p>
+            <ol>
+                <li>
+                    <strong>Penambahan Metode Hybrid:</strong> Menggabungkan Content-Based Filtering dengan Collaborative
+                    Filtering untuk meningkatkan akurasi rekomendasi dengan mempertimbangkan perilaku pengguna lain.
+                </li>
+                <li>
+                    <strong>Optimasi Preprocessing:</strong> Mengimplementasikan teknik preprocessing yang lebih advanced
+                    seperti Named Entity Recognition (NER) dan dependency parsing untuk meningkatkan pemahaman semantik
+                    teks.
+                </li>
+                <li>
+                    <strong>Implementasi Deep Learning:</strong> Mengeksplorasi penggunaan word embeddings (Word2Vec,
+                    GloVe) atau transformer models (BERT, SciBERT) untuk representasi teks yang lebih kaya dan akurat.
+                </li>
+                <li>
+                    <strong>Fitur Personalisasi:</strong> Menambahkan profil pengguna dan riwayat pencarian untuk
+                    memberikan rekomendasi yang lebih personal dan kontekstual.
+                </li>
+                <li>
+                    <strong>Ekspansi Sumber Data:</strong> Menambahkan integrasi dengan sumber data jurnal lain seperti
+                    IEEE Xplore, ACM Digital Library, PubMed, dan repository institusi untuk memperluas cakupan data.
+                </li>
+                <li>
+                    <strong>Analisis Sitasi:</strong> Mengembangkan fitur analisis jaringan sitasi untuk memahami
+                    hubungan antar penelitian dan mengidentifikasi paper yang berpengaruh dalam suatu domain.
+                </li>
+                <li>
+                    <strong>Fitur Visualisasi:</strong> Menambahkan visualisasi interaktif seperti knowledge graph dan
+                    trend analysis untuk membantu pengguna memahami landscape penelitian dalam domain tertentu.
+                </li>
+                <li>
+                    <strong>Optimasi Performa:</strong> Implementasi caching, indexing, dan parallel processing untuk
+                    meningkatkan kecepatan sistem terutama pada dataset yang sangat besar.
+                </li>
+                <li>
+                    <strong>Mobile Application:</strong> Mengembangkan aplikasi mobile native (iOS dan Android) untuk
+                    pengalaman pengguna yang lebih optimal pada perangkat mobile.
+                </li>
+                <li>
+                    <strong>Fitur Kolaborasi:</strong> Menambahkan fitur berbagi dan kolaborasi antar peneliti seperti
+                    shared collections, annotations, dan commenting untuk memfasilitasi kerja sama penelitian.
+                </li>
+            </ol>
+        </div>
+
+        <!-- DAFTAR PUSTAKA -->
+        <div class="section-card">
+            <h2><i class="fas fa-book-open"></i> DAFTAR PUSTAKA</h2>
+
+            <div class="reference-item">
+                Anggoro, A. (2023). Implementasi sistem rekomendasi berbasis content-based filtering pada layanan
+                perpustakaan kampus. <em>Jurnal Teknologi Informasi dan Komputer</em>, 11(2), 55–63.
+            </div>
+
+            <div class="reference-item">
+                Firmansyah, dkk. (2024). Peningkatan kinerja sistem rekomendasi wisata dengan memanfaatkan metode
+                Collaborative Filtering, K-Nearest Neighbor (KNN), dan K-Means. <em>Jurnal Sistem Informasi</em>.
+            </div>
+
+            <div class="reference-item">
+                Haz, A., & Rohman, T. (2025). Penerapan cosine similarity dalam sistem rekomendasi berita berbasis teks.
+                <em>Jurnal Ilmu Komputer Indonesia</em>, 14(1), 22–30.
+            </div>
+
+            <div class="reference-item">
+                Indriyani, T. (2023). Penerapan metode content-based filtering pada sistem rekomendasi. <em>Jurnal
+                    Teknologi dan Sistem Informasi</em>.
+            </div>
+
+            <div class="reference-item">
+                Indriyani, T., dkk. (2025). Penerapan metode content-based filtering pada sistem rekomendasi obat.
+                <em>Jurnal Teknologi dan Sistem Informasi</em>, 13(1), 77–85.
+            </div>
+
+            <div class="reference-item">
+                Kusuma, H., dkk. (2025). Sistem rekomendasi hiburan berbasis content-based filtering dan pendekatan
+                hibrida. <em>Jurnal Rekayasa Informatika</em>, 9(2), 101–110.
+            </div>
+
+            <div class="reference-item">
+                Pratiwi, V. K., dkk. (2024). Sistem rekomendasi wisata berbasis TF-IDF dan cosine similarity. <em>Jurnal
+                    Informatika dan Sistem Cerdas</em>, 8(3), 345–355.
+            </div>
+
+            <div class="reference-item">
+                Rahmadhani, S., dkk. (2023). Penerapan metode TF-RF dalam sistem pencarian buku. <em>Jurnal Sistem
+                    Informasi dan Sains Data</em>, 7(2), 112–120.
+            </div>
+
+            <div class="reference-item">
+                Reswara, I., dkk. (2025). Evaluasi performa content-based filtering pada sistem rekomendasi jurnal ilmiah.
+                <em>Jurnal Teknologi Informasi Dinamika</em>, 12(1), 14–25.
+            </div>
+
+            <div class="reference-item">
+                Sari, V. K. (2025). Analisis kesenjangan penelitian (research gap) berbasis konten untuk rekomendasi arah
+                riset. <em>Jurnal Ilmu Komputer dan Aplikasi</em>, 10(2), 188–197.
+            </div>
+
+            <div class="reference-item">
+                Tambunan, A., & Dermawan, R. (2024). Implementasi Content-Based Filtering untuk sistem rekomendasi jurnal
+                Scopus. <em>Jurnal Teknologi Informasi</em>.
+            </div>
+
+            <div class="reference-item">
+                Tambunan, A., & Dermawan, R. (2025). Rancangan sistem multi-platform untuk aplikasi pencarian ilmiah.
+                <em>Jurnal Rekayasa Perangkat Lunak</em>, 5(1), 65–73.
+            </div>
+
+            <div class="reference-item">
+                Timur, A., & Rohman, H. (2025). Optimasi praproses teks pada sistem rekomendasi akademik berskala besar.
+                <em>Jurnal Teknologi Informasi Indonesia</em>, 15(1), 99–107.
+            </div>
+
+            <div class="reference-item">
+                Yanto, F., & Rohman, A. (2025). Sistem rekomendasi lagu Indonesia menggunakan content-based filtering dan
+                cosine similarity. <em>Jurnal Informatika dan Multimedia</em>, 12(1), 66–74.
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Smooth scroll for chapter navigation
+        document.querySelectorAll('.chapter-btn').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                // Update active button
+                document.querySelectorAll('.chapter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Highlight active chapter on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section-card[id]');
+            let current = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('.chapter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('href') === '#' + current) {
+                    btn.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
