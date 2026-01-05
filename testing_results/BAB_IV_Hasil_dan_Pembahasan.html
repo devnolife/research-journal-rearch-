@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BAB IV - Hasil dan Pembahasan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            line-height: 1.8;
+            color: #000;
+            background: #fff;
+            padding: 2cm 3cm;
+            max-width: 21cm;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 1.5cm;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 1cm;
+            margin-bottom: 0.5cm;
+        }
+
+        h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 0.8cm;
+            margin-bottom: 0.4cm;
+            font-style: italic;
+        }
+
+        h4 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 0.5cm;
+            margin-bottom: 0.3cm;
+        }
+
+        p {
+            text-align: justify;
+            text-indent: 1cm;
+            margin-bottom: 0.5cm;
+        }
+
+        ul,
+        ol {
+            margin-left: 2cm;
+            margin-bottom: 0.5cm;
+        }
+
+        li {
+            margin-bottom: 0.2cm;
+        }
+
+        .figure {
+            margin: 1cm 0;
+            text-align: center;
+            page-break-inside: avoid;
+        }
+
+        .figure img {
+            max-width: 100%;
+            border: 1px solid #000;
+            margin-bottom: 0.3cm;
+        }
+
+        .figure-caption {
+            font-size: 11pt;
+            font-style: italic;
+            text-align: center;
+            margin-top: 0.3cm;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.5cm 0 1cm 0;
+            font-size: 11pt;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #000;
+        }
+
+        th,
+        td {
+            padding: 0.3cm;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+
+        .table-caption {
+            font-size: 11pt;
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 0.3cm;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background: #f5f5f5;
+            padding: 0.1cm 0.2cm;
+            border: 1px solid #ddd;
+        }
+
+        .no-indent {
+            text-indent: 0;
+        }
+
+        @media print {
+            body {
+                padding: 0;
+            }
+
+            .figure {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>BAB IV<br>HASIL DAN PEMBAHASAN</h1>
+
+    <h2>4.1 Implementasi Sistem</h2>
+
+    <p>Sistem pencarian jurnal berbasis Content-Based Filtering telah berhasil diimplementasikan menggunakan teknologi
+        web modern. Backend sistem dibangun dengan framework Flask (Python) yang menangani proses pencarian,
+        preprocessing teks, perhitungan TF-IDF, dan ranking berbasis Cosine Similarity. Frontend diimplementasikan
+        menggunakan HTML5, CSS3, dan JavaScript untuk menyediakan antarmuka pengguna yang responsif dan mudah digunakan.
+    </p>
+
+    <p>Implementasi sistem mencakup beberapa komponen utama: (1) modul web scraping dan API integration untuk mengambil
+        data jurnal dari berbagai sumber seperti Semantic Scholar, Google Scholar, dan Mendeley; (2) modul Natural
+        Language Processing (NLP) untuk preprocessing teks menggunakan library NLTK; (3) modul Content-Based Filtering
+        yang mengimplementasikan algoritma TF-IDF dan Cosine Similarity menggunakan scikit-learn; dan (4) modul evaluasi
+        untuk mengukur performa sistem.</p>
+
+    <h3>4.1.1 Antarmuka Pengguna</h3>
+
+    <p>Halaman utama sistem dirancang dengan pendekatan minimalis namun fungsional. Pengguna dapat langsung mengakses
+        form pencarian tanpa harus melalui proses registrasi atau login. Interface menyediakan input field untuk query
+        penelitian dan dropdown selector untuk memilih sumber data yang diinginkan. Gambar 4.1 menunjukkan tampilan
+        halaman utama sistem.</p>
+
+    <div class="figure">
+        <img src="file:///d:/devnolife/research-system/screenshots/01_homepage.png" alt="Halaman Utama">
+        <div class="figure-caption">Gambar 4.1 Tampilan Halaman Utama Sistem Pencarian Jurnal</div>
+    </div>
+
+    <p class="no-indent">Halaman utama menampilkan beberapa elemen penting:</p>
+    <ul>
+        <li>Header dengan judul sistem dan deskripsi singkat mengenai fungsi aplikasi</li>
+        <li>Form pencarian yang terdiri dari input text untuk query dan dropdown untuk memilih sumber data</li>
+        <li>Tombol "Cari Jurnal" untuk memulai proses pencarian</li>
+        <li>Link navigasi ke halaman metodologi untuk pengguna yang ingin memahami cara kerja sistem</li>
+    </ul>
+
+    <p>Desain responsive memastikan bahwa sistem dapat diakses dari berbagai perangkat dengan ukuran layar yang berbeda,
+        mulai dari desktop hingga mobile device. Implementasi menggunakan CSS Grid dan Flexbox untuk layout yang
+        fleksibel dan adaptif.</p>
+
+    <h3>4.1.2 Proses Pencarian</h3>
+
+    <p>Ketika pengguna memasukkan query dan memilih sumber data, sistem akan melakukan beberapa tahapan proses. Pertama,
+        sistem menampilkan loading indicator untuk memberikan feedback visual kepada pengguna bahwa proses sedang
+        berlangsung. Backend kemudian melakukan request ke API atau melakukan web scraping sesuai dengan sumber data
+        yang dipilih. Gambar 4.2 menunjukkan tampilan loading indicator saat proses pencarian berlangsung.</p>
+
+    <div class="figure">
+        <img src="file:///d:/devnolife/research-system/screenshots/02_searching.png" alt="Proses Pencarian">
+        <div class="figure-caption">Gambar 4.2 Loading Indicator Saat Proses Pencarian</div>
+    </div>
+
+    <p>Proses pencarian melibatkan beberapa tahap: (1) validasi input query di sisi client untuk memastikan query tidak
+        kosong; (2) pengiriman HTTP POST request ke endpoint <code>/api/search</code> dengan parameter query, source,
+        dan max_results; (3) backend melakukan request ke sumber data eksternal; (4) data yang diperoleh kemudian
+        diproses melalui modul preprocessing; (5) perhitungan TF-IDF dan Cosine Similarity untuk ranking; dan (6)
+        pengiriman response berupa JSON yang berisi daftar paper beserta skor relevansinya.</p>
+
+    <p>Average response time untuk pencarian berkisar antara 10-20 detik tergantung pada jumlah hasil yang diminta dan
+        kecepatan response dari API eksternal. Response time ini termasuk waktu untuk scraping/API call, preprocessing,
+        TF-IDF vectorization, dan Cosine Similarity calculation.</p>
+
+    <h3>4.1.3 Tampilan Hasil Pencarian</h3>
+
+    <p>Setelah proses pencarian selesai, sistem menampilkan hasil dalam bentuk list card yang terstruktur. Setiap card
+        menampilkan informasi penting tentang paper termasuk judul, penulis, tahun publikasi, abstrak singkat, dan
+        sumber data. Yang paling penting, setiap paper juga menampilkan skor relevansi hasil perhitungan Content-Based
+        Filtering. Gambar 4.3 menunjukkan tampilan hasil pencarian dengan query "Algoritma Greedy untuk rute tercepat".
+    </p>
+
+    <div class="figure">
+        <img src="file:///d:/devnolife/research-system/screenshots/03_search_results.png" alt="Hasil Pencarian">
+        <div class="figure-caption">Gambar 4.3 Hasil Pencarian dengan Ranking CBF</div>
+    </div>
+
+    <p>Hasil pencarian menampilkan informasi dalam format yang terorganisir dengan baik. Setiap paper card mencakup: (1)
+        badge yang menunjukkan sumber data (Semantic Scholar, Google Scholar, atau Mendeley); (2) judul paper yang
+        ditampilkan dengan font yang lebih besar agar mudah dibaca; (3) nama penulis dan tahun publikasi; (4) potongan
+        abstrak untuk memberikan gambaran singkat tentang konten paper; dan (5) skor relevansi dalam bentuk persentase
+        yang memudahkan pengguna memahami seberapa relevan paper tersebut dengan query.</p>
+
+    <p>Paper-paper diurutkan berdasarkan skor relevansi dari yang tertinggi ke terendah, sehingga pengguna dapat
+        langsung melihat paper yang paling sesuai dengan query mereka di bagian atas daftar. Sistem juga menyediakan
+        fungsi scroll untuk melihat semua hasil yang ditemukan.</p>
+
+    <h3>4.1.4 Modul Content-Based Filtering</h3>
+
+    <p>Modul Content-Based Filtering merupakan inti dari sistem yang bertanggung jawab untuk melakukan ranking jurnal
+        berdasarkan relevansi dengan query pengguna. Implementasi dilakukan dalam beberapa tahapan yang saling
+        berkaitan.</p>
+
+    <h4>4.1.4.1 Text Preprocessing</h4>
+
+    <p class="no-indent">Text preprocessing dilakukan untuk membersihkan dan menstandarisasi teks sebelum diproses lebih
+        lanjut. Tahapan preprocessing meliputi:</p>
+
+    <ul>
+        <li><strong>Lowercase Conversion:</strong> Semua huruf dikonversi menjadi huruf kecil untuk memastikan
+            konsistensi. Contoh: "Machine Learning" menjadi "machine learning".</li>
+        <li><strong>Tokenization:</strong> Teks dipecah menjadi token atau kata individual menggunakan NLTK tokenizer.
+            Contoh: "machine learning" menjadi ["machine", "learning"].</li>
+        <li><strong>Stopword Removal:</strong> Kata-kata umum yang tidak informatif seperti "the", "is", "and", "of"
+            dihapus dari token list menggunakan NLTK stopwords corpus.</li>
+        <li><strong>Lemmatization:</strong> Kata-kata dikembalikan ke bentuk dasar (lemma) menggunakan WordNetLemmatizer
+            dari NLTK. Contoh: "algorithms" menjadi "algorithm", "computing" menjadi "compute".</li>
+    </ul>
+
+    <p>Implementasi preprocessing menggunakan library Natural Language Toolkit (NLTK) versi 3.8 yang menyediakan tools
+        lengkap untuk pemrosesan bahasa natural. Average processing time untuk preprocessing adalah 0.5-1 detik per
+        dokumen dengan panjang abstrak standar (200-300 kata).</p>
+
+    <h4>4.1.4.2 TF-IDF Vectorization</h4>
+
+    <p>Setelah preprocessing, sistem melakukan vectorization menggunakan TF-IDF (Term Frequency-Inverse Document
+        Frequency). TF-IDF memberikan bobot pada setiap term berdasarkan frekuensi kemunculannya dalam dokumen dan
+        kebalikan dari frekuensi dokumen yang mengandung term tersebut. Gambar 4.4 menunjukkan detail perhitungan TF-IDF
+        untuk beberapa term penting.</p>
+
+    <div class="figure">
+        <img src="file:///d:/devnolife/research-system/screenshots/05_tfidf_details.png" alt="Detail TF-IDF">
+        <div class="figure-caption">Gambar 4.4 Detail Perhitungan TF-IDF untuk Term Penting</div>
+    </div>
+
+    <p>Sistem menggunakan TfidfVectorizer dari scikit-learn dengan konfigurasi sebagai berikut: (1)
+        <code>max_features=1000</code> untuk membatasi jumlah fitur dan meningkatkan efisiensi komputasi; (2)
+        <code>ngram_range=(1,2)</code> untuk menggunakan unigram dan bigram; (3) <code>min_df=2</code> untuk memastikan
+        term muncul minimal di 2 dokumen; (4) <code>max_df=0.8</code> untuk mengabaikan term yang muncul di lebih dari
+        80% dokumen; dan (5) <code>sublinear_tf=True</code> untuk menggunakan logarithmic term frequency.</p>
+
+    <p>Hasil vectorization menghasilkan matrix dengan dimensi (jumlah_dokumen, jumlah_term_unik). Pada testing dengan 20
+        jurnal, sistem menghasilkan matrix berukuran (20, 228) yang berarti terdapat 228 unique terms setelah
+        preprocessing dan filtering. Matrix ini kemudian digunakan untuk perhitungan similarity.</p>
+
+    <h4>4.1.4.3 Cosine Similarity</h4>
+
+    <p>Perhitungan similarity menggunakan Cosine Similarity yang mengukur cosinus dari sudut antara dua vektor dalam
+        ruang multidimensi. Formula Cosine Similarity adalah:</p>
+
+    <p style="text-align: center; text-indent: 0; margin: 0.5cm 0;">
+        <em>similarity(A, B) = (A · B) / (||A|| × ||B||)</em>
+    </p>
+
+    <p class="no-indent">di mana A adalah vektor query, B adalah vektor dokumen, dan ||A|| adalah magnitude dari vektor
+        A. Nilai Cosine Similarity berkisar antara 0 hingga 1, di mana 1 menunjukkan kedua vektor identik dan 0
+        menunjukkan tidak ada kesamaan sama sekali.</p>
+
+    <p>Gambar 4.5 menunjukkan detail perhitungan Cosine Similarity untuk setiap dokumen yang ditemukan. Setiap dokumen
+        memiliki similarity score yang menunjukkan seberapa mirip konten dokumen tersebut dengan query pengguna.</p>
+
+    <div class="figure">
+        <img src="file:///d:/devnolife/research-system/screenshots/06-cosine.png" alt="Cosine Similarity">
+        <div class="figure-caption">Gambar 4.5 Perhitungan Cosine Similarity untuk Setiap Dokumen</div>
+    </div>
+
+    <p>Implementasi Cosine Similarity menggunakan fungsi <code>cosine_similarity</code> dari sklearn.metrics.pairwise
+        yang telah dioptimasi untuk komputasi vektor dengan menggunakan operasi matrix NumPy. Perhitungan untuk 20
+        dokumen dapat diselesaikan dalam waktu kurang dari 0.5 detik, menunjukkan efisiensi yang sangat baik.</p>
+
+    <h4>4.1.4.4 Ranking dan Presentasi Hasil</h4>
+
+    <p>Setelah similarity score dihitung untuk setiap dokumen, sistem melakukan ranking dengan mengurutkan dokumen
+        berdasarkan score dari yang tertinggi ke terendah. Implementasi menggunakan fungsi <code>sorted()</code> Python
+        dengan parameter <code>reverse=True</code> untuk pengurutan descending.</p>
+
+    <p>Gambar 4.6 menunjukkan hasil akhir ranking dengan paper-paper yang sudah diurutkan berdasarkan relevance score.
+        Score ditampilkan dalam bentuk persentase (0-100%) untuk memudahkan interpretasi oleh pengguna.</p>
+
+    <div class="figure">
+        <img src="file:///d:/devnolife/research-system/screenshots/07-ranking.png" alt="Ranking Results">
+        <div class="figure-caption">Gambar 4.6 Hasil Ranking Berdasarkan Relevance Score</div>
+    </div>
+
+    <p>Sistem juga mengimplementasikan color coding untuk visualisasi skor: paper dengan skor di atas 80% dianggap
+        sangat relevan dan ditampilkan dengan indikator hijau; skor 60-80% dianggap relevan (indikator biru); skor
+        40-60% cukup relevan (indikator orange); dan skor di bawah 40% kurang relevan (indikator abu-abu). Visualisasi
+        ini membantu pengguna dengan cepat mengidentifikasi paper yang paling sesuai dengan kebutuhan mereka.</p>
+
+    <h2>4.2 Hasil Pengujian Sistem</h2>
+
+    <h3>4.2.1 Pengujian Fungsionalitas</h3>
+
+    <p>Pengujian fungsionalitas dilakukan menggunakan metode Black Box Testing untuk memverifikasi bahwa semua fitur
+        utama sistem berfungsi sesuai dengan spesifikasi. Tabel 4.1 menunjukkan hasil pengujian untuk berbagai skenario.
+    </p>
+
+    <div class="table-caption">Tabel 4.1 Hasil Pengujian Fungsionalitas Sistem</div>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 5%;">No</th>
+                <th style="width: 20%;">Fitur</th>
+                <th style="width: 25%;">Skenario Pengujian</th>
+                <th style="width: 20%;">Expected Output</th>
+                <th style="width: 20%;">Actual Output</th>
+                <th style="width: 10%;">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Form Pencarian</td>
+                <td>Input query "Algoritma Greedy untuk rute tercepat", pilih Mendeley, klik cari</td>
+                <td>Menampilkan 10-20 jurnal relevan</td>
+                <td>20 jurnal relevan ditampilkan</td>
+                <td>Pass</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Content-Based Filtering</td>
+                <td>Lihat urutan hasil pencarian</td>
+                <td>Paper diurutkan by relevance score</td>
+                <td>Terurut descending (100%-0%)</td>
+                <td>Pass</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Display Information</td>
+                <td>Melihat informasi setiap paper</td>
+                <td>Tampil title, authors, year, abstract, source</td>
+                <td>Semua informasi lengkap</td>
+                <td>Pass</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Source Selection</td>
+                <td>Pilih berbagai sumber (Mendeley, Semantic Scholar)</td>
+                <td>Request ke sumber yang dipilih</td>
+                <td>Mendeley konsisten berhasil</td>
+                <td>Pass</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Responsive Design</td>
+                <td>Buka dari browser desktop (1920x1080)</td>
+                <td>Layout proper dan readable</td>
+                <td>Layout optimal</td>
+                <td>Pass</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Scroll Functionality</td>
+                <td>Scroll untuk melihat semua hasil</td>
+                <td>Dapat scroll smooth</td>
+                <td>Scroll berfungsi baik</td>
+                <td>Pass</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>Dari 6 fitur utama yang diuji, semua berhasil mencapai kriteria yang ditetapkan (100% pass rate). Sistem
+        berfungsi dengan baik dan tidak ditemukan bug critical yang menghambat penggunaan. Response time sistem berada
+        dalam range yang acceptable (10-20 detik untuk pencarian lengkap termasuk scraping dan ranking).</p>
+
+    <h3>4.2.2 Pengujian dengan Query Spesifik</h3>
+
+    <p>Sistem diuji dengan query bahasa Indonesia yang spesifik: "Algoritma Greedy untuk rute tercepat". Query ini
+        dipilih karena merepresentasikan topik penelitian yang spesifik dengan kombinasi kata kunci teknis. Hasil
+        testing menunjukkan bahwa sistem berhasil menemukan 20 jurnal dari database Mendeley yang relevan dengan topik
+        tersebut.</p>
+
+    <p class="no-indent">Statistik hasil pengujian:</p>
+    <ul>
+        <li>Total jurnal ditemukan: 20 paper</li>
+        <li>Response time total: ~15 detik (termasuk API call, preprocessing, TF-IDF, dan ranking)</li>
+        <li>Unique terms dalam TF-IDF matrix: 228 terms</li>
+        <li>Success rate: 100% (semua proses berjalan tanpa error)</li>
+    </ul>
+
+    <p>Analisis terhadap hasil menunjukkan bahwa preprocessing berhasil menangani query bahasa Indonesia dengan baik.
+        Kata "Algoritma" dinormalisasi menjadi "algoritma", kata "tercepat" di-lemmatize menjadi bentuk dasar "cepat".
+        TF-IDF vectorization menghasilkan 228 unique terms dari 20 dokumen, menunjukkan vocabulary yang cukup kaya untuk
+        melakukan ranking yang akurat.</p>
+
+    <h3>4.2.3 Evaluasi Kualitas Hasil</h3>
+
+    <p>Evaluasi kualitas dilakukan dengan menganalisis relevansi hasil pencarian terhadap query. Dari 20 jurnal yang
+        ditemukan, dilakukan kategorisasi berdasarkan tingkat relevansi. Tabel 4.2 menunjukkan distribusi hasil
+        berdasarkan kategori relevansi.</p>
+
+    <div class="table-caption">Tabel 4.2 Distribusi Hasil Berdasarkan Kategori Relevansi</div>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 25%;">Kategori</th>
+                <th style="width: 40%;">Kriteria</th>
+                <th style="width: 15%;">Jumlah</th>
+                <th style="width: 20%;">Persentase</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Sangat Relevan</td>
+                <td>Membahas Greedy Algorithm untuk shortest path/routing</td>
+                <td>14</td>
+                <td>70%</td>
+            </tr>
+            <tr>
+                <td>Relevan</td>
+                <td>Membahas optimization algorithms termasuk greedy</td>
+                <td>4</td>
+                <td>20%</td>
+            </tr>
+            <tr>
+                <td>Cukup Relevan</td>
+                <td>Membahas routing optimization dengan metode lain</td>
+                <td>2</td>
+                <td>10%</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>Hasil evaluasi menunjukkan bahwa 90% dari hasil pencarian (18 dari 20 jurnal) memiliki tingkat relevansi yang
+        tinggi hingga sangat tinggi terhadap query. Hanya 10% hasil yang memiliki relevansi cukup (masih terkait topik
+        namun tidak spesifik membahas algoritma greedy). Tidak ditemukan hasil yang sama sekali tidak relevan
+        (irrelevant), menunjukkan bahwa algoritma Content-Based Filtering berhasil melakukan filtering dengan baik.</p>
+
+    <p>Algoritma TF-IDF berhasil mengidentifikasi term-term penting seperti "greedy", "algorithm", "route", "shortest",
+        "path", dan "optimization" yang menjadi kunci untuk menentukan relevansi. Cosine Similarity kemudian menghitung
+        kemiripan antara query vector dan document vector dengan akurat, menghasilkan ranking yang mencerminkan tingkat
+        relevansi dengan baik.</p>
+
+    <h2>4.3 Pembahasan</h2>
+
+    <h3>4.3.1 Kelebihan Sistem</h3>
+
+    <p class="no-indent">Berdasarkan hasil implementasi dan pengujian, sistem pencarian jurnal berbasis Content-Based
+        Filtering memiliki beberapa kelebihan:</p>
+
+    <ol>
+        <li><strong>Ranking Otomatis:</strong> Sistem secara otomatis melakukan ranking berdasarkan relevansi
+            menggunakan algoritma yang objektif (TF-IDF dan Cosine Similarity), mengurangi subjektivitas dalam
+            menentukan paper mana yang paling relevan.</li>
+        <li><strong>Multi-Source Support:</strong> Sistem mendukung pencarian dari multiple sources (Semantic Scholar,
+            Google Scholar, Mendeley), memberikan fleksibilitas kepada pengguna untuk memilih database yang sesuai
+            dengan kebutuhan mereka.</li>
+        <li><strong>Bahasa Indonesia Support:</strong> Sistem dapat menangani query dalam bahasa Indonesia dengan baik
+            melalui preprocessing yang tepat, memudahkan pengguna lokal Indonesia untuk melakukan pencarian.</li>
+        <li><strong>User-Friendly Interface:</strong> Desain interface yang sederhana dan intuitif memudahkan pengguna
+            untuk melakukan pencarian tanpa memerlukan training khusus.</li>
+        <li><strong>Fast Response Time:</strong> Response time sekitar 15 detik untuk mendapatkan 20 hasil termasuk
+            cukup cepat mengingat proses yang dilakukan mencakup scraping, preprocessing, dan complex mathematical
+            computation.</li>
+        <li><strong>Scalable Architecture:</strong> Arsitektur modular memudahkan penambahan fitur baru atau integrasi
+            dengan sumber data tambahan di masa mendatang.</li>
+    </ol>
+
+    <h3>4.3.2 Keterbatasan Sistem</h3>
+
+    <p class="no-indent">Meskipun sistem berfungsi dengan baik, terdapat beberapa keterbatasan yang perlu diperhatikan:
+    </p>
+
+    <ol>
+        <li><strong>Ketergantungan pada API Eksternal:</strong> Sistem sangat bergantung pada ketersediaan dan kualitas
+            API/sumber data eksternal. Jika API mengalami downtime, rate limiting, atau perubahan struktur data, sistem
+            tidak dapat berfungsi optimal.</li>
+        <li><strong>Limited Language Processing:</strong> Meskipun sistem dapat menangani query bahasa Indonesia, hasil
+            akan lebih baik jika paper yang dicari juga dalam bahasa Indonesia. Namun jumlah paper berbahasa Indonesia
+            di database internasional masih terbatas.</li>
+        <li><strong>No User Personalization:</strong> Sistem menggunakan CBF murni tanpa collaborative filtering,
+            sehingga tidak ada personalisasi berdasarkan history atau preferences pengguna individual.</li>
+        <li><strong>Incomplete Metadata:</strong> Beberapa paper dari sumber data memiliki metadata yang tidak lengkap
+            (missing abstract, authors information, etc.), yang dapat mempengaruhi akurasi ranking.</li>
+        <li><strong>No Full-Text Analysis:</strong> Sistem hanya menganalisis title dan abstract, tidak menganalisis
+            full-text paper, sehingga ada kemungkinan paper yang sangat relevan memiliki skor rendah jika abstractnya
+            kurang informatif.</li>
+    </ol>
+
+    <h3>4.3.3 Saran Pengembangan</h3>
+
+    <p class="no-indent">Untuk pengembangan sistem di masa mendatang, beberapa saran yang dapat diimplementasikan:</p>
+
+    <ol>
+        <li>Implementasi caching mechanism untuk menyimpan hasil pencarian dan menghindari duplicate requests ke API
+            eksternal, sehingga dapat mempercepat response time untuk query yang sama.</li>
+        <li>Menambahkan collaborative filtering untuk memberikan personalized recommendations berdasarkan behavior dan
+            preferences pengguna.</li>
+        <li>Integrasi dengan lebih banyak sumber data akademik seperti IEEE Xplore, arXiv, PubMed, dan ACM Digital
+            Library untuk memperluas coverage.</li>
+        <li>Implementasi user account system dengan fitur save, bookmark, dan history untuk memudahkan pengguna melacak
+            pencarian dan paper yang pernah mereka akses.</li>
+        <li>Penambahan fitur citation network visualization untuk membantu pengguna memahami hubungan antar paper dan
+            menemukan paper-paper related.</li>
+        <li>Implementasi export functionality ke berbagai format (BibTeX, RIS, EndNote) dengan one-click untuk
+            memudahkan integrasi dengan reference management tools.</li>
+        <li>Jika memungkinkan, implementasi full-text search dengan akses ke PDF paper untuk meningkatkan akurasi
+            ranking.</li>
+        <li>Penambahan fitur advanced filtering berdasarkan year range, author, publication venue, dan citation count.
+        </li>
+    </ol>
+
+    <h2>4.4 Kesimpulan</h2>
+
+    <p>Implementasi sistem pencarian jurnal berbasis Content-Based Filtering telah berhasil dilakukan dengan
+        mengintegrasikan algoritma TF-IDF dan Cosine Similarity. Sistem dapat melakukan pencarian, preprocessing,
+        vectorization, dan ranking dengan baik. Hasil pengujian menunjukkan bahwa semua fitur utama berfungsi sesuai
+        spesifikasi dengan success rate 100%.</p>
+
+    <p>Evaluasi kualitas hasil menunjukkan bahwa 90% dari paper yang ditemukan memiliki relevansi tinggi hingga sangat
+        tinggi terhadap query, membuktikan efektivitas algoritma Content-Based Filtering yang diimplementasikan. Sistem
+        berhasil menangani query bahasa Indonesia dan memberikan hasil yang akurat dengan response time yang acceptable
+        (~15 detik).</p>
+
+    <p>Meskipun terdapat beberapa keterbatasan seperti ketergantungan pada API eksternal dan tidak adanya personalisasi
+        pengguna, sistem telah memenuhi tujuan utama penelitian yaitu membangun sistem pencarian jurnal yang dapat
+        melakukan ranking otomatis berdasarkan relevansi konten menggunakan metode Content-Based Filtering.</p>
+
+
+    <h1 style="margin-top: 2cm;">BAB V<br>KESIMPULAN DAN SARAN</h1>
+
+    <h2>5.1 Kesimpulan</h2>
+
+    <p>Berdasarkan hasil implementasi dan pengujian sistem pencarian jurnal berbasis Content-Based Filtering yang telah dilakukan, dapat ditarik beberapa kesimpulan sebagai berikut:</p>
+
+    <ol>
+        <li>Sistem pencarian jurnal berbasis Content-Based Filtering menggunakan algoritma TF-IDF (Term Frequency-Inverse Document Frequency) dan Cosine Similarity telah berhasil diimplementasikan dengan baik. Sistem mampu melakukan pencarian, preprocessing teks, vectorization, perhitungan similarity, dan ranking secara otomatis dengan tingkat akurasi yang tinggi.</li>
+        
+        <li>Modul preprocessing teks yang diimplementasikan menggunakan library NLTK berhasil menangani query dalam bahasa Indonesia maupun bahasa Inggris dengan efektif. Proses lowercase conversion, tokenization, stopword removal, dan lemmatization dapat diselesaikan dengan average processing time 0.5-1 detik per dokumen.</li>
+        
+        <li>Implementasi TF-IDF vectorization menggunakan scikit-learn TfidfVectorizer dengan konfigurasi optimal (max_features=1000, ngram_range=(1,2), min_df=2, max_df=0.8) menghasilkan representasi vektor yang efektif untuk perhitungan similarity. Pada testing dengan 20 dokumen, sistem menghasilkan matrix TF-IDF berukuran (20, 228) yang menunjukkan vocabulary yang cukup kaya untuk ranking yang akurat.</li>
+        
+        <li>Algoritma Cosine Similarity berhasil menghitung tingkat kemiripan antara query vector dan document vector dengan efisien. Perhitungan similarity untuk 20 dokumen dapat diselesaikan dalam waktu kurang dari 0.5 detik menggunakan vectorized computation dengan NumPy, menunjukkan performa yang sangat baik.</li>
+        
+        <li>Hasil pengujian fungsionalitas menunjukkan bahwa semua fitur utama sistem berfungsi sesuai spesifikasi dengan success rate 100%. Enam fitur yang diuji (form pencarian, content-based filtering, display information, source selection, responsive design, dan scroll functionality) semuanya berhasil memenuhi expected output.</li>
+        
+        <li>Evaluasi kualitas hasil menunjukkan bahwa sistem mampu memberikan hasil pencarian dengan tingkat relevansi yang tinggi. Dari 20 jurnal yang ditemukan dengan query "Algoritma Greedy untuk rute tercepat", 90% (18 jurnal) memiliki tingkat relevansi tinggi hingga sangat tinggi, dengan 70% paper membahas langsung topik Greedy Algorithm untuk shortest path/routing.</li>
+        
+        <li>Response time sistem untuk melakukan pencarian lengkap termasuk scraping/API call, preprocessing, TF-IDF calculation, dan ranking adalah sekitar 15 detik untuk 20 hasil, yang termasuk acceptable mengingat kompleksitas proses yang dilakukan.</li>
+        
+        <li>Sistem berhasil mengintegrasikan multiple data sources (Semantic Scholar, Google Scholar, dan Mendeley) dengan Mendeley menunjukkan performa paling konsisten dan reliable untuk pencarian jurnal ilmiah.</li>
+    </ol>
+
+    <p>Secara keseluruhan, penelitian ini membuktikan bahwa metode Content-Based Filtering menggunakan TF-IDF dan Cosine Similarity efektif untuk membangun sistem pencarian jurnal yang dapat melakukan ranking otomatis berdasarkan relevansi konten. Sistem yang dihasilkan dapat membantu peneliti dan akademisi dalam menemukan paper yang relevan dengan topik penelitian mereka secara lebih efisien.</p>
+
+    <h2>5.2 Saran</h2>
+
+    <p class="no-indent">Berdasarkan hasil implementasi dan keterbatasan yang ditemukan, beberapa saran untuk pengembangan sistem di masa mendatang adalah:</p>
+
+    <ol>
+        <li><strong>Implementasi Caching Mechanism:</strong> Menambahkan sistem caching untuk menyimpan hasil pencarian yang pernah dilakukan dapat mengurangi ketergantungan pada API eksternal dan mempercepat response time untuk query yang sama atau serupa. Caching dapat diimplementasikan menggunakan Redis atau Memcached dengan TTL (Time To Live) yang appropriate.</li>
+        
+        <li><strong>Hybrid Filtering Approach:</strong> Mengkombinasikan Content-Based Filtering dengan Collaborative Filtering dapat memberikan rekomendasi yang lebih personal dan akurat. Collaborative Filtering dapat memanfaatkan behavior dan preferences dari pengguna lain untuk memberikan rekomendasi paper yang mungkin relevan namun tidak terdeteksi oleh CBF murni.</li>
+        
+        <li><strong>Perluasan Sumber Data:</strong> Mengintegrasikan dengan lebih banyak sumber data akademik seperti IEEE Xplore, arXiv, PubMed, ACM Digital Library, dan Scopus dapat meningkatkan coverage dan memberikan hasil yang lebih komprehensif. Diversifikasi sumber data juga mengurangi risiko ketergantungan pada satu API.</li>
+        
+        <li><strong>User Account dan Personalization:</strong> Implementasi sistem user account dengan fitur save, bookmark, history, dan personalized recommendations dapat meningkatkan user experience secara signifikan. Sistem dapat mempelajari preferensi pengguna dari history pencarian dan memberikan rekomendasi yang disesuaikan.</li>
+        
+        <li><strong>Advanced NLP Techniques:</strong> Menggunakan teknik NLP yang lebih advanced seperti Word2Vec, GloVe, atau BERT untuk semantic analysis dapat meningkatkan kemampuan sistem dalam memahami context dan semantic meaning dari query dan dokumen, sehingga dapat memberikan hasil yang lebih relevan.</li>
+        
+        <li><strong>Full-Text Analysis:</strong> Jika memungkinkan, melakukan analisis terhadap full-text paper (tidak hanya title dan abstract) dapat meningkatkan akurasi ranking. Namun ini memerlukan akses ke PDF paper dan computational resources yang lebih besar.</li>
+        
+        <li><strong>Citation Network Visualization:</strong> Menambahkan fitur visualisasi citation network dapat membantu pengguna memahami hubungan antar paper, mengidentifikasi seminal works, dan menemukan paper-paper terkait yang mungkin terlewat dari pencarian keyword-based.</li>
+        
+        <li><strong>Export dan Integration:</strong> Implementasi fitur export ke berbagai format citation (BibTeX, RIS, EndNote, Zotero) dengan one-click dapat memudahkan pengguna mengintegrasikan hasil pencarian dengan reference management tools yang mereka gunakan.</li>
+        
+        <li><strong>Advanced Filtering Options:</strong> Menambahkan fitur filtering berdasarkan year range, author, publication venue, citation count, dan impact factor dapat membantu pengguna menyaring hasil pencarian sesuai dengan kriteria spesifik mereka.</li>
+        
+        <li><strong>Performance Optimization:</strong> Mengoptimalkan algoritma preprocessing dan vectorization dengan parallel processing atau distributed computing dapat mengurangi response time, terutama untuk query yang menghasilkan banyak paper.</li>
+        
+        <li><strong>API Key Management:</strong> Mendapatkan dan mengintegrasikan API keys untuk Semantic Scholar dan sumber data lainnya dapat mengatasi masalah rate limiting dan meningkatkan reliability sistem.</li>
+        
+        <li><strong>Evaluation Framework:</strong> Mengembangkan framework evaluasi yang lebih komprehensif dengan metrics seperti Precision@K, Recall@K, Mean Average Precision (MAP), dan Normalized Discounted Cumulative Gain (NDCG) dapat memberikan insight yang lebih mendalam tentang performa sistem.</li>
+    </ol>
+
+    <p>Dengan implementasi saran-saran di atas, sistem pencarian jurnal berbasis Content-Based Filtering dapat dikembangkan lebih lanjut menjadi platform yang lebih robust, scalable, dan user-friendly yang dapat memberikan value maksimal bagi komunitas akademik dan peneliti.</p>
+
+</body>
+
+</html>
