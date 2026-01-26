@@ -1861,10 +1861,6 @@
                         <option value="thesis">Tesis</option>
                     </select>
                 </div>
-                <div class="option-group">
-                    <label for="minCitations">Min Sitasi:</label>
-                    <input type="number" id="minCitations" min="0" placeholder="0" style="width: 80px;">
-                </div>
             </div>
 
             <!-- Advanced Filters (Collapsible) -->
@@ -2462,7 +2458,6 @@
                     year: document.getElementById('yearFilter').value,
                     sortBy: document.getElementById('sortBy').value,
                     paperType: document.getElementById('paperType').value,
-                    minCitations: parseInt(document.getElementById('minCitations').value) || 0,
                     author: document.getElementById('authorFilter').value.trim(),
                     journal: document.getElementById('journalFilter').value.trim(),
                     excludeWords: document.getElementById('excludeWords').value.trim(),
