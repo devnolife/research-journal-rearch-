@@ -708,33 +708,121 @@ def get_cbf_calculation_details(selected_papers, query):
                 row.append(float(sim_matrix[i][j]))
             similarity_matrix.append(row)
     
+    # Hitung detail TF dan IDF untuk setiap term (untuk tampilan yang lebih jelas)
+    tf_idf_details = []
+    if cbf.vectorizer and cbf.tfidf_matrix is not None:
+        feature_names = cbf.vectorizer.get_feature_names_out()
+        n_docs = len(selected_papers)
+        
+        # Get average TF-IDF scores
+        avg_scores = np.mean(cbf.tfidf_matrix.toarray(), axis=0)
+        top_indices = np.argsort(avg_scores)[::-1][:20]
+        
+        for idx in top_indices:
+            term = feature_names[idx]
+            tfidf_score = float(avg_scores[idx])
+            df = int(np.sum(cbf.tfidf_matrix.toarray()[:, idx] > 0))
+            idf = np.log(n_docs / max(df, 1)) + 1
+            
+            # Calculate TF for first document that has this term
+            tf_values = []
+            for doc_idx in range(min(n_docs, 5)):
+                doc_vector = cbf.tfidf_matrix[doc_idx].toarray().flatten()
+                if doc_vector[idx] > 0:
+                    tf_values.append({
+                        'doc': f'D{doc_idx + 1}',
+                        'tf': round(doc_vector[idx] / max(idf, 0.001), 4),
+                        'tfidf': round(doc_vector[idx], 4)
+                    })
+            
+            tf_idf_details.append({
+                'term': term,
+                'df': df,
+                'n_docs': n_docs,
+                'idf': round(idf, 4),
+                'idf_formula': f'log({n_docs}/{df}) + 1 = {round(idf, 4)}',
+                'avg_tfidf': round(tfidf_score, 4),
+                'per_doc': tf_values[:3]
+            })
+    
+    # Hitung cosine similarity detail dengan rumus
+    cosine_details = []
+    if cbf.tfidf_matrix is not None and len(selected_papers) > 0:
+        query_preprocessed = cbf.preprocess_text(query)
+        try:
+            query_vector = cbf.vectorizer.transform([query_preprocessed]).toarray().flatten()
+            query_magnitude = np.sqrt(np.sum(query_vector ** 2))
+            
+            for i in range(min(len(selected_papers), 10)):
+                doc_vector = cbf.tfidf_matrix[i].toarray().flatten()
+                doc_magnitude = np.sqrt(np.sum(doc_vector ** 2))
+                dot_product = np.dot(query_vector, doc_vector)
+                
+                if query_magnitude > 0 and doc_magnitude > 0:
+                    cos_sim = dot_product / (query_magnitude * doc_magnitude)
+                else:
+                    cos_sim = 0
+                
+                cosine_details.append({
+                    'doc_id': f'D{i + 1}',
+                    'title': selected_papers[i].get('title', '')[:60],
+                    'dot_product': round(dot_product, 6),
+                    'query_magnitude': round(query_magnitude, 6),
+                    'doc_magnitude': round(doc_magnitude, 6),
+                    'formula': f'({round(dot_product, 4)}) / ({round(query_magnitude, 4)} × {round(doc_magnitude, 4)})',
+                    'similarity': round(cos_sim, 6),
+                    'similarity_percent': round(cos_sim * 100, 2)
+                })
+        except:
+            pass
+    
     # Hasil perhitungan lengkap
     calculation_details = {
         'query': query,
+        'query_preprocessed': cbf.preprocess_text(query) if query else '',
         'total_papers': len(selected_papers),
         'preprocessing': preprocessing_results,
         'tfidf': tfidf_data,
+        'tfidf_details': tf_idf_details,  # Detail per term
+        'cosine_details': cosine_details,  # Detail perhitungan cosine
         'papers': papers_with_similarity,
         'ranking': ranking,
         'similarity_matrix': similarity_matrix,
         'papers_analysis': [],
         'preprocessing_info': {
             'steps': [
-                '1. Case Folding (lowercase)',
-                '2. Tokenisasi',
-                '3. Penghapusan Stopwords',
-                '4. Lemmatisasi'
-            ]
+                '1. Case Folding (lowercase) - Mengubah semua huruf menjadi huruf kecil',
+                '2. Tokenisasi - Memecah teks menjadi kata-kata individual',
+                '3. Penghapusan Stopwords - Menghapus kata umum (the, is, a, an, dll)',
+                '4. Lemmatisasi - Mengubah kata ke bentuk dasar (running → run)'
+            ],
+            'example': {
+                'original': 'Deep Learning for Natural Language Processing',
+                'after_case_fold': 'deep learning for natural language processing',
+                'after_tokenize': ['deep', 'learning', 'for', 'natural', 'language', 'processing'],
+                'after_stopword': ['deep', 'learning', 'natural', 'language', 'processing'],
+                'final': 'deep learning natural language processing'
+            }
         },
         'tfidf_info': {
-            'formula': 'TF-IDF = TF(t,d) × IDF(t)',
-            'tf_formula': 'TF(t,d) = frekuensi term t dalam dokumen d',
+            'formula': 'TF-IDF(t,d) = TF(t,d) × IDF(t)',
+            'tf_formula': 'TF(t,d) = frekuensi term t dalam dokumen d / total terms dalam d',
             'idf_formula': 'IDF(t) = log(N / df(t)) + 1',
-            'description': 'TF-IDF memberikan bobot tinggi pada kata yang sering muncul di dokumen tertentu tapi jarang di dokumen lain'
+            'idf_explanation': 'N = total dokumen, df(t) = jumlah dokumen mengandung term t',
+            'description': 'TF-IDF memberikan bobot tinggi pada kata yang sering muncul di dokumen tertentu tapi jarang di dokumen lain. Kata yang muncul di banyak dokumen mendapat bobot rendah.',
+            'example': f'Contoh: Jika term "learning" muncul di 3 dari {len(selected_papers)} dokumen, IDF = log({len(selected_papers)}/3) + 1'
         },
         'cosine_info': {
             'formula': 'Cosine Similarity = (A · B) / (||A|| × ||B||)',
-            'description': 'Mengukur kemiripan berdasarkan sudut antara dua vektor dokumen (0-1)'
+            'dot_product_desc': 'A · B = Σ(Ai × Bi) - Jumlah perkalian elemen vektor',
+            'magnitude_desc': '||A|| = √(Σ Ai²) - Panjang vektor (Euclidean norm)',
+            'description': 'Mengukur kemiripan berdasarkan sudut antara dua vektor dokumen dalam ruang TF-IDF',
+            'range': 'Nilai: 0 (tidak mirip) hingga 1 (identik)',
+            'interpretation': {
+                'high': '≥ 0.7 = Sangat relevan',
+                'medium': '0.4 - 0.7 = Cukup relevan',
+                'low': '< 0.4 = Kurang relevan'
+            }
         }
     }
     

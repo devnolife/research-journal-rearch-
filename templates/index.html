@@ -1985,13 +1985,22 @@
         <div id="resultsSection" class="results-section">
             <div id="evaluationPanel" class="evaluation-panel" style="display: none;"></div>
             <div id="exportSection" class="export-section" style="display: none;"></div>
-            <div class="cbf-info">
-                <i class="fas fa-brain"></i>
-                <div class="cbf-info-text">
-                    <h4>🧠 Content-Based Filtering Aktif</h4>
-                    <p>Hasil diranking menggunakan <strong>TF-IDF + Cosine Similarity</strong> berdasarkan relevansi dengan kata kunci Anda</p>
+            
+            <!-- CBF Info Banner -->
+            <div class="cbf-info" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <i class="fas fa-brain" style="font-size: 28px;"></i>
+                    <div class="cbf-info-text">
+                        <h4>🧠 Content-Based Filtering Aktif</h4>
+                        <p>Hasil diranking menggunakan <strong>TF-IDF + Cosine Similarity</strong> berdasarkan relevansi dengan kata kunci Anda</p>
+                    </div>
                 </div>
+                <!-- Button to view CBF details - Always visible after search -->
+                <button id="showCbfBtnMain" class="show-cbf-btn visible" onclick="showCBFCalculation()" style="display: inline-flex;">
+                    <i class="fas fa-calculator"></i> Lihat Detail Perhitungan
+                </button>
             </div>
+            
             <div class="results-header">
                 <h2><i class="fas fa-file-alt"></i> Hasil Pencarian</h2>
                 <span id="selectedCountBadge" class="selected-count-badge">
@@ -2004,7 +2013,7 @@
                 </div>
             </div>
             <!-- CBF Calculation Button and Panel -->
-            <button id="showCbfBtn" class="show-cbf-btn" onclick="showCBFCalculation()">
+            <button id="showCbfBtn" class="show-cbf-btn" onclick="showCBFCalculation()" style="display: none;">
                 <i class="fas fa-calculator"></i> Lihat Detail Perhitungan TF-IDF & Cosine Similarity
             </button>
             
@@ -2190,13 +2199,12 @@
             `).join('');
         }
         
-        // Populate TF-IDF results
+        // Populate TF-IDF results with detailed calculations
         function populateTFIDF(data) {
             const container = document.getElementById('tfidfResults');
             if (!container) return;
             
             const terms = data.top_terms || [];
-            const matrix = data.matrix || [];
             
             if (terms.length === 0) {
                 container.innerHTML = '<p style="color: #666;">Data TF-IDF tidak tersedia</p>';
@@ -2204,27 +2212,46 @@
             }
             
             let html = `
+                <div style="background: #f0f9ff; padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #6366f1;">
+                    <h4 style="color: #1e40af; margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Penjelasan Rumus</h4>
+                    <div style="font-size: 13px; color: #374151; line-height: 1.8;">
+                        <p><strong>TF (Term Frequency)</strong> = Jumlah kemunculan term / Total kata dalam dokumen</p>
+                        <p><strong>IDF (Inverse Document Frequency)</strong> = log(N/df) + 1</p>
+                        <p style="margin-left: 20px; color: #6b7280;">• N = Total dokumen (${data.total_docs || 0})</p>
+                        <p style="margin-left: 20px; color: #6b7280;">• df = Jumlah dokumen yang mengandung term</p>
+                        <p><strong>TF-IDF</strong> = TF × IDF</p>
+                    </div>
+                </div>
+                
                 <p style="margin-bottom: 15px; color: #64748b;">
-                    <strong>Total Terms:</strong> ${data.total_terms || 0} | 
-                    <strong>Documents:</strong> ${data.total_docs || 0}
+                    <i class="fas fa-database"></i> <strong>Total Terms Unik:</strong> ${data.total_terms || 0} | 
+                    <i class="fas fa-file-alt"></i> <strong>Total Dokumen:</strong> ${data.total_docs || 0}
                 </p>
+                
                 <table class="tfidf-table">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Term</th>
-                            <th>TF-IDF Score</th>
-                            <th>Document Frequency</th>
+                            <th>DF (Doc Freq)</th>
+                            <th>IDF Calculation</th>
+                            <th>Avg TF-IDF</th>
                         </tr>
                     </thead>
                     <tbody>
             `;
             
-            terms.slice(0, 20).forEach(term => {
+            const n_docs = data.total_docs || 1;
+            terms.slice(0, 20).forEach((term, idx) => {
+                const df = term.df || 1;
+                const idf = Math.log(n_docs / df) + 1;
                 html += `
                     <tr>
-                        <td><strong>${term.term}</strong></td>
-                        <td class="tfidf-value">${term.score.toFixed(4)}</td>
-                        <td>${term.df || '-'}</td>
+                        <td style="text-align: center; font-weight: bold; color: #6366f1;">${idx + 1}</td>
+                        <td><strong style="color: #10b981;">${term.term}</strong></td>
+                        <td style="text-align: center;">${df} / ${n_docs}</td>
+                        <td style="font-family: monospace; font-size: 11px; color: #f59e0b;">log(${n_docs}/${df}) + 1 = ${idf.toFixed(4)}</td>
+                        <td class="tfidf-value" style="text-align: center; font-size: 14px;">${term.score.toFixed(4)}</td>
                     </tr>
                 `;
             });
@@ -2233,23 +2260,46 @@
             container.innerHTML = html;
         }
         
-        // Populate similarity matrix
+        // Populate similarity matrix with detailed calculations
         function populateSimilarity(matrix, papers) {
             const container = document.getElementById('similarityResults');
-            if (!container || !matrix.length) return;
-            
-            const labels = papers.slice(0, 6).map((p, i) => `D${i+1}`);
+            if (!container || !papers.length) return;
             
             let html = `
-                <p style="margin-bottom: 15px; color: #64748b;">
-                    Matriks Cosine Similarity antara Query dan Dokumen
-                </p>
+                <div style="background: #fef3c7; padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #f59e0b;">
+                    <h4 style="color: #b45309; margin-bottom: 10px;"><i class="fas fa-lightbulb"></i> Cara Menghitung Cosine Similarity</h4>
+                    <div style="font-size: 13px; color: #374151; line-height: 1.8;">
+                        <p><strong>Rumus:</strong> cos(θ) = (A · B) / (||A|| × ||B||)</p>
+                        <p style="margin-top: 8px;"><strong>Langkah-langkah:</strong></p>
+                        <p style="margin-left: 20px;">1. Hitung <strong>Dot Product</strong> (A · B) = Σ(Ai × Bi)</p>
+                        <p style="margin-left: 20px;">2. Hitung <strong>Magnitude</strong> ||A|| = √(Σ Ai²)</p>
+                        <p style="margin-left: 20px;">3. Bagi dot product dengan perkalian magnitude</p>
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
+                    <div style="background: #dcfce7; padding: 12px; border-radius: 8px; text-align: center;">
+                        <div style="color: #166534; font-weight: bold; font-size: 16px;">≥ 50%</div>
+                        <div style="font-size: 11px; color: #166534;">Sangat Relevan</div>
+                    </div>
+                    <div style="background: #fef9c3; padding: 12px; border-radius: 8px; text-align: center;">
+                        <div style="color: #854d0e; font-weight: bold; font-size: 16px;">25-50%</div>
+                        <div style="font-size: 11px; color: #854d0e;">Cukup Relevan</div>
+                    </div>
+                    <div style="background: #fee2e2; padding: 12px; border-radius: 8px; text-align: center;">
+                        <div style="color: #991b1b; font-weight: bold; font-size: 16px;">< 25%</div>
+                        <div style="font-size: 11px; color: #991b1b;">Kurang Relevan</div>
+                    </div>
+                </div>
+                
+                <h4 style="color: #1e293b; margin-bottom: 15px;"><i class="fas fa-table"></i> Hasil Perhitungan Similarity Query ↔ Dokumen</h4>
                 <table class="matrix-table">
                     <thead>
                         <tr>
-                            <th>Document</th>
-                            <th>Title</th>
-                            <th>Similarity to Query</th>
+                            <th style="width: 60px;">Doc</th>
+                            <th style="text-align: left;">Judul Paper</th>
+                            <th style="width: 120px;">Similarity</th>
+                            <th style="width: 100px;">Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -2257,13 +2307,26 @@
             
             papers.slice(0, 10).forEach((paper, i) => {
                 const sim = paper.similarity || 0;
-                const simClass = sim >= 0.5 ? 'similarity-high' : (sim >= 0.25 ? 'similarity-medium' : 'similarity-low');
+                const simPercent = (sim * 100).toFixed(2);
+                let simClass, simLabel;
+                
+                if (sim >= 0.5) {
+                    simClass = 'similarity-high';
+                    simLabel = '✓ Sangat Relevan';
+                } else if (sim >= 0.25) {
+                    simClass = 'similarity-medium';
+                    simLabel = '~ Cukup Relevan';
+                } else {
+                    simClass = 'similarity-low';
+                    simLabel = '✗ Kurang Relevan';
+                }
                 
                 html += `
                     <tr>
-                        <td><strong>D${i+1}</strong></td>
-                        <td style="text-align: left; max-width: 300px; overflow: hidden; text-overflow: ellipsis;">${(paper.title || '').substring(0, 50)}...</td>
-                        <td class="${simClass}">${(sim * 100).toFixed(2)}%</td>
+                        <td style="text-align: center;"><strong style="color: #6366f1;">D${i+1}</strong></td>
+                        <td style="text-align: left; max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${(paper.title || '').substring(0, 60)}...</td>
+                        <td class="${simClass}" style="text-align: center; font-weight: bold; font-size: 14px;">${simPercent}%</td>
+                        <td style="text-align: center; font-size: 11px;">${simLabel}</td>
                     </tr>
                 `;
             });
@@ -2272,18 +2335,34 @@
             container.innerHTML = html;
         }
         
-        // Populate ranking results
+        // Populate ranking results with detailed info
         function populateRanking(ranking) {
             const container = document.getElementById('rankingResults');
             if (!container || !ranking.length) return;
             
-            container.innerHTML = ranking.slice(0, 10).map((item, i) => {
+            let html = `
+                <div style="background: #ecfdf5; padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #10b981;">
+                    <h4 style="color: #065f46; margin-bottom: 10px;"><i class="fas fa-trophy"></i> Hasil Ranking Berdasarkan Relevansi</h4>
+                    <div style="font-size: 13px; color: #374151; line-height: 1.8;">
+                        <p>Jurnal diurutkan berdasarkan <strong>Cosine Similarity</strong> tertinggi terhadap query.</p>
+                        <p>Semakin tinggi nilai similarity, semakin relevan jurnal dengan topik penelitian Anda.</p>
+                    </div>
+                </div>
+            `;
+            
+            html += ranking.slice(0, 10).map((item, i) => {
                 const rank = i + 1;
                 const rankClass = rank === 1 ? 'rank-1' : (rank === 2 ? 'rank-2' : (rank === 3 ? 'rank-3' : 'rank-other'));
+                const simPercent = ((item.similarity || 0) * 100).toFixed(1);
+                
+                // Medal emoji for top 3
+                const medal = rank === 1 ? '🥇' : (rank === 2 ? '🥈' : (rank === 3 ? '🥉' : ''));
                 
                 return `
-                    <div class="ranking-item">
-                        <div class="rank-badge ${rankClass}">#${rank}</div>
+                    <div class="ranking-item" style="border-left: 4px solid ${rank <= 3 ? '#f59e0b' : '#6366f1'};">
+                        <div class="rank-badge ${rankClass}">
+                            ${medal || '#' + rank}
+                        </div>
                         <div class="ranking-content">
                             <div class="ranking-title">${item.title || 'Untitled'}</div>
                             <div class="ranking-meta">
@@ -2293,12 +2372,16 @@
                             </div>
                         </div>
                         <div class="ranking-score">
-                            <div class="score-value">${((item.similarity || 0) * 100).toFixed(1)}%</div>
-                            <div class="score-label">Relevance</div>
+                            <div class="score-value" style="color: ${parseFloat(simPercent) >= 50 ? '#10b981' : (parseFloat(simPercent) >= 25 ? '#f59e0b' : '#ef4444')};">
+                                ${simPercent}%
+                            </div>
+                            <div class="score-label">Relevance Score</div>
                         </div>
                     </div>
                 `;
             }).join('');
+            
+            container.innerHTML = html;
         }
         
         // Initialize story input listener
@@ -2386,8 +2469,9 @@
                     includeWords: document.getElementById('includeWords').value.trim()
                 };
 
-                if (!query) {
-                    this.showError('Silakan masukkan kata kunci pencarian');
+                // Allow single character search (minimum 1 character)
+                if (!query || query.length < 1) {
+                    this.showError('Silakan masukkan minimal 1 karakter untuk pencarian');
                     return;
                 }
 
